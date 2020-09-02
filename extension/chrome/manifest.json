@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "LACO test",
+  "description": "Laco Test extension",
+  "version": "1.0",
+
+  "browser_action": {
+   "default_icon": "icon.png",
+   "default_popup": "popup.html"
+  },
+  
+  "background": {
+    "scripts": ["background.js","common.js"]
+      // "persistent": false
+  },
+  "permissions": [
+   "activeTab",
+   "webRequest",
+   "tabs",
+   "https://*/*",
+   "http://localhost:8887/*"
+    ]
+}
