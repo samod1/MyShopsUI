@@ -1,6 +1,6 @@
 
  
- var api_baseurl="http://localhost:8887/shops/1.0/";
+ var api_baseurl="http://localhost:8887/shops/v1/";
  
  
  async function postData(url = '', data = {}) {
