@@ -14,7 +14,7 @@ function sendMessage(msg,responseFunction) {
 }
 
 
-chrome.browserAction.setBadgeText({text: "ON"});
+chrome.browserAction.setBadgeText({text: "MS"});
 console.log("Loaded.");
 
 

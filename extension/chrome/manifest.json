@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "LACO test",
-  "description": "Laco Test extension",
+  "name": "MyShops",
+  "description": "Extension for manage Your central point to organize eshops, eshops passwords and registration data.",
   "version": "1.0",
 
   "browser_action": {
@@ -17,6 +17,7 @@
     "scripts": ["background.js","common.js"]
       // "persistent": false
   },
+
   "permissions": [
    "activeTab",
    "webRequest",
