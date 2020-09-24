@@ -11,8 +11,8 @@ export default class Iconbutton extends Component {
       const button_size = this.props.button_size;
       return (
         <Button color="black" icon size={button_size}>
-        <Icon name={iconname}/>
-      </Button>
+          <Icon name={iconname}/>
+        </Button>
     ) }
   }
   
