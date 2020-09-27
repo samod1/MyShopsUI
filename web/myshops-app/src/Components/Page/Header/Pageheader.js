@@ -14,7 +14,7 @@ export default class  Pageheader extends Component {
 
     const mobile = this.props.mobile;
     return (
-        <Container text>
+        <Container text id="pageHeader">
           <Header
               as='h1'
               inverted
@@ -22,7 +22,7 @@ export default class  Pageheader extends Component {
                 fontSize: mobile ? '2em' : '4em',
                 fontWeight: 'normal',
                 marginBottom: 0,
-                marginTop: mobile ? '1.5em' : '3em',
+                marginTop: mobile ? '1.5em' : '1.5em',
               }}
           >
             <FormattedMessage id="pageheader.title"

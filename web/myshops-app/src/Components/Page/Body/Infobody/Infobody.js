@@ -7,6 +7,7 @@ import {
     Header,
     Image,
 } from 'semantic-ui-react'
+import {FormattedMessage} from "react-intl";
 
 export default class  Infobody extends Component {
 
@@ -24,27 +25,44 @@ export default class  Infobody extends Component {
                     <Grid.Row>
                         <Grid.Column width={8}>
                             <Header as='h3' style={{ fontSize: '2em' }}>
-                                We Help Companies and Companions
+                                <FormattedMessage
+                                    id="infobody.title1"
+                                    description=""
+                                    defaultMessage="We help you to organize your e-shops"/>
                             </Header>
                             <p style={{ fontSize: '1.33em' }}>
-                                We can give your company superpowers to do things that they never thought possible.
-                                Let us delight your customers and empower your needs... through pure data analytics.
+                                <FormattedMessage
+                                    id="infobody.text1"
+                                    description=""
+                                    defaultMessage=""/>
                             </p>
                             <Header as='h3' style={{ fontSize: '2em' }}>
-                                We Make Bananas That Can Dance
+                                <FormattedMessage
+                                    id="infobody.title2"
+                                    description=""
+                                    defaultMessage=""/>
                             </Header>
                             <p style={{ fontSize: '1.33em' }}>
-                                Yes that's right, you thought it was the stuff of dreams, but even bananas can be
-                                bioengineered.
+                                <FormattedMessage
+                                    id="infobody.text2"
+                                    description=""
+                                    defaultMessage=""/>
+                            </p>
+                            <Header as='h3' style={{ fontSize: '2em' }}>
+                                <FormattedMessage
+                                    id="infobody.title3"
+                                    description=""
+                                    defaultMessage=""/>
+                            </Header>
+                            <p style={{ fontSize: '1.33em' }}>
+                                <FormattedMessage
+                                    id="infobody.text3"
+                                    description=""
+                                    defaultMessage=""/>
                             </p>
                         </Grid.Column>
                         <Grid.Column floated='right' width={6}>
                             <Image bordered rounded size='large' src='/images/wireframe/white-image.png' />
-                        </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row>
-                        <Grid.Column textAlign='center'>
-                            <Button size='huge'>Check Them Out</Button>
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>

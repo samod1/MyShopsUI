@@ -51,7 +51,7 @@ export default class  Footer extends Component {
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
-                            <Grid.Column textAlign="middle">
+                            <Grid.Column textAlign="center">
                                 <span>
                                     <FormattedMessage id="footer.copy"
                                                       defaultMessage="Copyright "
