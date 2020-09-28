@@ -4,8 +4,7 @@ import {FormattedMessage,injectIntl} from "react-intl";
 import "./Registerform.css"
 import {validateEmail} from "../../../Tools/Tools";
 import '../../../css/MyShops.css'
-
-
+import {postData,getData,apiurl} from "../../../Tools/servercall";
 
 
 export class Registerform extends Component{
@@ -40,6 +39,18 @@ export class Registerform extends Component{
                 this.setState({useremailError: false})
                 error = false
             }
+
+            if(error)
+                return;
+
+            let usermail = this.state.useremail;
+            postData(apiurl + '/users/register',{email: usermail} )
+                .then(data => {
+                    console.log(data);
+                });
+
+
+
         }
 
         setUsername(ev,data){
@@ -53,6 +64,30 @@ export class Registerform extends Component{
                 defaultMessage: "ENTER ME TO MESSAGES"});
            return str;
         }
+
+        componentDidMount() {
+
+            /*fetch(url)
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        this.setState({
+                            isLoaded: true,
+                            items: result.items
+                        });
+                    },
+                    // Note: it's important to handle errors here
+                    // instead of a catch() block so that we don't swallow
+                    // exceptions from actual bugs in components.
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        });
+                    }
+                )*/
+        }
+
 
        render(){
            const { intl } = this.props;
