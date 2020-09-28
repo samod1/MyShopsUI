@@ -1,3 +1,6 @@
+import {FormattedMessage} from "react-intl";
+import React from "react";
+
 export default {
     'en-US': {
         // We're using dots for nesting and camelCase for each name
@@ -18,6 +21,12 @@ export default {
         'infobody.text2': 'We offer the management of profiles in which contact information is stored for filling in e-shops.',
         'infobody.title3': 'Browser extension',
         'infobody.text3': 'gives you access to functions for automatic filling in of registration forms, login dialogs. You can get to the e-shop in one click.',
+        'registerform.title' : 'Register new account',
+        "registerform.crtbut" : "Create new account",
+        "registerform.email" : 'Username/e-mail',
+        "registerform.email.placeholder" : 'foo@gmail.com',
+        "registerform.email.empty" : 'Please fill e-mail',
+        "registerform.email.invalid" : 'E-mail is not valid.',
 
     },
     'sk-SK': {
@@ -39,7 +48,13 @@ export default {
         'infobody.text2': 'Ponúkame správu profilov, v ktorých sú uložené kontaktné údaje pre vyplnenie do e-obchodov.',
         'infobody.title3': 'Rozšírenie prehliadača',
         'infobody.text3': 'vám sprístupní funkcie na automatické vyplňovanie registračných formulárov, prihlasovacích dialógov. ' +
-            ' Do e-edchodu sa dostanete na jeden klik.'
+            ' Do e-edchodu sa dostanete na jeden klik.',
+        'registerform.title' : 'Registrácia nového účtu',
+        "registerform.crtbut" : "Vytvoriť nový účet",
+        "registerform.email" : 'Používateľské meno/e-mail',
+        "registerform.email.placeholder" : 'jozef@gmail.com',
+        "registerform.email.empty" : 'Prosím vyplňte e-mail',
+        "registerform.email.invalid" : 'E-mail nie je platný.',
 
     }
 };
