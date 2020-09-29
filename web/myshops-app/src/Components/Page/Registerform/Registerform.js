@@ -1,10 +1,10 @@
 import React,{Component} from "react";
-import {Form,Input,Label,Button, Header,Container} from "semantic-ui-react";
+import {Form,Input,Label,Button, Header,Container,Message} from "semantic-ui-react";
 import {FormattedMessage,injectIntl} from "react-intl";
 import "./Registerform.css"
-import {validateEmail} from "../../../Tools/Tools";
+import {validateEmail,getLocalizedString} from "../../../Tools/Tools";
 import '../../../css/MyShops.css'
-import {postData,getData,apiurl} from "../../../Tools/servercall";
+import {postData,getData,apiurl,ServerError} from "../../../Tools/servercall";
 
 
 export class Registerform extends Component{
@@ -14,13 +14,16 @@ export class Registerform extends Component{
            this.state = {
                useremail: "",
                useremailError : false,
-               errdescid: ""
+               errdescid: "",
+               srvErr: false,
+               srvDescId: "",
+               srvMsg: "",
+               retData: null
            };
         this.setUsername = this.setUsername.bind(this);
         this.submitRegForm = this.submitRegForm.bind(this);
-        this.getLocalizedString = this.getLocalizedString.bind(this);
-
-
+        this.message_detail = this.message_detail.bind(this);
+        this.hideErrMessage = this.hideErrMessage.bind(this)
        }
 
 
@@ -44,50 +47,51 @@ export class Registerform extends Component{
                 return;
 
             let usermail = this.state.useremail;
-            postData(apiurl + '/users/register',{email: usermail} )
-                .then(data => {
-                    console.log(data);
+            postData(apiurl + '/users/register',{email: usermail,override: false} )
+                .then(retData => {
+                    console.log(retData);
+                    let st = {srvErr: false,srvDescId: retData.shops_code,retData: retData};
+                    this.setState(st);
+                })
+                .catch(error => {
+                    if(error instanceof ServerError){
+                      let st = {srvErr: true,srvDescId: error.data.shops_code,retData: error.data};
+                      this.setState(st);
+                    }
                 });
-
-
-
         }
 
         setUsername(ev,data){
             this.setState({useremail: ev.target.value});
         }
 
-        getLocalizedString(msgid,intl){
-           let str = null;
-           if(msgid !== "")
-            str =intl.formatMessage({id: msgid,
-                defaultMessage: "ENTER ME TO MESSAGES"});
-           return str;
-        }
 
         componentDidMount() {
-
-            /*fetch(url)
-                .then(res => res.json())
-                .then(
-                    (result) => {
-                        this.setState({
-                            isLoaded: true,
-                            items: result.items
-                        });
-                    },
-                    // Note: it's important to handle errors here
-                    // instead of a catch() block so that we don't swallow
-                    // exceptions from actual bugs in components.
-                    (error) => {
-                        this.setState({
-                            isLoaded: true,
-                            error
-                        });
-                    }
-                )*/
         }
 
+
+        message_detail(intl){
+
+           let msgid;
+           if(this.state.srvErr)
+           {
+               if(this.state.srvDescId != null && this.state.srvDescId != 0){
+                   msgid = "registerform.srv_" + this.state.srvDescId.toString();
+                   return getLocalizedString(msgid,intl)
+               } else if(this.state.retData && this.state.retData.statusText){
+                   msgid = "srv_unknown";
+                   let msg = getLocalizedString(msgid,intl);
+                   return (msg + ": " + this.state.retData.statusText);
+               }
+           }
+           return null;
+        }
+
+        hideErrMessage(){
+            if(this.state.srvErr)
+                return false;
+            return true;
+        }
 
        render(){
            const { intl } = this.props;
@@ -100,7 +104,15 @@ export class Registerform extends Component{
                                    <FormattedMessage id="registerform.title"
                                                      defaultMessage= "ENTER ME TO MESSAGES"/>
                                </Header>
-
+                               <Message negative hidden={this.hideErrMessage()}>
+                                   <Message.Header>
+                                       <FormattedMessage id="registerform.srvErrorTitle"
+                                                         defaultMessage= "ENTER ME TO MESSAGES"/>
+                                   </Message.Header>
+                                   <p>
+                                       {this.message_detail(intl) }
+                                   </p>
+                               </Message>
                                <div className="ui fluid card">
                                    <div className="content">
                                        <form className="ui form" method="POST">
@@ -120,7 +132,7 @@ export class Registerform extends Component{
                                                                error={this.state.useremailError}
                                                                />
                                                    {this.state.useremailError && <Label pointing prompt>
-                                                       {this.getLocalizedString(this.state.errdescid,intl)}
+                                                       {getLocalizedString(this.state.errdescid,intl)}
                                                    </Label>}
                                                </Form.Field>
                                            </div>

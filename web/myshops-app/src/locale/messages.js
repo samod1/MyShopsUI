@@ -27,6 +27,8 @@ export default {
         "registerform.email.placeholder" : 'foo@gmail.com',
         "registerform.email.empty" : 'Please fill e-mail',
         "registerform.email.invalid" : 'E-mail is not valid.',
+        "registerform.srvErrorTitle": "Registration error",
+        "srv_unknown": "Unknown server error"
 
     },
     'sk-SK': {
@@ -55,6 +57,8 @@ export default {
         "registerform.email.placeholder" : 'jozef@gmail.com',
         "registerform.email.empty" : 'Prosím vyplňte e-mail',
         "registerform.email.invalid" : 'E-mail nie je platný.',
+        "registerform.srvErrorTitle": "Chyba registrácie",
+        "srv_unknown": "Nešpecifikovaná chyba servera"
 
     }
 };
