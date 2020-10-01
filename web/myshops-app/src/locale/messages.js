@@ -23,11 +23,17 @@ export default {
         'infobody.text3': 'gives you access to functions for automatic filling in of registration forms, login dialogs. You can get to the e-shop in one click.',
         'registerform.title' : 'Register new account',
         "registerform.crtbut" : "Create new account",
+        "registerform.exitbut": "Return to main page",
         "registerform.email" : 'Username/e-mail',
         "registerform.email.placeholder" : 'foo@gmail.com',
         "registerform.email.empty" : 'Please fill e-mail',
         "registerform.email.invalid" : 'E-mail is not valid.',
         "registerform.srvErrorTitle": "Registration error",
+        "registerform.srvOKTitle": "Registration",
+        "registerform.srv_100001": "Account with specified e-mail, already exists.",
+        "registerform.srv_100002": "E-mail is not valid.",
+        "registerform.srv_100003": "Previous sign up process for specified e-mail is pending.",
+        "registerform.OK": "Message with next instruction was sent to entered e-mail.",
         "srv_unknown": "Unknown server error"
 
     },
@@ -53,11 +59,17 @@ export default {
             ' Do e-edchodu sa dostanete na jeden klik.',
         'registerform.title' : 'Registrácia nového účtu',
         "registerform.crtbut" : "Vytvoriť nový účet",
+        "registerform.exitbut": "Návrat ma hlavnú stránku",
         "registerform.email" : 'Používateľské meno/e-mail',
         "registerform.email.placeholder" : 'jozef@gmail.com',
         "registerform.email.empty" : 'Prosím vyplňte e-mail',
         "registerform.email.invalid" : 'E-mail nie je platný.',
         "registerform.srvErrorTitle": "Chyba registrácie",
+        "registerform.srvOKTitle": "Registrácia",
+        "registerform.srv_100001": "Účet s daným e-mailom už existuje.",
+        "registerform.srv_100002": "Zadaná e-mailová adresa nie je v správnom tvare. ",
+        "registerform.srv_100003": "Predchádzajúca požiadavka na registráciu nebola dokončená.",
+        "registerform.OK": "Na Váš email bola odoslaná správa s informáciou o pokračovaní v procese registrácie.",
         "srv_unknown": "Nešpecifikovaná chyba servera"
 
     }

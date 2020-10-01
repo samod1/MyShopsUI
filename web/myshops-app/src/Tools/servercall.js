@@ -14,61 +14,96 @@ export class ServerError extends Error {
         }
 
         this.name = 'ServerError';
-        this.data = retData;
+        this.data = errData;
         // Custom debugging information
         this.date = new Date()
     }
 }
 
-const retData = {
-    shops_code: 0,
-    shops_msg: "",
-    rspJSON: null,
-    status: 0,
-    statusText: ""
+class retData {
+    constructor() {
+        this.shops_code= 0;
+        this.shops_msg= "";
+        this.rspObject= null;
+        this.status= 0;
+        this.statusText= "";
+        this.content_length= 0;
+        this.content_type="";
+    }
 }
 
 function constructRetData(response){
 
-
     let shops_code = 0;
     let shops_msg = '';
-    let ret = retData;
+    let content_length = 0;
+    let ret = new retData();
 
     console.log(response.headers);
     response.headers.forEach((val, key) => {
         console.log(key, val)
-        if(key === 'SHOPS_CODE')
-            shops_code = val;
-        if(key === 'SHOPS_MSG')
-            shops_msg = val;
+        if (key.toUpperCase() === 'SHOPS_CODE')
+            ret.shops_code = val;
+        if (key.toUpperCase() === 'SHOPS_MSG')
+            ret.shops_msg = val;
+        if (key.toUpperCase() === 'content-length'.toUpperCase())
+            ret.content_length = parseInt(val);
+        if (key.toUpperCase() === 'content-type'.toUpperCase())
+            ret.content_type = val;
     });
 
-    let rspJSON = null;
-    try {
-        rspJSON = response.json(); // parses JSON response into native JavaScript objects
-        rspJSON.then((data)=>{
-            console.log(data);
-        });
+    if(ret.content_type.startsWith("application/json") &&
+        ret.content_length != 0){
+        ret.rspObject = getJson(response)
+    } else if(ret.content_type.startsWith("text/") &&
+        ret.content_length != 0){
+        ret.rspObject = getText(response);
+    } else if( ret.content_length != 0){
+        ret.rspObject = getBinary(response);
     }
-    catch (e) {
-        console.log(e);
-    }
-    ret.rspJSON= rspJSON;
 
 
-    ret.shops_code = ret.rspJSON.error.SHOPS_CODE;
-    ret.shops_msg = response.headers.SHOPS_MSG;
     ret.status = response.status;
     ret.statusText = response.statusText;
 
-
-
-    if(ret.status!=500){
-        throw new ServerError(shops_msg?shops_msg:ret.statusText,ret);
+    if (ret.status != 200) {
+        throw new ServerError(shops_msg ? shops_msg : ret.statusText, ret);
     }
 
     return ret;
+
+
+}
+
+async function getJson(response){
+    try {
+        let retObject = await response.json();
+        return retObject;
+    }
+    catch(error){
+        console.log(error);
+        return null;
+    }
+}
+async function getText(response){
+    try {
+        let retObject = await response.text();
+        return retObject;
+    }
+    catch(error){
+        console.log(error);
+        return null;
+    }
+}
+async function getBinary(response){
+    try {
+        let retObject = await response.arrayBuffer();
+        return retObject;
+    }
+    catch(error){
+        console.log(error);
+        return null;
+    }
 }
 
 export async function postData(url = '', data = {}) {
@@ -79,7 +114,8 @@ export async function postData(url = '', data = {}) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'SHOPS_CODE':0
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         redirect: 'follow', // manual, *follow, error

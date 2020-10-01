@@ -50,16 +50,22 @@ export class Registerform extends Component{
             postData(apiurl + '/users/register',{email: usermail,override: false} )
                 .then(retData => {
                     console.log(retData);
-                    let st = {srvErr: false,srvDescId: retData.shops_code,retData: retData};
+                    let st = {srvErr: false,srvDescId: "registerform.OK",retData: retData};
                     this.setState(st);
                 })
                 .catch(error => {
                     if(error instanceof ServerError){
+                      console.log(error.data);
                       let st = {srvErr: true,srvDescId: error.data.shops_code,retData: error.data};
                       this.setState(st);
                     }
                 });
         }
+
+        gotoMainPage(ev,data){
+
+        }
+
 
         setUsername(ev,data){
             this.setState({useremail: ev.target.value});
@@ -84,11 +90,26 @@ export class Registerform extends Component{
                    return (msg + ": " + this.state.retData.statusText);
                }
            }
+           if(this.state.retData && this.state.retData.status === 200 && !this.state.srvErr){
+               if(this.state.srvDescId != null && this.state.srvDescId != 0){
+                   msgid = this.state.srvDescId;
+                   return getLocalizedString(msgid,intl)
+               } else if(this.state.retData && this.state.retData.statusText){
+                   msgid = "srv_unknown";
+                   let msg = getLocalizedString(msgid,intl);
+                   return (msg + ": " + this.state.retData.statusText);
+               }
+           }
            return null;
         }
 
         hideErrMessage(){
             if(this.state.srvErr)
+                return false;
+            return true;
+        }
+        hideOKMessage(){
+            if(this.state.retData && this.state.retData.status === 200 && !this.state.srvErr)
                 return false;
             return true;
         }
@@ -113,6 +134,18 @@ export class Registerform extends Component{
                                        {this.message_detail(intl) }
                                    </p>
                                </Message>
+
+                               <Message positive hidden={this.hideOKMessage()}>
+                                   <Message.Header>
+                                       <FormattedMessage id="registerform.srvOKTitle"
+                                                         defaultMessage= "ENTER ME TO MESSAGES"/>
+                                   </Message.Header>
+                                   <p>
+                                       {this.message_detail(intl) }
+                                   </p>
+                               </Message>
+
+
                                <div className="ui fluid card">
                                    <div className="content">
                                        <form className="ui form" method="POST">
@@ -130,19 +163,30 @@ export class Registerform extends Component{
                                                                               defaultMessage: "ENTER ME TO MESSAGES"})}
                                                                onChange={this.setUsername}
                                                                error={this.state.useremailError}
+                                                               disabled={!this.hideOKMessage()}
                                                                />
                                                    {this.state.useremailError && <Label pointing prompt>
                                                        {getLocalizedString(this.state.errdescid,intl)}
                                                    </Label>}
                                                </Form.Field>
                                            </div>
-                                           <div  style={{padding: '1em 0em 0em 0em'}}>
+                                           <div  style={{padding: '1em 0em 0em 0em'}} hidden={!this.hideOKMessage()}>
                                                <Button className="ui primary labeled icon button" type="submit"
                                                        onClick={this.submitRegForm}
                                                >
                                                    <i className="signup alternate icon"></i>
                                                    <FormattedMessage id="registerform.crtbut"
-                                                                     defaultMessage="Create new account"
+                                                                     defaultMessage="ENTER ME TO MESSAGES"
+                                                                     description="Create new account"/>
+                                               </Button>
+                                           </div>
+                                           <div  style={{padding: '1em 0em 0em 0em'}}  hidden={this.hideOKMessage()}>
+                                               <Button className="ui secondary labeled icon button" type="submit"
+                                                       onClick={this.gotoMainPage}
+                                               >
+                                                   <i className="home alternate icon"></i>
+                                                   <FormattedMessage id="registerform.exitbut"
+                                                                     defaultMessage="ENTER ME TO MESSAGES"
                                                                      description="Create new account"/>
                                                </Button>
                                            </div>
