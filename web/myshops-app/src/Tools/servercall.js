@@ -29,22 +29,43 @@ const retData = {
 }
 
 function constructRetData(response){
-    let shops_code = response.headers.SHOPS_CODE;
-    let shops_msg = response.headers.SHOPS_MSG;
-    let status = response.status;
-    let statusText = response.statusText;
 
-    let rspJSON = response.json(); // parses JSON response into native JavaScript objects
 
+    let shops_code = 0;
+    let shops_msg = '';
     let ret = retData;
-    ret.shops_code= shops_code;
-    ret.shops_msg= shops_msg;
-    ret.rspJSON= rspJSON;
-    ret.status= status;
-    ret.statusText= statusText
 
-    if(status!=500){
-        throw new ServerError(shops_msg?shops_msg:statusText,ret);
+    console.log(response.headers);
+    response.headers.forEach((val, key) => {
+        console.log(key, val)
+        if(key === 'SHOPS_CODE')
+            shops_code = val;
+        if(key === 'SHOPS_MSG')
+            shops_msg = val;
+    });
+
+    let rspJSON = null;
+    try {
+        rspJSON = response.json(); // parses JSON response into native JavaScript objects
+        rspJSON.then((data)=>{
+            console.log(data);
+        });
+    }
+    catch (e) {
+        console.log(e);
+    }
+    ret.rspJSON= rspJSON;
+
+
+    ret.shops_code = ret.rspJSON.error.SHOPS_CODE;
+    ret.shops_msg = response.headers.SHOPS_MSG;
+    ret.status = response.status;
+    ret.statusText = response.statusText;
+
+
+
+    if(ret.status!=500){
+        throw new ServerError(shops_msg?shops_msg:ret.statusText,ret);
     }
 
     return ret;
