@@ -23,6 +23,7 @@ export default {
         'infobody.text3': 'gives you access to functions for automatic filling in of registration forms, login dialogs. You can get to the e-shop in one click.',
         'registerform.title' : 'Register new account',
         "registerform.crtbut" : "Create new account",
+        "registerform.crtbutagain":"Send signup again",
         "registerform.exitbut": "Return to main page",
         "registerform.email" : 'Username/e-mail',
         "registerform.email.placeholder" : 'foo@gmail.com',
@@ -34,7 +35,8 @@ export default {
         "registerform.srv_100002": "E-mail is not valid.",
         "registerform.srv_100003": "Previous sign up process for specified e-mail is pending.",
         "registerform.OK": "Message with next instruction was sent to entered e-mail.",
-        "srv_unknown": "Unknown server error"
+        "srv_unknown": "Unknown server error",
+        "srv_500": "Internal processing error."
 
     },
     'sk-SK': {
@@ -59,6 +61,7 @@ export default {
             ' Do e-edchodu sa dostanete na jeden klik.',
         'registerform.title' : 'Registrácia nového účtu',
         "registerform.crtbut" : "Vytvoriť nový účet",
+        "registerform.crtbutagain":"Vytvoriť účet znovu",
         "registerform.exitbut": "Návrat ma hlavnú stránku",
         "registerform.email" : 'Používateľské meno/e-mail',
         "registerform.email.placeholder" : 'jozef@gmail.com',
@@ -70,7 +73,8 @@ export default {
         "registerform.srv_100002": "Zadaná e-mailová adresa nie je v správnom tvare. ",
         "registerform.srv_100003": "Predchádzajúca požiadavka na registráciu nebola dokončená.",
         "registerform.OK": "Na Váš email bola odoslaná správa s informáciou o pokračovaní v procese registrácie.",
-        "srv_unknown": "Nešpecifikovaná chyba servera"
+        "srv_unknown": "Nešpecifikovaná chyba servera",
+        "srv_500": "Interná chyba spracovania"
 
     }
 };
