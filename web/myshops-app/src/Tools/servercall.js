@@ -2,7 +2,7 @@ import {config} from "../config/liveconfig"
 import messages from "../locale/messages";
 
 export const apiurl = config.api_url;
-
+export const apiurl_registration = config.api_url_registration;
 
 export class ServerError extends Error {
     constructor(message = '',errData=null) {
@@ -52,6 +52,9 @@ function constructRetData(response){
             ret.content_type = val;
     });
 
+
+
+    /*
     if(ret.content_type.startsWith("application/json") &&
         ret.content_length != 0){
         ret.rspObject = getJson(response)
@@ -60,8 +63,11 @@ function constructRetData(response){
         ret.rspObject = getText(response);
     } else if( ret.content_length != 0){
         ret.rspObject = getBinary(response);
-    }
+    }*/
 
+    ret.rspObject = response;
+    console.log("constructRetData(response)");
+    console.log(ret.rspObject);
 
     ret.status = response.status;
     ret.statusText = response.statusText;
@@ -72,12 +78,13 @@ function constructRetData(response){
 
     return ret;
 
-
 }
 
-async function getJson(response){
+export async function getJson(response){
     try {
         let retObject = await response.json();
+        console.log("getJson()");
+        console.log(retObject);
         return retObject;
     }
     catch(error){
@@ -85,7 +92,7 @@ async function getJson(response){
         return null;
     }
 }
-async function getText(response){
+export async function getText(response){
     try {
         let retObject = await response.text();
         return retObject;
@@ -95,7 +102,7 @@ async function getText(response){
         return null;
     }
 }
-async function getBinary(response){
+export async function getBinary(response){
     try {
         let retObject = await response.arrayBuffer();
         return retObject;
@@ -122,8 +129,9 @@ export async function postData(url = '', data = {}) {
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify(data) // body data type must match "Content-Type" header
     });
-
-    return constructRetData(response);
+    console.log("postData()");
+    let ret = constructRetData(response);
+    return ret;
 }
 
 export async function getData(url = '') {
@@ -141,7 +149,9 @@ export async function getData(url = '') {
         referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     });
 
-    return constructRetData(response);
+    let ret = constructRetData(response);
+    return ret;
+
 }
 
 

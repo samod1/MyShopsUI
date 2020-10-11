@@ -25,6 +25,8 @@ export default {
         "registerform.crtbut" : "Create new account",
         "registerform.crtbutagain":"Send signup again",
         "registerform.exitbut": "Return to main page",
+        "registerform.cancelbut": "Cancel",
+        "registerform.save":"Save password",
         "registerform.email" : 'Username/e-mail',
         "registerform.email.placeholder" : 'foo@gmail.com',
         "registerform.email.empty" : 'Please fill e-mail',
@@ -34,7 +36,16 @@ export default {
         "registerform.srv_100001": "Account with specified e-mail, already exists.",
         "registerform.srv_100002": "E-mail is not valid.",
         "registerform.srv_100003": "Previous sign up process for specified e-mail is pending.",
+        "registerform.srv_100004": "Registration key is invalid.",
+        "registerform.srv_100005": "The password is not strong enough. Length at least 8 characters, uppercase letter, lowercase letter, special character and number.",
         "registerform.OK": "Message with next instruction was sent to entered e-mail.",
+        "registerform.password": "Password",
+        "registerform.password1": "Password for check",
+        "registerform.completeregtitle" : "Sign up completion",
+        "registerform.password.placeholder":"password",
+        "registerform.password.invalid.length":"Invalid password length. Minimal password length is six characters.",
+        "registerform.password.invalid.noteq": "Password and check password is not the same.",
+        "password.placeholder":"Password",
         "srv_unknown": "Unknown server error",
         "srv_500": "Internal processing error."
 
@@ -62,7 +73,9 @@ export default {
         'registerform.title' : 'Registrácia nového účtu',
         "registerform.crtbut" : "Vytvoriť nový účet",
         "registerform.crtbutagain":"Vytvoriť účet znovu",
-        "registerform.exitbut": "Návrat ma hlavnú stránku",
+        "registerform.exitbut": "Návrat na hlavnú stránku",
+        "registerform.cancelbut": "Zrušiť",
+        "registerform.save":"Uložiť heslo",
         "registerform.email" : 'Používateľské meno/e-mail',
         "registerform.email.placeholder" : 'jozef@gmail.com',
         "registerform.email.empty" : 'Prosím vyplňte e-mail',
@@ -72,9 +85,19 @@ export default {
         "registerform.srv_100001": "Účet s daným e-mailom už existuje.",
         "registerform.srv_100002": "Zadaná e-mailová adresa nie je v správnom tvare. ",
         "registerform.srv_100003": "Predchádzajúca požiadavka na registráciu nebola dokončená.",
+        "registerform.srv_100004": "Registračný kľúč nie je platný.",
+        "registerform.srv_100005": "Heslo nie je dostatočne silné. Dĺžka minimálne 8 znakov, veľké písmeno, malé písmeno, špecialny znak a číslica.",
         "registerform.OK": "Na Váš email bola odoslaná správa s informáciou o pokračovaní v procese registrácie.",
+        "registerform.password": "Heslo",
+        "registerform.password1": "Opakované heslo",
+        "registerform.completeregtitle" : "Dokončenie registrácie",
+        "registerform.password.placeholder":"heslo",
+        "registerform.password.invalid.length":"Nedostatočná dĺžka hesla. Minimálna dĺžka hesla je šesť znakov.",
+        "registerform.password.invalid.noteq": "Heslo a heslo pre kontrolu sa nezhodujú.",
+        "password.placeholder":"Heslo",
         "srv_unknown": "Nešpecifikovaná chyba servera",
         "srv_500": "Interná chyba spracovania"
+
 
     }
 };

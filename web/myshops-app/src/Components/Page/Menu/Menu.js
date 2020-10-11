@@ -1,7 +1,7 @@
 import React, {Component, useState} from "react";
 import {Button, Container, Dropdown, Icon, Menu, Segment, Sidebar, Visibility} from "semantic-ui-react";
 import {FormattedMessage} from "react-intl";
-import Pageheader from "../Header/Pageheader";
+import Pageheader from "../Header/ShopsMainInfoBar";
 import PropTypes from "prop-types";
 import {createMedia} from "@artsy/fresnel";
 import Languages from "../../../Tools/Languages";
@@ -16,9 +16,29 @@ const {  Media } = createMedia({
     },
 })
 
+export const MENU_EVENT = {
+    REGISTER: 0x01,
+    LOGIN: 0x02,
+}
 
 
 export default class ShopsMenu extends  Component{
+
+    constructor(props) {
+        super(props);
+        this.onSignup = this.onSignup.bind(this);
+        this.onLogin = this.onLogin.bind(this);
+    }
+
+    onSignup(ev,data){
+        let parentMenuHandler = this.props.menuHandler;
+        parentMenuHandler(MENU_EVENT.REGISTER);
+    }
+    onLogin(ev,data){
+        let parentMenuHandler = this.props.menuHandler;
+        parentMenuHandler(MENU_EVENT.LOGIN);
+    }
+
     render() {
         const fixed = this.props.fixed;
         const mobile = this.props.mobile;
@@ -47,7 +67,7 @@ export default class ShopsMenu extends  Component{
                                               defaultMessage="Log in"
                                               description="Login user"/>
                         </Button>
-                        <Button as='a' inverted={!fixed} primary={fixed} style={{marginLeft: '0.5em'}}>
+                        <Button as='a' inverted={!fixed} primary={fixed} style={{marginLeft: '0.5em'}} onClick={this.onSignup}>
                             <FormattedMessage id="page.menu.signup"
                                               defaultMessage="Signup"
                                               description="Signup new user"/>

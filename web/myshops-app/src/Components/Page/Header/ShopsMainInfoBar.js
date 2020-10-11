@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import {Container, Button, Header, Icon} from 'semantic-ui-react'
-import './Pageheader.css';
+import './ShopsMainInfoBar.css';
 import {FormattedMessage} from "react-intl";
 import PropTypes from "prop-types";
 
-export default class  Pageheader extends Component {
+export default class  ShopsMainInfoBar extends Component {
 
   constructor(props) {
     super(props);
@@ -58,6 +58,6 @@ export default class  Pageheader extends Component {
   }
 }
 
-Pageheader.propTypes = {
+ShopsMainInfoBar.propTypes = {
   mobile: PropTypes.bool,
 }

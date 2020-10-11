@@ -2,9 +2,9 @@ import React,{Component} from "react";
 import {Form,Input,Label,Button, Header,Container,Message} from "semantic-ui-react";
 import {FormattedMessage,injectIntl} from "react-intl";
 import "./Registerform.css"
-import {validateEmail,getLocalizedString} from "../../../Tools/Tools";
+import {validateEmail, getLocalizedString, MessageLocalization} from "../../../Tools/Tools";
 import '../../../css/MyShops.css'
-import {postData,getData,apiurl,ServerError} from "../../../Tools/servercall";
+import {postData, getData, apiurl, ServerError, apiurl_registration} from "../../../Tools/servercall";
 
 const SHOPS_CODE_REG_EMAILEXISTS = 100001;
 const SHOPS_CODE_REG_EMAILINVALID = 100002;
@@ -15,16 +15,15 @@ export class Registerform extends Component{
        constructor(props) {
            super(props);
            this.state = {
-               useremail: "",
                useremailError : false,
-               errdescid: "",
                srvErr: false,
-               srvDescId: "",
-               srvMsg: "",
-               retData: null
            };
 
-           this.bubleStateFnc = props.bubleStateFnc;
+           this.useremail = "";
+           this.errdescid = "";
+           this.srvDescId = "";
+           this.srvMsg = "";
+           this.retData = null;
 
            this.setUsername = this.setUsername.bind(this);
            this.submitRegForm = this.submitRegForm.bind(this);
@@ -40,17 +39,25 @@ export class Registerform extends Component{
 
     sendRegistration (usermail,override){
 
-        postData(apiurl + '/users/register',{email: usermail,override: override} )
+        postData(apiurl_registration + '/create',{email: usermail,override: override} )
             .then(retData => {
                 console.log(retData);
-                let st = {srvErr: false,srvDescId: "registerform.OK",retData: retData};
-                this.setState(st);
+                this.srvDescId = "registerform.OK";
+                this.retData = retData;
+                this.setState({srvErr: false});
             })
             .catch(error => {
                 if(error instanceof ServerError){
                     console.log(error.data);
-                    let st = {srvErr: true,srvDescId: error.data.shops_code,retData: error.data};
-                    this.setState(st);
+                    this.srvDescId = error.data.shops_code;
+                    this.retData = error.data;
+                    this.setState({srvErr: true});
+                } else {
+                    console.log(error);
+                    this.srvDescId = null;
+                    this.srvMsg = error.message;
+                    this.retData = null;
+                    this.setState({srvErr: true});
                 }
             });
     }
@@ -58,13 +65,17 @@ export class Registerform extends Component{
     submitRegForm(ev,data) {
             let error = false;
 
-            if (this.state.useremail === '') {
+            this.state.srvErr = false;
+            this.state.useremailError = false;
+            this.errdescid = "";
+
+            if (this.useremail === '') {
                 this.setState({useremailError: true})
-                this.setState({errdescid: 'registerform.email.empty'})
+                this.errdescid = 'registerform.email.empty';
                 error = true
-            } else if(!validateEmail(this.state.useremail)){
+            } else if(!validateEmail(this.useremail)){
                 this.setState({useremailError: true})
-                this.setState({errdescid: "registerform.email.invalid"})
+                this.errdescid = "registerform.email.invalid";
                 error = true
             }else {
                 this.setState({useremailError: false})
@@ -74,56 +85,46 @@ export class Registerform extends Component{
             if(error)
                 return;
 
-            let usermail = this.state.useremail;
+            let usermail = this.useremail;
             this.sendRegistration(usermail,false);
         }
 
     submitRegFormAgain(ev,data) {
-        let usermail = this.state.useremail;
+        let usermail = this.useremail;
         this.sendRegistration(usermail,true);
     }
 
 
     gotoMainPage(ev,data){
-
+        this.props.onClose();
     }
 
     setUsername(ev,data){
-        this.setState({useremail: ev.target.value});
+        this.useremail = ev.target.value;
     }
 
     componentDidMount() {
     }
 
     message_detail(intl){
+        let msg = new MessageLocalization();
+        msg.msgPrefix = "registerform.srv_";
+        msg.localError.errdescid = this.errdescid;
+        if(this.state.srvErr)
+            msg.server.srvErr = this.state.srvErr;
+        if(this.retData) {
+            if (this.retData.status)
+                msg.server.status = this.retData.status;
+            if (this.retData.statusText)
+                msg.server.statusText = this.retData.statusText;
+        }
+        if(this.srvDescId)
+            msg.server.srvDescId = this.srvDescId;
+        if(this.srvMsg)
+            msg.server.srvMsg = this.srvMsg;
 
-       let msgid;
-       if(this.state.srvErr)
-       {
-           if(this.state.srvDescId != null && this.state.srvDescId != 0){
-               let msg_prefix= "registerform.srv_"
-               if(this.state.srvDescId === "500")
-                   msg_prefix= "srv_"
-
-               msgid = msg_prefix + this.state.srvDescId.toString();
-               return getLocalizedString(msgid,intl)
-           } else if(this.state.retData && this.state.retData.statusText){
-               msgid = "srv_unknown";
-               let msg = getLocalizedString(msgid,intl);
-               return (msg + ": " + this.state.retData.statusText);
-           }
-       }
-       if(this.state.retData && this.state.retData.status === 200 && !this.state.srvErr){
-           if(this.state.srvDescId != null && this.state.srvDescId != 0){
-               msgid = this.state.srvDescId;
-               return getLocalizedString(msgid,intl)
-           } else if(this.state.retData && this.state.retData.statusText){
-               msgid = "srv_unknown";
-               let msg = getLocalizedString(msgid,intl);
-               return (msg + ": " + this.state.retData.statusText);
-           }
-       }
-       return null;
+        let localizedMessage = msg.message_detail(intl)
+        return localizedMessage;
     }
 
     hideErrMessage(){
@@ -132,14 +133,14 @@ export class Registerform extends Component{
         return true;
     }
     hideOKMessage(){
-        if(this.state.retData && this.state.retData.status === 200 && !this.state.srvErr)
+        if(this.retData && this.retData.status === 200 && !this.state.srvErr)
             return false;
         return true;
     }
 
     hideAgainButton(){
-        if(this.state.retData && this.state.retData.status === 400) {
-            if( Number(this.state.retData.shops_code) === SHOPS_CODE_REG_EMAILPREVATTEMPT)
+        if(this.retData && this.retData.status === 400) {
+            if( Number(this.retData.shops_code) === SHOPS_CODE_REG_EMAILPREVATTEMPT)
                 return false;
         }
         return true;
@@ -198,7 +199,7 @@ export class Registerform extends Component{
                                                            readOnly={!this.hideOKMessage() || !this.hideAgainButton()}
                                                            />
                                                {this.state.useremailError && <Label pointing prompt>
-                                                   {getLocalizedString(this.state.errdescid,intl)}
+                                                   {getLocalizedString(this.errdescid,intl)}
                                                </Label>}
                                            </Form.Field>
                                        </div>
@@ -211,6 +212,16 @@ export class Registerform extends Component{
                                                                  defaultMessage="ENTER ME TO MESSAGES"
                                                                  description="Create new account"/>
                                            </Button>
+                                           <span style={{paddingLeft: '0.5em'}}>
+                                               <Button className="ui labeled icon button" type="submit"
+                                                       onClick={this.gotoMainPage}
+                                               >
+                                                   <i className="cancel alternate icon"></i>
+                                                   <FormattedMessage id="registerform.cancelbut"
+                                                                     defaultMessage="ENTER ME TO MESSAGES"
+                                                                     description="Create new account - cancel"/>
+                                               </Button>
+                                           </span>
                                        </div>
                                        <div  style={{padding: '1em 0em 0em 0em'}} hidden={this.hideAgainButton()}>
                                            <Button className="ui primary labeled icon button" type="submit"
@@ -221,6 +232,16 @@ export class Registerform extends Component{
                                                                  defaultMessage="ENTER ME TO MESSAGES"
                                                                  description=""/>
                                            </Button>
+                                           <span style={{paddingLeft: '0.5em'}}>
+                                               <Button className="ui labeled icon button" type="submit"
+                                                       onClick={this.gotoMainPage}
+                                               >
+                                                   <i className="cancel alternate icon"></i>
+                                                   <FormattedMessage id="registerform.cancelbut"
+                                                                     defaultMessage="ENTER ME TO MESSAGES"
+                                                                     description="Create new account - cancel"/>
+                                               </Button>
+                                           </span>
                                        </div>
                                        <div  style={{padding: '1em 0em 0em 0em'}}  hidden={this.hideOKMessage()}>
                                            <Button className="ui secondary labeled icon button" type="submit"
@@ -232,6 +253,7 @@ export class Registerform extends Component{
                                                                  description="Create new account"/>
                                            </Button>
                                        </div>
+
                                    </form>
                                </div>
                            </div>
