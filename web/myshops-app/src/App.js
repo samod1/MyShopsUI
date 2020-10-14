@@ -4,13 +4,14 @@ import ResponsiveContainer,{MAIN_PANEL_PATH_MAIN,MAIN_PANEL_PATH_REGISTER} from 
 import {AppProvider,AppContext} from "./Tools/AppContext";
 import {IntlProvider} from "react-intl";
 import messages from "./locale/messages";
+import {config} from "./config/liveconfig";
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Link
 } from "react-router-dom";
-
+import ConfigPanel from "./Components/ConfigPanel/ConfigPanel"
 
 const locale = (navigator.languages && navigator.languages[0])
     || navigator.language
@@ -23,13 +24,14 @@ let locale_test='sk-SK';
 
 function App(props) {
   return (
-
     <React.StrictMode>
         <AppProvider>
 
             <Router>
                 <Switch>
                     <Route path="/register" component={AppL2}>
+                    </Route>
+                    <Route path="/configuration" component={AppL3}>
                     </Route>
                     <Route path="/" component={AppL1}>
                     </Route>
@@ -65,6 +67,18 @@ function AppL2(props){
         </IntlProvider>
     )
 }
+
+function AppL3(props){
+    const  [ctx,dispatch] = useContext(AppContext)
+    return (
+            <IntlProvider locale={ctx.language} messages={messages[ctx.language]} >
+                <div className="App" hidden={!config.dev}>
+                    <ConfigPanel></ConfigPanel>
+                </div>
+            </IntlProvider>
+    )
+}
+
 
 
 export default App;

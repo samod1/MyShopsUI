@@ -4,7 +4,8 @@ import {FormattedMessage,injectIntl} from "react-intl";
 import "./Registerform.css"
 import {validateEmail, getLocalizedString, MessageLocalization} from "../../../Tools/Tools";
 import '../../../css/MyShops.css'
-import {postData, getData, apiurl, ServerError, apiurl_registration} from "../../../Tools/servercall";
+import {postData, getData, ServerError} from "../../../Tools/servercall";
+import Config from "../../../Tools/Config"
 
 const SHOPS_CODE_REG_EMAILEXISTS = 100001;
 const SHOPS_CODE_REG_EMAILINVALID = 100002;
@@ -34,12 +35,15 @@ export class Registerform extends Component{
            this.submitRegFormAgain = this.submitRegFormAgain.bind(this);
            this.hideAgainButton = this.hideAgainButton.bind(this);
            this.gotoMainPage = this.gotoMainPage.bind(this);
+
+           this.ct = new Config();
+
        }
 
 
     sendRegistration (usermail,override){
 
-        postData(apiurl_registration + '/create',{email: usermail,override: override} )
+        postData(this.ct.api_url_registration + '/create',{email: usermail,override: override} )
             .then(retData => {
                 console.log(retData);
                 this.srvDescId = "registerform.OK";

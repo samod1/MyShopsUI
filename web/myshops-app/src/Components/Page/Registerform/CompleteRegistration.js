@@ -4,8 +4,9 @@ import {FormattedMessage,injectIntl} from "react-intl";
 import "./Registerform.css"
 import {validateEmail, getLocalizedString, MessageLocalization} from "../../../Tools/Tools";
 import '../../../css/MyShops.css'
-import {postData,getJson, getData, apiurl, ServerError, apiurl_registration} from "../../../Tools/servercall";
+import {postData,getJson, getData, ServerError} from "../../../Tools/servercall";
 import Passwordfield from "../../Passwordfield/Passwordfield";
+import Config from "../../../Tools/Config"
 
 
 const SHOPS_CODE_REG_EMAILEXISTS = 100001;
@@ -30,6 +31,8 @@ export class CompleteRegistration extends Component{
         this.sendRegistrationCompleti1on = this.sendRegistrationCompletion.bind(this);
         this.gotoMainPage = this.gotoMainPage.bind(this);
 
+        this.ct = new Config();
+
         this.password = "";
         this.password1 = "";
         this.errdescid = "";
@@ -44,10 +47,10 @@ export class CompleteRegistration extends Component{
 
     sendRegistrationCompletion (password){
 
-        postData(apiurl + '/users/registration/confirm',{password: password,registration_key: this.props.regkey} )
+        postData( this.ct.api_url + '/users/registration/confirm',{password: password,registration_key: this.props.regkey} )
             .then(retData => {
                 console.log(retData);
-                this.srvDescId = "registerform.OK";
+                this.srvDescId = "registerform.compl.OK";
                 this.retData = retData;
                 this.setState({srvErr: false});
             })
@@ -146,7 +149,7 @@ export class CompleteRegistration extends Component{
 
     getRegistrationData(){
 
-        postData(apiurl_registration + '/getbykey',{registration_key: this.props.regkey} )
+        postData(this.ct.api_url_registration + '/getbykey',{registration_key: this.props.regkey} )
             .then(retData => {
                 console.log("getRegistrationData=")
                 console.log(retData);
@@ -258,7 +261,7 @@ export class CompleteRegistration extends Component{
                                                            onChange={this.setPassword1}
                                             />
                                         </div>
-                                        <div  style={{padding: '1em 0em 0em 0em'}} >
+                                        <div  style={{padding: '1em 0em 0em 0em'}} hidden={!this.hideOKMessage()} >
                                             <Button className="ui primary labeled icon button" type="submit"
                                                     onClick={this.submitForm}>
                                                 <i className="checkmark alternate icon"></i>

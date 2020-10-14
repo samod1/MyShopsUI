@@ -1,8 +1,7 @@
 import {config} from "../config/liveconfig"
 import messages from "../locale/messages";
+import {Config} from "./Config"
 
-export const apiurl = config.api_url;
-export const apiurl_registration = config.api_url_registration;
 
 export class ServerError extends Error {
     constructor(message = '',errData=null) {
@@ -140,7 +139,7 @@ export async function getData(url = '') {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
+        credentials: 'same-origin', // include, same-origin, omit
         headers: {
             'Content-Type': 'application/json'
             // 'Content-Type': 'application/x-www-form-urlencoded',

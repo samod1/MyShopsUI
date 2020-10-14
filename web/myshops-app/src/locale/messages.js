@@ -4,6 +4,8 @@ import React from "react";
 export default {
     'en-US': {
         // We're using dots for nesting and camelCase for each name
+        "exitbut": "Return to main page",
+        "cancelbut": "Cancel",
         'page.menu.eshops': 'E-Shops',
         'page.menu.login': 'Log in',
         'page.menu.signup': 'Sign Up',
@@ -39,6 +41,7 @@ export default {
         "registerform.srv_100004": "Registration key is invalid.",
         "registerform.srv_100005": "The password is not strong enough. Length at least 8 characters, uppercase letter, lowercase letter, special character and number.",
         "registerform.OK": "Message with next instruction was sent to entered e-mail.",
+        "registerform.compl.OK": "Registration completed. You can continue by log in.",
         "registerform.password": "Password",
         "registerform.password1": "Password for check",
         "registerform.completeregtitle" : "Sign up completion",
@@ -47,11 +50,25 @@ export default {
         "registerform.password.invalid.noteq": "Password and check password is not the same.",
         "password.placeholder":"Password",
         "srv_unknown": "Unknown server error",
-        "srv_500": "Internal processing error."
+        "srv_500": "Internal processing error.",
+        "loginform.OK": "User was successfully logged in.",
+        "loginform.logindata.empty": "Username and password cannot be empty.",
+        "loginform.logindata.unameinvalid": "Login name is invalid.",
+        "loginform.title" : "Log in to MyShops",
+        "loginform.srvErrorTitle": "Login error",
+        "loginform.srvOKTitle" : "Successful login",
+        "loginform.email" : 'Username/e-mail',
+        "loginform.password" : 'Password',
+        "loginform.loginbut" : "Log in",
+        "loginform.email.placeholder": 'foo@mail.com'
+
+
 
     },
     'sk-SK': {
         // We're using dots for nesting and camelCase for each name
+        "exitbut": "Návrat na hlavnú stránku",
+        "cancelbut": "Zrušiť",
         'page.menu.eshops': 'E-Obchody',
         'page.menu.login': 'Prihlásiť',
         'page.menu.signup': 'Registrovať',
@@ -77,7 +94,7 @@ export default {
         "registerform.cancelbut": "Zrušiť",
         "registerform.save":"Uložiť heslo",
         "registerform.email" : 'Používateľské meno/e-mail',
-        "registerform.email.placeholder" : 'jozef@gmail.com',
+        "registerform.email.placeholder" : 'jozef@mail.com',
         "registerform.email.empty" : 'Prosím vyplňte e-mail',
         "registerform.email.invalid" : 'E-mail nie je platný.',
         "registerform.srvErrorTitle": "Chyba registrácie",
@@ -88,6 +105,7 @@ export default {
         "registerform.srv_100004": "Registračný kľúč nie je platný.",
         "registerform.srv_100005": "Heslo nie je dostatočne silné. Dĺžka minimálne 8 znakov, veľké písmeno, malé písmeno, špecialny znak a číslica.",
         "registerform.OK": "Na Váš email bola odoslaná správa s informáciou o pokračovaní v procese registrácie.",
+        "registerform.compl.OK": "Registrácia bola dokončená. Môžete pokračovať prihlásením.",
         "registerform.password": "Heslo",
         "registerform.password1": "Opakované heslo",
         "registerform.completeregtitle" : "Dokončenie registrácie",
@@ -96,7 +114,18 @@ export default {
         "registerform.password.invalid.noteq": "Heslo a heslo pre kontrolu sa nezhodujú.",
         "password.placeholder":"Heslo",
         "srv_unknown": "Nešpecifikovaná chyba servera",
-        "srv_500": "Interná chyba spracovania"
+        "srv_500": "Interná chyba spracovania",
+        "loginform.OK": "Používateľ bol úspešne prihlásený.",
+        "loginform.logindata.empty": "Prihlasovacie meno a heslo musia byť vyplnené.",
+        "loginform.logindata.unameinvalid": "Prihlasovacie meno nie je platné.",
+        "loginform.title" : "Prihlásenie",
+        "loginform.srvErrorTitle": "Chyba prihlásenia",
+        "loginform.srvOKTitle" : "Úspešné prihlásenie",
+        "loginform.email" : 'Používateľské meno/e-mail',
+        "loginform.password" : 'Heslo',
+        "loginform.loginbut" : "Prihlásiť",
+        "loginform.email.placeholder": 'jozef@mail.com'
+
 
 
     }

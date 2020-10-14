@@ -28,16 +28,30 @@ export default class ShopsMenu extends  Component{
         super(props);
         this.onSignup = this.onSignup.bind(this);
         this.onLogin = this.onLogin.bind(this);
+        this.setHref = this.setHref.bind(this);
     }
 
     onSignup(ev,data){
+        this.setHref("#signup");
         let parentMenuHandler = this.props.menuHandler;
         parentMenuHandler(MENU_EVENT.REGISTER);
     }
     onLogin(ev,data){
+        this.setHref("#login");
         let parentMenuHandler = this.props.menuHandler;
         parentMenuHandler(MENU_EVENT.LOGIN);
     }
+
+    setHref(href){
+
+        let url = window.location.href;
+        if(url.indexOf("/register")!=-1)
+            window.location.href = "/" + href;
+        else
+            window.location.href =  href;
+
+    }
+
 
     render() {
         const fixed = this.props.fixed;
@@ -62,7 +76,7 @@ export default class ShopsMenu extends  Component{
 
 
                     <Menu.Item position='right'>
-                        <Button as='a' inverted={!fixed}>
+                        <Button as='a' inverted={!fixed} onClick={this.onLogin}>
                             <FormattedMessage id="page.menu.login"
                                               defaultMessage="Log in"
                                               description="Login user"/>

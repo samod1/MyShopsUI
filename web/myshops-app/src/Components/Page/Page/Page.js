@@ -10,6 +10,7 @@ import Registerform from "../Registerform/Registerform";
 import CompleteRegistration from "../Registerform/CompleteRegistration";
 import ShopsMainInfoBar from "../Header/ShopsMainInfoBar";
 import {getJsonFromLocation} from "../../../Tools/Tools";
+import Login from "../Login/Login";
 
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
@@ -74,6 +75,7 @@ export default class ResponsiveContainer extends Component {
     handleCloseLogin(){
         this.setState({mainPanel_mode: MAIN_PANEL_MODE_INFO })
     }
+
     handleShowInfo(){
         this.setState({mainPanel_mode: MAIN_PANEL_MODE_INFO })
     }
@@ -91,6 +93,9 @@ export default class ResponsiveContainer extends Component {
             body=<div></div>
         }
         if(this.props.path && this.props.path==MAIN_PANEL_PATH_REGISTER){
+            body=<div></div>
+        }
+        if( this.state.mainPanel_mode == MAIN_PANEL_MODE_LOGIN) {
             body=<div></div>
         }
 
@@ -129,6 +134,7 @@ export class DesktopContainer extends Component {
         this.onMenuEvent = this.onMenuEvent.bind(this);
         this.onCloseMainPanel = this.onCloseMainPanel.bind(this);
         this.createMainPanel = this.createMainPanel.bind(this);
+        this.onLogged = this.props.handlers
         this.mobile = this.props.mobile;
 
     }
@@ -146,6 +152,11 @@ export class DesktopContainer extends Component {
         this.props.handlers.handleShowInfo();
     }
 
+    onLogged(userContext){
+
+    }
+
+
     createMainPanel(state,mobile){
         let panel="";
         let style = { minHeight: 550, padding: '1em 0em' };
@@ -158,6 +169,16 @@ export class DesktopContainer extends Component {
                 <Registerform mobile={mobile} onClose={this.onCloseMainPanel}></Registerform>
             </div>
         };
+
+        if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_LOGIN){
+            style = { minHeight: 80, padding: '0em 0em' };
+            styleMenu = { paddingTop: '1em' };
+            panel=<div style={{paddingBottom: '2em', minHeight: '300px',backgroundColor: "white"}}>
+                <Login mobile={mobile} onClose={this.onCloseMainPanel} onLogged={this.onLogged}></Login>
+            </div>
+        };
+
+
         if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_INFO)
         {
             style = { minHeight: 550, padding: '0em 0em' };
@@ -191,6 +212,9 @@ export class DesktopContainer extends Component {
             titleStyle={minHeight: '500px',backgroundColor: 'black'};
 
         if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_REGISTER)
+            titleStyle={minHeight: '80px',backgroundColor: 'black'};
+
+        if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_LOGIN)
             titleStyle={minHeight: '80px',backgroundColor: 'black'};
 
         return (
