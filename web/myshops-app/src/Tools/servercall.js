@@ -1,7 +1,7 @@
 import {config} from "../config/liveconfig"
 import messages from "../locale/messages";
 import {Config} from "./Config"
-
+import MyShopsException from "./MyShopsExceptions"
 
 export class ServerError extends Error {
     constructor(message = '',errData=null) {
@@ -49,6 +49,11 @@ function constructRetData(response){
             ret.content_length = parseInt(val);
         if (key.toUpperCase() === 'content-type'.toUpperCase())
             ret.content_type = val;
+        if (key.toUpperCase() === 'Authorization'.toUpperCase()) {
+            ret.Authorization = val;
+            console.log(btoa(val))
+        }
+
     });
 
 
@@ -72,6 +77,11 @@ function constructRetData(response){
     ret.statusText = response.statusText;
 
     if (ret.status != 200) {
+
+        if(ret.status == 401){
+            console.log()
+            throw new MyShopsException(response.statusText);
+        }
         throw new ServerError(shops_msg ? shops_msg : ret.statusText, ret);
     }
 

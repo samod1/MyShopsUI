@@ -1,7 +1,7 @@
 import {Component} from "react";
 import {Form, Checkbox, Button, FormField, FormButton, Segment,Header} from "semantic-ui-react";
 import React from "react";
-import Config from "../../Tools/Config";
+import Config, {AuthorizationHeaderName} from "../../Tools/Config";
 
 export default class ConfigPanel extends Component {
 
@@ -31,6 +31,10 @@ export default class ConfigPanel extends Component {
 
                 case "api_url":
                     this.ct.api_url =  ev.target.value;
+                    break;
+
+                case AuthorizationHeaderName:
+                    this.ct.authorizationHeader =  ev.target.value;
                     break;
 
                 default:
@@ -83,6 +87,15 @@ export default class ConfigPanel extends Component {
                                id="api_url_registration"
                                onChange={this.onChange}
                                defaultValue={this.ct.api_url_registration}
+                               type="text"
+                        />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>API Registration URL</label>
+                        <input placeholder={this.ct.authorizationHeader}
+                               id={AuthorizationHeaderName}
+                               onChange={this.onChange}
+                               defaultValue={this.ct.authorizationHeader}
                                type="text"
                         />
                     </Form.Field>

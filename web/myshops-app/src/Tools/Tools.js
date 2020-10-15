@@ -127,3 +127,22 @@ export function getCookie(name) {
 export function eraseCookie(name) {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
+
+
+export function setLocalStorageItem(key,val){
+    window.localStorage.setItem(key,val);
+}
+
+export function getLocalStorageItem(key){
+    let ret = window.localStorage.getItem(key);
+    return ret;
+}
+
+export function decodeJWT(jwtData){
+
+    let toks = jwtData.split(" ")
+    let jwtText = btoa(toks[1]);
+    console.log(jwtText);
+
+
+}

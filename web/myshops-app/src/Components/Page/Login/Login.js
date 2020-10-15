@@ -1,12 +1,13 @@
 import React,{Component} from "react";
 import {Form,Input,Label,Button, Header,Container,Message} from "semantic-ui-react";
 import {FormattedMessage,injectIntl} from "react-intl";
-import { getLocalizedString, MessageLocalization,validateEmail} from "../../../Tools/Tools";
+import {decodeJWT, getLocalizedString, MessageLocalization, validateEmail} from "../../../Tools/Tools";
 import '../../../css/MyShops.css'
 import {postData, getData, ServerError} from "../../../Tools/servercall";
-import Config from "../../../Tools/Config"
+import Config, {AuthorizationHeaderName} from "../../../Tools/Config"
 import Passwordfield from "../../Passwordfield/Passwordfield";
-import {setCookie,getCookie} from "../../../Tools/Tools";
+import {setCookie,getCookie,getLocalStorageItem,setLocalStorageItem} from "../../../Tools/Tools";
+
 
 
 export class Login extends Component{
@@ -43,7 +44,7 @@ export class Login extends Component{
 
     sendLogin (username,password){
 
-        postData(this.ct.api_url + '/users/login',{username: username,password: password} )
+        postData(this.ct.api_url + '/auth/login',{username: username,password: password} )
             .then(retData => {
                 console.log(retData);
                 this.srvDescId = "loginform.OK";
@@ -107,17 +108,16 @@ export class Login extends Component{
         // save cookies
         // session
         retData.rspObject.headers.forEach((val, key) => {
-            console.log(key, val)
-            if (key.toUpperCase() === 'session') {
-                setCookie(key,val)
+            console.log(key, val);
+            if (key.toUpperCase() == AuthorizationHeaderName.toUpperCase()) {
+                setLocalStorageItem(AuthorizationHeaderName, val);
+                decodeJWT(val);
             }
         });
-        // username
-        setCookie("username",username)
+
 
 
         //window.location.href = "/"
-
     }
 
     gotoMainPage(ev,data){
@@ -216,7 +216,7 @@ export class Login extends Component{
                                                                     defaultMessage: "ENTER ME TO MESSAGES"})}
                                                             onChange={this.setUsername}
                                                             error={this.uname_err}
-                                                            readonly={this.hideOKMessage()}
+                                                            readOnly={!this.hideOKMessage()}
                                                 />
                                                 {this.uname_err && <Label pointing prompt>
                                                     {getLocalizedString(this.errdescid,intl)}
