@@ -1,4 +1,8 @@
 import log from 'loglevel';
+import {AuthorizationHeaderName} from "./Config";
+import {postData, getData, ServerError} from "./servercall";
+import {MyShopsException,JWTTokenInvalid} from "./MyShopsExceptions";
+import Config from "./Config"
 
 
 export class Logger {
@@ -72,9 +76,16 @@ export class MessageLocalization {
         let msgid;
         if(this.server.srvErr)
         {
-            if(this.server.srvDescId != null && this.server.srvDescId != 0){
+
+            if(this.server.status == 500 ||
+               this.server.status == 401
+            ){
+                let msg_prefix= "srv_";
+                msgid = msg_prefix + this.server.status.toString();
+                return getLocalizedString(msgid,intl)
+            } else if(this.server.srvDescId != null && this.server.srvDescId != 0){
                 let msg_prefix= this.msgPrefix;
-                if(this.server.srvDescId === "500")
+                if(this.server.srvDescId === "500" || this.server.srvDescId === "400" )
                     msg_prefix= "srv_"
                 msgid = msg_prefix + this.server.srvDescId.toString();
                 return getLocalizedString(msgid,intl)
@@ -144,5 +155,25 @@ export function decodeJWT(jwtData){
     let jwtText = btoa(toks[1]);
     console.log(jwtText);
 
+
+}
+
+export async function isLogged(){
+
+    let ct = new Config();
+
+    getData(ct.api_url + '/auth/isLogged' )
+        .then(retData => {
+            console.log("JWT token is valid");
+            return true;
+        })
+        .catch(error => {
+            if( error instanceof  JWTTokenInvalid) {
+                console.log("JWT token is valid");
+                throw error;
+            } else {
+                throw error;
+            }
+        });
 
 }

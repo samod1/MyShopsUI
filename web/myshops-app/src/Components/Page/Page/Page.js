@@ -9,8 +9,10 @@ import {Container, Icon, Menu, Segment, Sidebar} from "semantic-ui-react";
 import Registerform from "../Registerform/Registerform";
 import CompleteRegistration from "../Registerform/CompleteRegistration";
 import ShopsMainInfoBar from "../Header/ShopsMainInfoBar";
-import {getJsonFromLocation} from "../../../Tools/Tools";
+import {getJsonFromLocation, isLogged} from "../../../Tools/Tools";
 import Login from "../Login/Login";
+import {BaseComponent} from "../../BaseComponent";
+import {JWTTokenInvalid} from "../../../Tools/MyShopsExceptions";
 
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
@@ -29,10 +31,15 @@ const MAIN_PANEL_MODE_REGCOMPLETE   = 0x04
 export const MAIN_PANEL_PATH_MAIN          = "/"
 export const MAIN_PANEL_PATH_REGISTER      = "/register"
 
+export const EVNAME_CLOSE_REGISTER = "CloseRegister";
+export const EVNAME_CLOSE_LOGIN = "CloseLogin";
+export const EVNAME_OPEN_REGISTER = "OpenRegister";
+export const EVNAME_OPEN_LOGIN = "OpenLogin";
+export const EVNAME_SHOW_INFO = "ShowInfo";
+export const EVNAME_INVALIDJWT = "InvalidJwt"
 
 
-
-export default class ResponsiveContainer extends Component {
+export default class ResponsiveContainer extends BaseComponent {
 
     constructor(props) {
         super(props);
@@ -41,18 +48,20 @@ export default class ResponsiveContainer extends Component {
         this.handleOpenRegister = this.handleOpenRegister.bind(this);
         this.handleOpenLogin = this.handleOpenLogin.bind(this);
         this.handleShowInfo = this.handleShowInfo.bind(this);
+        this.handleInvalidJwt = this.handleInvalidJwt.bind(this);
         this.state = {
             mainPanel_mode: MAIN_PANEL_MODE_INFO,
             fixed: true,
         };
         this.regkey=null;
-        this.handlers = {
-            handleCloseRegister: this.handleCloseRegister,
-            handleCloseLogin: this.handleCloseLogin,
-            handleOpenLogin: this.handleOpenLogin,
-            handleOpenRegister: this.handleOpenRegister,
-            handleShowInfo: this.handleShowInfo,
-        }
+
+        this.updateHandlersCopy(EVNAME_CLOSE_REGISTER,this.handleCloseRegister);
+        this.updateHandlersCopy(EVNAME_CLOSE_LOGIN, this.handleCloseLogin);
+        this.updateHandlersCopy(EVNAME_OPEN_LOGIN,this.handleOpenLogin);
+        this.updateHandlersCopy(EVNAME_OPEN_REGISTER,this.handleOpenRegister);
+        this.updateHandlersCopy(EVNAME_SHOW_INFO,this.handleShowInfo);
+        this.updateHandlersCopy(EVNAME_INVALIDJWT,this.handleInvalidJwt);
+
         if(this.props.path && this.props.path==MAIN_PANEL_PATH_REGISTER){
             this.state.mainPanel_mode = MAIN_PANEL_MODE_REGCOMPLETE;
         }
@@ -61,23 +70,47 @@ export default class ResponsiveContainer extends Component {
             this.regkey = parameters["reg_key"];
             console.log(this.regkey);
         }
+        this.setName("ResponsiveContainer");
     }
 
     handleOpenRegister(){
         this.setState({mainPanel_mode: MAIN_PANEL_MODE_REGISTER })
+        return true;
     }
     handleCloseRegister(){
         this.setState({mainPanel_mode: MAIN_PANEL_MODE_INFO })
+        return true;
     }
     handleOpenLogin(){
         this.setState({mainPanel_mode: MAIN_PANEL_MODE_LOGIN })
+        return true;
     }
     handleCloseLogin(){
         this.setState({mainPanel_mode: MAIN_PANEL_MODE_INFO })
+        return true;
     }
 
     handleShowInfo(){
         this.setState({mainPanel_mode: MAIN_PANEL_MODE_INFO })
+        return true;
+    }
+
+    handleInvalidJwt(){
+        this.setState({mainPanel_mode: MAIN_PANEL_MODE_INFO })
+        return true;
+    }
+
+    componentDidMount() {
+        super.componentDidMount();
+        try {
+            let ret = isLogged();
+        }
+        catch(ex){
+            if(ex instanceof JWTTokenInvalid){
+                this.dispatchEvent(EVNAME_INVALIDJWT,null,null);
+            }
+        }
+
     }
 
     render() {
@@ -108,9 +141,9 @@ export default class ResponsiveContainer extends Component {
                 </Media>
                 <Media greaterThan="mobile">
                     <DesktopContainer mobile={this.props.mobile}
-                                      handlers={this.handlers}
                                       state = {this.state}
                                       regkey = {this.regkey}
+                                      {...this.getHandlersCopy()}
                     >
                         {this.props.children}
                     </DesktopContainer>
@@ -126,31 +159,32 @@ ResponsiveContainer.propTypes = {
 children: PropTypes.node,
 }
 
-export class DesktopContainer extends Component {
+export class DesktopContainer extends BaseComponent {
 
     constructor(props) {
         super(props);
 
-        this.onMenuEvent = this.onMenuEvent.bind(this);
-        this.onCloseMainPanel = this.onCloseMainPanel.bind(this);
         this.createMainPanel = this.createMainPanel.bind(this);
         this.onLogged = this.props.handlers
         this.mobile = this.props.mobile;
-
+        this.setName("DesktopContainer");
     }
 
+    /*
     onMenuEvent(data){
         if(data == MENU_EVENT.REGISTER){
-            this.props.handlers.handleOpenRegister();
+            this.dispatchEvent(EVNAME_CLOSE_REGISTER,null,data);
         }
         if(data == MENU_EVENT.LOGIN){
-            this.props.handlers.handleOpenLogin();
+            this.dispatchEvent(EVNAME_OPEN_LOGIN,null,data);
         }
+        return false;
     }
 
     onCloseMainPanel(){
-        this.props.handlers.handleShowInfo();
-    }
+        this.dispatchEvent(EVNAME_SHOW_INFO,null,null);
+        return false;
+    } */
 
     onLogged(userContext){
 
@@ -230,7 +264,7 @@ export class DesktopContainer extends Component {
                         pointing={!fixed}
                         secondary={!fixed}
                         size='large'>
-                        <ShopsMenu menuHandler={this.onMenuEvent}></ShopsMenu>
+                        <ShopsMenu link={this} {...this.getHandlersCopy()} ></ShopsMenu>
                     </Menu>
                     <Segment id="PageHeaderSegment" style={{backgroundColor: "black",padding:'0em'}}>
                         {mainPanel.panel}

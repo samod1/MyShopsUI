@@ -5,8 +5,12 @@ import Pageheader from "../Header/ShopsMainInfoBar";
 import PropTypes from "prop-types";
 import {createMedia} from "@artsy/fresnel";
 import Languages from "../../../Tools/Languages";
+import {isLogged} from "../../../Tools/Tools";
 import Registerform from "../Registerform/Registerform";
 import Body from "../Body/Body";
+import {JWTTokenInvalid} from "../../../Tools/MyShopsExceptions";
+import {BaseComponent} from "../../BaseComponent";
+import {EVNAME_SHOW_INFO,EVNAME_OPEN_LOGIN,EVNAME_CLOSE_REGISTER,EVNAME_OPEN_REGISTER,EVNAME_CLOSE_LOGIN} from "../Page/Page";
 
 const {  Media } = createMedia({
     breakpoints: {
@@ -22,34 +26,34 @@ export const MENU_EVENT = {
 }
 
 
-export default class ShopsMenu extends  Component{
+export default class ShopsMenu extends  BaseComponent{
 
     constructor(props) {
         super(props);
         this.onSignup = this.onSignup.bind(this);
         this.onLogin = this.onLogin.bind(this);
         this.setHref = this.setHref.bind(this);
+        this.setName("ShopsMenu");
     }
 
-    onSignup(ev,data){
+    onSignup(ev, data)
+    {
         this.setHref("#signup");
-        let parentMenuHandler = this.props.menuHandler;
-        parentMenuHandler(MENU_EVENT.REGISTER);
+        this.dispatchEvent(EVNAME_OPEN_REGISTER,ev,data);
     }
-    onLogin(ev,data){
+    onLogin(ev, data)
+    {
         this.setHref("#login");
-        let parentMenuHandler = this.props.menuHandler;
-        parentMenuHandler(MENU_EVENT.LOGIN);
+        this.dispatchEvent(EVNAME_OPEN_LOGIN,ev,data);
     }
 
-    setHref(href){
-
+    setHref(href)
+    {
         let url = window.location.href;
-        if(url.indexOf("/register")!=-1)
+        if (url.indexOf("/register") != -1)
             window.location.href = "/" + href;
         else
-            window.location.href =  href;
-
+            window.location.href = href;
     }
 
 

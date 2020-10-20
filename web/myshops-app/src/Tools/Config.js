@@ -34,9 +34,9 @@ export default class Config {
             else
                 this.api_url_registration = config.api_url_registration;
             if (this.myStorage.getItem(AuthorizationHeaderName))
-                this.AuthorizationHeader = this.myStorage.getItem(AuthorizationHeaderName);
+                this.authorizationHeader = this.myStorage.getItem(AuthorizationHeaderName);
             else
-                this.AuthorizationHeader = config.AuthorizationHeader;
+                this.authorizationHeader = config.authorizationHeader;
 
         } else {
             this.api_server = config.api_server;
@@ -65,9 +65,9 @@ export default class Config {
                 (this.myStorage.getItem("api_url_registration") && this.myStorage.getItem("api_url_registration") !== this.api_url_registration))
                 this.myStorage.setItem("api_url_registration", this.api_url_registration);
 
-        if (this.AuthorizationHeader)
-            if (this.AuthorizationHeader !== config.AuthorizationHeader ||
-                (this.myStorage.getItem(AuthorizationHeaderName) && this.myStorage.getItem(AuthorizationHeaderName) !== this.AuthorizationHeader))
-                this.myStorage.setItem(AuthorizationHeaderName, this.AuthorizationHeader);
+        if (this.authorizationHeader)
+            if (this.authorizationHeader !== config.authorizationHeader ||
+                (this.myStorage.getItem(AuthorizationHeaderName) && this.myStorage.getItem(AuthorizationHeaderName) !== this.authorizationHeader))
+                this.myStorage.setItem(AuthorizationHeaderName, this.authorizationHeader);
     }
 }

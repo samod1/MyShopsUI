@@ -1,14 +1,35 @@
-import React,{Component} from "react";
+import React, {Component, useContext, useState} from "react";
 import {Form,Input,Label,Button, Header,Container,Message} from "semantic-ui-react";
 import {FormattedMessage,injectIntl} from "react-intl";
 import {decodeJWT, getLocalizedString, MessageLocalization, validateEmail} from "../../../Tools/Tools";
 import '../../../css/MyShops.css'
-import {postData, getData, ServerError} from "../../../Tools/servercall";
+import {postData, getData, ServerError, InternalServerError} from "../../../Tools/servercall";
 import Config, {AuthorizationHeaderName} from "../../../Tools/Config"
 import Passwordfield from "../../Passwordfield/Passwordfield";
 import {setCookie,getCookie,getLocalStorageItem,setLocalStorageItem} from "../../../Tools/Tools";
+import {MyShopsException} from "../../../Tools/MyShopsExceptions"
+import {AppContext, useAppContext,SET_LOGGEDUSER} from "../../../Tools/AppContext";
 
 
+
+export function LoginSwitch(props) {
+
+    const [state, setState] = useState({processed:false});
+    const [ctx, dispatch] = useContext(AppContext);
+
+    const setLoggedUser = (username) => {
+        dispatch({
+            type: SET_LOGGEDUSER,
+            payload: username
+        });
+    };
+
+    if( props.username && props.username !== '' && !state.processed) {
+        setLoggedUser(props.username);
+        setState({processed: true});
+    }
+    return (<div id="LoginSwitch"/> );
+}
 
 export class Login extends Component{
 
@@ -19,7 +40,7 @@ export class Login extends Component{
             srvErr: false,
         };
 
-        this.username = "";
+        this.username = null;
         this.password = "";
         this.errdescid = "";
         this.srvDescId = "";
@@ -39,6 +60,7 @@ export class Login extends Component{
         this.onSuccessLogin = this.onSuccessLogin.bind(this);
 
         this.ct = new Config();
+
     }
 
 
@@ -53,16 +75,16 @@ export class Login extends Component{
                 this.onSuccessLogin(username,retData);
             })
             .catch(error => {
-                if(error instanceof ServerError){
+                if((error instanceof MyShopsException) || (error instanceof ServerError)){
                     console.log(error.data);
                     this.srvDescId = error.data.shops_code;
                     this.retData = error.data;
                     this.setState({srvErr: true});
-                } else {
+                }else {
                     console.log(error);
                     this.srvDescId = null;
                     this.srvMsg = error.message;
-                    this.retData = null;
+                    this.retData = error.data;
                     this.setState({srvErr: true});
                 }
             });
@@ -114,9 +136,6 @@ export class Login extends Component{
                 decodeJWT(val);
             }
         });
-
-
-
         //window.location.href = "/"
     }
 
@@ -169,6 +188,8 @@ export class Login extends Component{
 
     render(){
         const { intl } = this.props;
+        console.trace();
+
         return(
             <Form>
                 <div className="page-login" style={{minHeight: '700px'}}>
@@ -266,6 +287,7 @@ export class Login extends Component{
                                                                   defaultMessage="ENTER ME TO MESSAGES"
                                                                   description="Create new account"/>
                                             </Button>
+                                            <LoginSwitch username={this.username}/>
                                         </div>
 
 

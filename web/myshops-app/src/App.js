@@ -21,12 +21,10 @@ const locale = (navigator.languages && navigator.languages[0])
 let locale_test='sk-SK';
 
 
-
 function App(props) {
   return (
     <React.StrictMode>
         <AppProvider>
-
             <Router>
                 <Switch>
                     <Route path="/register" component={AppL2}>
@@ -39,8 +37,6 @@ function App(props) {
             </Router>
         </AppProvider>
     </React.StrictMode>
-
-
 
   );
 }

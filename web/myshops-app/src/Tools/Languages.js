@@ -30,7 +30,7 @@ export default function Languages(props) {
 
     const changeLang = (ev,data) => {
         let txt = options_dict[data.value]
-        let newState = {selecte: data.value,text: txt};
+        let newState = {selected: data.value,text: txt};
         setState(newState);
         setLanguage(data.value)
     }

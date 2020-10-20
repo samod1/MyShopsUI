@@ -14,10 +14,12 @@ const reducer = (state, action) => {
     switch (action.type) {
         case SET_LANGUAGE:
             return {
-                language: action.payload
+                language: action.payload,
+                loggedUser: state.loggedUser
             };
         case SET_LOGGEDUSER:
             return {
+                language: state.language,
                 loggedUser:  action.payload
             };
         default:

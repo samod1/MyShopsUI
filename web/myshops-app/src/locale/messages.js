@@ -51,6 +51,7 @@ export default {
         "password.placeholder":"Password",
         "srv_unknown": "Unknown server error",
         "srv_500": "Internal processing error.",
+        "srv_401": "User in not logged.",
         "loginform.OK": "User was successfully logged in.",
         "loginform.logindata.empty": "Username and password cannot be empty.",
         "loginform.logindata.unameinvalid": "Login name is invalid.",
@@ -60,7 +61,11 @@ export default {
         "loginform.email" : 'Username/e-mail',
         "loginform.password" : 'Password',
         "loginform.loginbut" : "Log in",
-        "loginform.email.placeholder": 'foo@mail.com'
+        "loginform.email.placeholder": 'foo@mail.com',
+        "loginform.srv_100006": "User does not exists.",
+        "loginform.srv_100007": "User password is expired.",
+        "loginform.srv_100008": "User is disabled.",
+        "loginform.srv_100009": "Invalid user name or password."
 
 
 
@@ -115,6 +120,7 @@ export default {
         "password.placeholder":"Heslo",
         "srv_unknown": "Nešpecifikovaná chyba servera",
         "srv_500": "Interná chyba spracovania",
+        "srv_401": "Používateľ nie je prihlásený.",
         "loginform.OK": "Používateľ bol úspešne prihlásený.",
         "loginform.logindata.empty": "Prihlasovacie meno a heslo musia byť vyplnené.",
         "loginform.logindata.unameinvalid": "Prihlasovacie meno nie je platné.",
@@ -124,8 +130,11 @@ export default {
         "loginform.email" : 'Používateľské meno/e-mail',
         "loginform.password" : 'Heslo',
         "loginform.loginbut" : "Prihlásiť",
-        "loginform.email.placeholder": 'jozef@mail.com'
-
+        "loginform.email.placeholder": 'jozef@mail.com',
+        "loginform.srv_100006": "Používateľ neexistuje.",
+        "loginform.srv_100007": "Heslo používateľa je expirované.",
+        "loginform.srv_100008": "Používateľ je zablokovaný.",
+        "loginform.srv_100009": "Neplatné používateľské meno alebo heslo."
 
 
     }

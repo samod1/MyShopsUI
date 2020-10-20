@@ -91,7 +91,7 @@ export default class ConfigPanel extends Component {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <label>API Registration URL</label>
+                        <label>Authorization header name</label>
                         <input placeholder={this.ct.authorizationHeader}
                                id={AuthorizationHeaderName}
                                onChange={this.onChange}

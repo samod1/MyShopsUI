@@ -16,6 +16,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intl": "^5.8.3",
+    "react-native": "^0.63.3",
     "react-password-strength-bar": "^0.3.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
