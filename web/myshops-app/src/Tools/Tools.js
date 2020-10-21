@@ -1,7 +1,7 @@
 import log from 'loglevel';
 import {AuthorizationHeaderName} from "./Config";
 import {postData, getData, ServerError} from "./servercall";
-import {MyShopsException,JWTTokenInvalid} from "./MyShopsExceptions";
+import {MyShopsException,JWTTokenInvalid,JWTTokenDoesNotExists} from "./MyShopsExceptions";
 import Config from "./Config"
 
 
@@ -162,18 +162,25 @@ export async function isLogged(){
 
     let ct = new Config();
 
-    getData(ct.api_url + '/auth/isLogged' )
+    if(!getLocalStorageItem(AuthorizationHeaderName)){
+        console.log("JWT token does not exists.");
+        throw new JWTTokenDoesNotExists();
+    }
+
+    let ret = await getData(ct.api_url + '/auth/isLogged' )
         .then(retData => {
             console.log("JWT token is valid");
             return true;
         })
         .catch(error => {
             if( error instanceof  JWTTokenInvalid) {
-                console.log("JWT token is valid");
+                console.log("JWT token is invalid.");
                 throw error;
             } else {
                 throw error;
             }
         });
+
+    return ret;
 
 }

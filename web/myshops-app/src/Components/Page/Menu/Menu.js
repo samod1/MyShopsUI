@@ -33,7 +33,11 @@ export default class ShopsMenu extends  BaseComponent{
         this.onSignup = this.onSignup.bind(this);
         this.onLogin = this.onLogin.bind(this);
         this.setHref = this.setHref.bind(this);
+        this.showUserMenu = this.showUserMenu.bind(this);
+        this.onLogged = this.onLogged.bind(this);
         this.setName("ShopsMenu");
+        this.addLoggedListener(this.onLogged);
+        this.state = {logged: false};
     }
 
     onSignup(ev, data)
@@ -46,6 +50,9 @@ export default class ShopsMenu extends  BaseComponent{
         this.setHref("#login");
         this.dispatchEvent(EVNAME_OPEN_LOGIN,ev,data);
     }
+    showUserMenu(ev, data)
+    {
+    }
 
     setHref(href)
     {
@@ -55,6 +62,9 @@ export default class ShopsMenu extends  BaseComponent{
         else
             window.location.href = href;
     }
+    onLogged(logged){
+        this.setState({logged: true});
+    }
 
 
     render() {
@@ -62,6 +72,18 @@ export default class ShopsMenu extends  BaseComponent{
         const mobile = this.props.mobile;
 
         if(!mobile) {
+
+            let hideLoginMenu= {};
+            let hideUserButton= {};
+            if(this.state.logged)
+                hideLoginMenu={
+                display: 'none'
+                }
+            else
+                hideUserButton={
+                    display: 'none'
+                }
+
             return (
                 <Container>
                     <Menu.Item as='a'>
@@ -78,8 +100,7 @@ export default class ShopsMenu extends  BaseComponent{
                         <Languages></Languages>
                     </Menu.Item>
 
-
-                    <Menu.Item position='right'>
+                    <Menu.Item position='right' style={hideLoginMenu}>
                         <Button as='a' inverted={!fixed} onClick={this.onLogin}>
                             <FormattedMessage id="page.menu.login"
                                               defaultMessage="Log in"
@@ -90,7 +111,11 @@ export default class ShopsMenu extends  BaseComponent{
                                               defaultMessage="Signup"
                                               description="Signup new user"/>
                         </Button>
-
+                    </Menu.Item>
+                    <Menu.Item position='right' style={hideUserButton}>
+                        <Button icon  style={{color:'white',backgroundColor: 'black', borderRadius: 0}} onClick={this.showUserMenu}>
+                            <Icon disabled={true} name='user outline' size='large'/>
+                        </Button>
                     </Menu.Item>
                 </Container>
             );

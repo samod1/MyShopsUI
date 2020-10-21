@@ -14,5 +14,11 @@ export class JWTTokenInvalid extends Error {
     }
 }
 
+export class JWTTokenDoesNotExists extends Error {
+    constructor(message) {
+        super();
+        this.message = message;
+    }
+}
 
 

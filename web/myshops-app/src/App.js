@@ -44,6 +44,8 @@ function App(props) {
 
 function AppL1(props){
     const  [ctx,dispatch] = useContext(AppContext)
+
+
     return (
         <IntlProvider locale={ctx.language} messages={messages[ctx.language]}>
             <div className="App">

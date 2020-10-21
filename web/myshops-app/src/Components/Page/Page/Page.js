@@ -12,7 +12,7 @@ import ShopsMainInfoBar from "../Header/ShopsMainInfoBar";
 import {getJsonFromLocation, isLogged} from "../../../Tools/Tools";
 import Login from "../Login/Login";
 import {BaseComponent} from "../../BaseComponent";
-import {JWTTokenInvalid} from "../../../Tools/MyShopsExceptions";
+import {JWTTokenInvalid,JWTTokenDoesNotExists} from "../../../Tools/MyShopsExceptions";
 
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
@@ -27,6 +27,7 @@ const MAIN_PANEL_MODE_INFO          = 0x01
 const MAIN_PANEL_MODE_REGISTER      = 0x02
 const MAIN_PANEL_MODE_LOGIN         = 0x03
 const MAIN_PANEL_MODE_REGCOMPLETE   = 0x04
+const MAIN_PANEL_MODE_LOGGED        = 0x05
 
 export const MAIN_PANEL_PATH_MAIN          = "/"
 export const MAIN_PANEL_PATH_REGISTER      = "/register"
@@ -37,6 +38,7 @@ export const EVNAME_OPEN_REGISTER = "OpenRegister";
 export const EVNAME_OPEN_LOGIN = "OpenLogin";
 export const EVNAME_SHOW_INFO = "ShowInfo";
 export const EVNAME_INVALIDJWT = "InvalidJwt"
+export const EVNAME_LOGINSUCCESS = "LoginSuccess"
 
 
 export default class ResponsiveContainer extends BaseComponent {
@@ -49,6 +51,8 @@ export default class ResponsiveContainer extends BaseComponent {
         this.handleOpenLogin = this.handleOpenLogin.bind(this);
         this.handleShowInfo = this.handleShowInfo.bind(this);
         this.handleInvalidJwt = this.handleInvalidJwt.bind(this);
+        this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
+
         this.state = {
             mainPanel_mode: MAIN_PANEL_MODE_INFO,
             fixed: true,
@@ -61,6 +65,7 @@ export default class ResponsiveContainer extends BaseComponent {
         this.updateHandlersCopy(EVNAME_OPEN_REGISTER,this.handleOpenRegister);
         this.updateHandlersCopy(EVNAME_SHOW_INFO,this.handleShowInfo);
         this.updateHandlersCopy(EVNAME_INVALIDJWT,this.handleInvalidJwt);
+        this.updateHandlersCopy(EVNAME_LOGINSUCCESS,this.handleLoginSuccess);
 
         if(this.props.path && this.props.path==MAIN_PANEL_PATH_REGISTER){
             this.state.mainPanel_mode = MAIN_PANEL_MODE_REGCOMPLETE;
@@ -96,22 +101,40 @@ export default class ResponsiveContainer extends BaseComponent {
     }
 
     handleInvalidJwt(){
-        this.setState({mainPanel_mode: MAIN_PANEL_MODE_INFO })
+        this.setState({mainPanel_mode: MAIN_PANEL_MODE_LOGIN })
         return true;
     }
 
+    handleLoginSuccess(){
+        this.setState({mainPanel_mode: MAIN_PANEL_MODE_LOGGED })
+        return true;
+    }
+
+
     componentDidMount() {
         super.componentDidMount();
+        this.isLogged();
+    }
+
+    async isLogged(){
         try {
-            let ret = isLogged();
+            let ret = await  isLogged();
+            if(ret){
+                this.setLogged(true);
+                this.handleLoginSuccess();
+            }
         }
         catch(ex){
             if(ex instanceof JWTTokenInvalid){
-                this.dispatchEvent(EVNAME_INVALIDJWT,null,null);
+                this.handleInvalidJwt();
+            }
+            if(ex instanceof JWTTokenDoesNotExists){
+                this.handleShowInfo();
             }
         }
-
     }
+
+
 
     render() {
 
@@ -208,10 +231,9 @@ export class DesktopContainer extends BaseComponent {
             style = { minHeight: 80, padding: '0em 0em' };
             styleMenu = { paddingTop: '1em' };
             panel=<div style={{paddingBottom: '2em', minHeight: '300px',backgroundColor: "white"}}>
-                <Login mobile={mobile} onClose={this.onCloseMainPanel} onLogged={this.onLogged}></Login>
+                <Login mobile={mobile} link={this}  {...this.getHandlersCopy()} ></Login>
             </div>
         };
-
 
         if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_INFO)
         {
@@ -231,6 +253,12 @@ export class DesktopContainer extends BaseComponent {
             </div>
         };
 
+        if(this.getLogged()){
+            style = { minHeight: 80, padding: '0em 0em' };
+            styleMenu = { paddingTop: '1em' };
+            panel= <div id="logged_panel" style={{paddingBottom: '2em', minHeight: '300px',backgroundColor: "white"}}>
+            </div>
+        };
 
         return {panel: panel,style: style,styleMenu: styleMenu};
     }
@@ -249,6 +277,9 @@ export class DesktopContainer extends BaseComponent {
             titleStyle={minHeight: '80px',backgroundColor: 'black'};
 
         if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_LOGIN)
+            titleStyle={minHeight: '80px',backgroundColor: 'black'};
+
+        if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_LOGGED)
             titleStyle={minHeight: '80px',backgroundColor: 'black'};
 
         return (

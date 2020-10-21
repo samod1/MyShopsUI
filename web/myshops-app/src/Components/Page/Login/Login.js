@@ -9,8 +9,8 @@ import Passwordfield from "../../Passwordfield/Passwordfield";
 import {setCookie,getCookie,getLocalStorageItem,setLocalStorageItem} from "../../../Tools/Tools";
 import {MyShopsException} from "../../../Tools/MyShopsExceptions"
 import {AppContext, useAppContext,SET_LOGGEDUSER} from "../../../Tools/AppContext";
-
-
+import {BaseComponent} from "../../BaseComponent";
+import {EVNAME_CLOSE_LOGIN, EVNAME_LOGINSUCCESS, EVNAME_SHOW_INFO} from "../Page/Page";
 
 export function LoginSwitch(props) {
 
@@ -31,7 +31,7 @@ export function LoginSwitch(props) {
     return (<div id="LoginSwitch"/> );
 }
 
-export class Login extends Component{
+export class Login extends BaseComponent{
 
     constructor(props) {
         super(props);
@@ -134,13 +134,15 @@ export class Login extends Component{
             if (key.toUpperCase() == AuthorizationHeaderName.toUpperCase()) {
                 setLocalStorageItem(AuthorizationHeaderName, val);
                 decodeJWT(val);
+                this.setLogged(true);
+                this.dispatchEvent(EVNAME_LOGINSUCCESS,null,null);
             }
         });
         //window.location.href = "/"
     }
 
     gotoMainPage(ev,data){
-        this.props.onClose();
+        this.dispatchEvent(EVNAME_SHOW_INFO,ev,data);
     }
 
     setUsername(ev,data){

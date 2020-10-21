@@ -178,10 +178,11 @@ export async function getData(url = '') {
         headers: {
             'SHOPS_CODE':0,
             'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': getJwtToken()
         },
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        Authorization: getJwtToken()
+
     });
 
     let ret = constructRetData(response);
