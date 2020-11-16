@@ -18,7 +18,7 @@ export default class  Footer extends Component {
     render(){
 
         const mobile = this.props.mobile;
-        return (
+        /*return (
             <Segment inverted vertical style={{ padding: '5em 0em 2em 0em' }}>
                 <Container>
                     <Grid divided inverted >
@@ -66,7 +66,12 @@ export default class  Footer extends Component {
                         </Grid.Row>
                     </Grid>
                 </Container>
-            </Segment>);
+            </Segment>); */
+
+        return (<div id={"footer"}></div>)
+
+
+
     }
 }
 

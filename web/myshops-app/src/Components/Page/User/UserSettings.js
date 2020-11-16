@@ -391,6 +391,51 @@ class UserIntl extends BaseComponent{
                         <LinkButton iconname='edit' text='Upravit' onClick={this.onClickAlias}>
                         </LinkButton>
                     </div>
+
+                    <div className={"us_chgAlias"} style={chgAliasStyle}>
+                        <label className="flexcolumn" style={{paddingTop: "0.5em"}}>
+                            <FormattedMessage id="usersettings.user.alias1"/>
+                        </label>
+                        <Form.Field  style={{paddingTop: "0.5em"}}>
+                            <Form.Input type=""
+                                        name="alias"
+                                        placeholder={intl.formatMessage(
+                                            {id: "usersettings.user.alias",
+                                                defaultMessage: "ENTER ME TO MESSAGES"})}
+                                        onChange={this.setUsername}
+                                        error={this.uname_err}
+
+                            />
+                            {this.uname_err && <Label pointing prompt>
+                                {getLocalizedString(this.errdescid,intl)}
+                            </Label>}
+                        </Form.Field>
+                        <div style={{display:"flex", flexDirection: "row", paddingTop: "1.5em" }}>
+                            <div style={{paddingRight: "1em"}}>
+                                <Button className="ui primary labeled icon button" type="submit"
+                                        onClick={this.aliasSave}
+                                        style={{paddingRight: "0.5em" }}
+                                >
+                                    <i className="save alternate icon"></i>
+                                    <FormattedMessage id="save"
+                                                      defaultMessage="ENTER ME TO MESSAGES"
+                                                      description="Cancel"/>
+                                </Button>
+                            </div>
+                            <div>
+                                <Button className="ui labeled icon button" type="submit"
+                                        onClick={this.aliasCancel}
+                                >
+                                    <i className="cancel alternate icon"></i>
+                                    <FormattedMessage id="cancelbut"
+                                                      defaultMessage="ENTER ME TO MESSAGES"
+                                                      description="Cancel"/>
+                                </Button>
+                            </div>
+                        </div>
+
+                    </div>
+
                     {horline}
                 </div>
             </div>
