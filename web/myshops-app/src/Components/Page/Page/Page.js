@@ -232,16 +232,6 @@ export class DesktopContainer extends BaseComponent {
 
 
     createMenu(){
-        /*
-        let menuPanel=<Menu
-            fixed={fixed ? 'top' : null}
-            inverted
-            pointing={!fixed}
-            secondary={!fixed}
-            size='large'>
-            <ShopsMenu link={this} {...this.getHandlersCopy()} ></ShopsMenu>
-        </Menu>
-         */
 
         let menuPanel=<div id="topMenu" style={{backgroundColor: "rgba(0,0,0,0.5)",paddingTop: "5px"}}>
                 <ShopsMenu link={this} {...this.getHandlersCopy()} ></ShopsMenu>

@@ -137,16 +137,20 @@ class UserIntl extends BaseComponent{
         this.getUserData = this.getUserData.bind(this);
         this.hideErrMessage = this.hideErrMessage.bind(this);
         this.message_detail = this.message_detail.bind(this);
+        this.aliasCancel = this.aliasCancel.bind(this);
+        this.aliasSave = this.aliasSave.bind(this);
         this.userdata={};
         this.retData = {};
         this.state = {
             srvErr: false
         };
+        this.changeAlias=false;
 
     }
 
     onClickAlias(){
         console.log("onClickAlias");
+        this.setState({chgAlias: true})
     }
 
     getUserData(){
@@ -213,6 +217,17 @@ class UserIntl extends BaseComponent{
     }
 
 
+    aliasSave(ev,data){
+        console.log("onClickAliasSave");
+        this.setState({chgAlias: false})
+    }
+
+    aliasCancel(ev,data){
+        console.log("onClickAliasCancel");
+        this.setState({chgAlias: false})
+    }
+
+
     render(){
 
         let msg = new MessageLocalization();
@@ -249,6 +264,17 @@ class UserIntl extends BaseComponent{
             let butlabel = getLocalizedString("delete",intl);
             cancelButton=<LinkButton iconname='stop circle outline' text={butlabel} onClick={this.onClickAlias}/>
         }
+
+
+        let chgAliasStyle= {};
+        if(this.state.chgAlias){
+            chgAliasStyle.display = "flex";
+
+        }else{
+            chgAliasStyle.display = "none";
+        }
+
+
 
         return(
             <div id={"us_editPane"} className={us_editPane}>
@@ -288,8 +314,51 @@ class UserIntl extends BaseComponent{
                         <label  className="us_fldVal">
                             {alias}
                         </label>
-                        <LinkButton iconname='edit' text='Upravit' onClick={this.onClickAlias}>
+                        <LinkButton iconname='edit' text='Upravit'  hidden={this.state.chgAlias} onClick={this.onClickAlias}>
                         </LinkButton>
+                    </div>
+                    <div className={"us_chgAlias"} style={chgAliasStyle}>
+                        <label className="flexcolumn" style={{paddingTop: "0.5em"}}>
+                            <FormattedMessage id="usersettings.user.alias1"/>
+                        </label>
+                        <Form.Field  style={{paddingTop: "0.5em"}}>
+                            <Form.Input type=""
+                                        name="alias"
+                                        placeholder={intl.formatMessage(
+                                            {id: "usersettings.user.alias",
+                                                defaultMessage: "ENTER ME TO MESSAGES"})}
+                                        onChange={this.setUsername}
+                                        error={this.uname_err}
+
+                            />
+                            {this.uname_err && <Label pointing prompt>
+                                {getLocalizedString(this.errdescid,intl)}
+                            </Label>}
+                        </Form.Field>
+                        <div style={{display:"flex", flexDirection: "row", paddingTop: "1.5em" }}>
+                            <div style={{paddingRight: "1em"}}>
+                                <Button className="ui primary labeled icon button" type="submit"
+                                        onClick={this.aliasSave}
+                                        style={{paddingRight: "0.5em" }}
+                                >
+                                    <i className="save alternate icon"></i>
+                                    <FormattedMessage id="save"
+                                                      defaultMessage="ENTER ME TO MESSAGES"
+                                                      description="Cancel"/>
+                                </Button>
+                            </div>
+                            <div>
+                                <Button className="ui labeled icon button" type="submit"
+                                        onClick={this.aliasCancel}
+                                >
+                                    <i className="cancel alternate icon"></i>
+                                    <FormattedMessage id="cancelbut"
+                                                      defaultMessage="ENTER ME TO MESSAGES"
+                                                      description="Cancel"/>
+                                </Button>
+                            </div>
+                        </div>
+
                     </div>
                     {horline}
                     {/*  dat reg */}

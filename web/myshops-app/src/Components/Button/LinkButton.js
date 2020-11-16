@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { Icon } from 'semantic-ui-react'
 import "./LinkButton.css"
+import "../../css/MyShops.css"
 
 export class LinkButton extends Component {
 
@@ -21,9 +22,14 @@ export class LinkButton extends Component {
         const text = this.props.text;
 
         const iconClass = iconname + " lb_linkButtonIcon"
+        let buttonClass = "lb_linkButton";
+        let buttonStyle = {}
+        if(this.props.hidden){
+            buttonStyle.display = "none";
+        }
 
         return (
-            <span className="lb_linkButton" onClick={this.onClick} >
+            <span className={buttonClass} onClick={this.onClick} style={buttonStyle} >
                 <Icon  name={iconname}  className={iconClass} style={{fontSize: "0.7em"}} />
                 <label className="lb_linkButtonLabel">{text}</label>
             </span>

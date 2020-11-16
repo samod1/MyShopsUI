@@ -17,4 +17,9 @@
     padding_bottom: 2em;
     min-height: 600px;
     background: white;
+
+}
+
+#desktopContainer{
+    overflow: auto;
 }

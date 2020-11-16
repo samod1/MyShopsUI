@@ -42,7 +42,14 @@ export function getLocalizedString(msgid,intl){
 }
 
 export function getLocalizedDate(date,intl){
-    let str = intl.formatDate(date)
+
+    let str = null;
+    if( typeof date === "string"){
+        let toks = date.split('T');
+        str = intl.formatDate(Date.parse(toks[0]));
+    } else {
+        str = intl.formatDate(date)
+    }
     return str;
 }
 
