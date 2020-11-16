@@ -45,6 +45,19 @@ export default function Languages(props) {
 
 }
 
+export function Language(props) {
+
+
+    const options_dict =   { 'en-US':'English', 'sk-SK':'Slovenčina'}
+    const [ctx,dispatch] = useContext(AppContext);
+
+    let locale = ctx.language;
+    let lang = options_dict[locale];
+
+    return(
+        <label>{lang}</label>
+    )
+}
 
 
 

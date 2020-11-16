@@ -1,0 +1,60 @@
+
+
+.verticalMenu {
+    display: flex;
+    flex-flow: column;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 0px 0px 0px 0px;
+}
+
+.horizontalMenu {
+    display: flex;
+    flex-flow: row;
+    border-left: 1px solid rgba(0, 0, 0, 0.87);
+    border-right: 1px solid rgba(0, 0, 0, 0.87);
+}
+
+.sidebar{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.menuItem{
+    flex-grow: 1;
+    flex-basis: 0;
+    font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+    display: block;
+    width: 200px;
+    padding: 14px;
+    border-radius: .28571429rem .28571429rem 0 0;
+    border-top: rgba(0,0,0,0.05) 1px solid;
+    cursor: pointer;
+}
+.activeMenuItem{
+    background-color: rgba(0,0,0,.05);
+    color: rgba(0,0,0,.95);
+    font-weight: bold;
+}
+
+div.menuItem:hover{
+    background-color: rgba(0,0,0,.05);
+    color: rgba(0,0,0,.95);
+    font-weight: bold;
+}
+
+.menuItemIcon{
+    width: 100px;
+}
+.menuItemIconWide{
+    width: 28px;
+}
+
+.innerMenuItem{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.sidebarItem{
+
+}
+

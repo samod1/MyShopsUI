@@ -1,0 +1,103 @@
+<!doctype html>
+<html >
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        .full{
+            height: 100%;
+            width: 100%;
+            border: #282c34 1px solid;
+            padding: 3px;
+            overflow: hidden;
+            position: relative;
+            min-height: 300px;
+        }
+
+        .child{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            border: red 1px solid;
+            margin: 4px;
+        }
+
+        .child_col1{
+            left: 0%;
+            background: azure;
+            width: 15%;
+        }
+        .child_col2{
+            left: 15%;
+            background: beige;
+            width: 70%;
+        }
+        .child_col3{
+            left: 85%;
+            background: burlywood;
+            width: 15%;
+        }
+
+
+        .flextable{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+
+        .flexitem {
+            flex-basis: 0;
+            flex-grow: 1;
+        }
+
+        .flextable > .flexitem_col1 {
+            flex-basis: 0;
+            flex-grow: 2;
+        }
+        .flextable > .flexitem_col2 {
+            flex-basis: 0;
+            flex-grow: 2;
+        }
+        .flextable > .flexitem_col3 {
+            flex-basis: 0;
+            flex-grow: 1;
+        }
+
+
+        @media screen and (max-width: 760px){
+            .grid{
+                display: grid;
+                grid-template-columns: 1fr;
+                height: 100%;
+            }}
+
+    </style>
+
+
+
+</head>
+<body>
+
+<span id="text1">Nezname media</span>
+
+<div class="full flextable">
+    <div class="child child_col1"></div>
+    <div class="child child_col2">
+        <div class="flextable">
+            <div class="flexitem_col1">Pouzivatelske meno</div>
+            <div class="flexitem_col2">laco.domin@dominanz.sk</div>
+            <div class="flexitem_col3">Upravit</div>
+        </div>
+    </div>
+    <div class="child child_col3"></div>
+</div>
+
+</body>
+</html>
+
+
+
+

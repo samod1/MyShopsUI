@@ -1,7 +1,73 @@
+
+:root {
+}
+
+
+
 .errorLabel{
     color: rgb(159,58,56);
     background-color: rgb(255, 246, 246);
     border-color: rgb(224, 180, 180);
     outline-color: rgb(159, 58, 56);
 
+}
+
+
+
+.grid-container{
+    display: grid;
+    padding: 1em;
+}
+
+.grid-one_column{
+    grid-template-columns: auto;
+}
+.grid-two_column{
+    grid-template-columns: auto auto;
+}
+.grid-three_column{
+    grid-template-columns: auto auto auto;
+}
+.grid-four_column{
+    grid-template-columns: auto auto auto auto;
+}
+.grid-five_column{
+    grid-template-columns: auto auto auto auto auto;
+}
+.grid-one_row {
+    grid-template-rows: auto;
+}
+
+.grid-item {
+}
+
+.topBorder{
+    border-top-color: black;
+    border-top-style: solid;
+    border-top-width: 1px;
+}
+
+.full {
+    position: relative;
+}
+.full > .height {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.flexline{
+    display: flex;
+    flex-flow: row;
+}
+
+.flexcolumn{
+    display: flex;
+    flex-flow: column;
+}
+
+.noSidePadding{
+    padding-left: 0px;
+    padding-right: 0px;
 }

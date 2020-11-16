@@ -1,0 +1,49 @@
+
+#us_menucolumn{
+    /*display: flex;
+    flex-direction: column;
+    grid-column-start: 1;
+    grid-column-end: 1;*/
+    text-align: left;
+    max-width: 25em;
+    padding-right: 0.7em;
+    border-right: 1px rgba(0,0,0,0.05) solid;
+
+}
+
+
+
+.us_grid-two_column {
+    grid-template-columns: 1fr 10fr;
+}
+
+#us_contentcolumn{
+    padding: 1.5em;
+    text-align: left;
+}
+
+.us_editPane {
+    padding-left: 4em;
+    line-height: 2.5em;
+    font-size: 1.1em;
+}
+.us_editPane_tablet {
+    padding-left: 0em;
+    line-height: 2.5em;
+    font-size: 1.1em;
+}
+
+
+.us_grid-three_column{
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+.us_fldName{
+    /*min-width: 20em;*/
+    font-weight: bold;
+}
+.us_fldVal{
+    max-width: 40em;
+    /*min-width: 30em;*/
+}
+

@@ -1,0 +1,38 @@
+
+.lb_linkButton{
+    display: flex;
+    flex-flow: row;
+}
+.lb_linkButtonIcon{
+    font-size: 0.8em;
+    color: white;
+    display: none;
+    transition: display 1s,color 1.8s,font-size 1.8s;
+}
+
+.lb_linkButton:hover .lb_linkButtonIcon{
+    color: steelblue;
+    cursor: pointer;
+    display: flex;
+    font-size: 1.3em;
+}
+
+.lb_linkButton:hover .lb_linkButtonLabel{
+    color: steelblue;
+    cursor: pointer;
+    display: flex;
+}
+
+@media only screen and (max-width: 1023px) {
+    .lb_linkButtonLabel {
+        color: steelblue;
+        cursor: pointer;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .lb_linkButtonLabel {
+        padding-left: 0.3em;
+        transition: color 1s;
+    }
+}

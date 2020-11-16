@@ -41,6 +41,11 @@ export function getLocalizedString(msgid,intl){
     return str;
 }
 
+export function getLocalizedDate(date,intl){
+    let str = intl.formatDate(date)
+    return str;
+}
+
 export function getJsonFromLocation(location) {
     if(location && location.search && location.search !== "") {
         let url = location.search;
@@ -149,13 +154,22 @@ export function getLocalStorageItem(key){
     return ret;
 }
 
-export function decodeJWT(jwtData){
+export function decodeJWT(){
 
-    let toks = jwtData.split(" ")
-    let jwtText = btoa(toks[1]);
-    console.log(jwtText);
+    let jwtToken = getLocalStorageItem(AuthorizationHeaderName);
+    if(!jwtToken){
+        return null;
+    }
+    let tokens = jwtToken.split(" ");
 
-
+    tokens = tokens[1].split(".")
+    let jwtHeader = window.atob(tokens[0]);
+    let jwtClaims = window.atob(tokens[1]);
+    jwtHeader = JSON.parse(jwtHeader);
+    jwtClaims = JSON.parse(jwtClaims);
+    //console.log(jwtHeader);
+    //console.log(jwtClaims);
+    return {jwtHeader:jwtHeader,jwtClaims:jwtClaims};
 }
 
 export async function isLogged(){
@@ -163,18 +177,18 @@ export async function isLogged(){
     let ct = new Config();
 
     if(!getLocalStorageItem(AuthorizationHeaderName)){
-        console.log("JWT token does not exists.");
+        //console.log("JWT token does not exists.");
         throw new JWTTokenDoesNotExists();
     }
 
     let ret = await getData(ct.api_url + '/auth/isLogged' )
         .then(retData => {
-            console.log("JWT token is valid");
+            //console.log("JWT token is valid");
             return true;
         })
         .catch(error => {
             if( error instanceof  JWTTokenInvalid) {
-                console.log("JWT token is invalid.");
+                //console.log("JWT token is invalid.");
                 throw error;
             } else {
                 throw error;
@@ -183,4 +197,8 @@ export async function isLogged(){
 
     return ret;
 
+}
+
+export function deleteJwt(){
+    window.localStorage.removeItem(AuthorizationHeaderName);
 }

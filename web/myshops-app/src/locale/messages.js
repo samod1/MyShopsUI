@@ -6,11 +6,17 @@ export default {
         // We're using dots for nesting and camelCase for each name
         "exitbut": "Return to main page",
         "cancelbut": "Cancel",
+        "edit": "Edit",
+        "delete": "Delete",
+        "deactivate":"Deactivate",
         'page.menu.eshops': 'E-Shops',
+        'page.menu.profiles': 'Profiles',
         'page.menu.login': 'Log in',
         'page.menu.signup': 'Sign Up',
         'page.menu.profile': 'Contact profiles',
         'page.menu.userdata': 'User settings',
+        'page.menu.logout': 'Log out',
+        'page.menu.settings': 'User settings',
         'pageheader.title': 'MyShops',
         'pageheader.shortdescription': 'Your central point to organize e-shops, e-shops passwords and registration data.',
         'pageheader.shortdescription_mobile': 'Organize e-shops, passwords and registration data.',
@@ -65,8 +71,19 @@ export default {
         "loginform.srv_100006": "User does not exists.",
         "loginform.srv_100007": "User password is expired.",
         "loginform.srv_100008": "User is disabled.",
-        "loginform.srv_100009": "Invalid user name or password."
-
+        "loginform.srv_100009": "Invalid user name or password.",
+        "usersettings.tittle": "Settings",
+        "usersettings.tittle.user": "User",
+        "usersettings.tittle.security": "Security",
+        "usersettings.tittle.others": "Others",
+        "usersettings.tittle.actlog": "Activity log",
+        "usersettings.user.email": 'Username/e-mail',
+        "usersettings.user.alias": 'Alias',
+        "usersettings.user.notAlias":"Alias is not set user account.",
+        "usersettings.user.regdate":"Registration date",
+        "usersettings.user.deleteUser":"Delete user account",
+        "usersettings.user.cancelDeleteUser":"Deactivate user deletion process",
+        "usersettings.user.langlabel":"Actual language"
 
 
     },
@@ -74,11 +91,17 @@ export default {
         // We're using dots for nesting and camelCase for each name
         "exitbut": "Návrat na hlavnú stránku",
         "cancelbut": "Zrušiť",
+        "edit": "Upraviť",
+        "delete": "Zmazať",
+        "deactivate":"Deaktivovať",
         'page.menu.eshops': 'E-Obchody',
+        'page.menu.profiles': 'Profily',
         'page.menu.login': 'Prihlásiť',
         'page.menu.signup': 'Registrovať',
         'page.menu.profile': 'Adresné profily',
         'page.menu.userdata': 'Nastavenia používateľa',
+        'page.menu.logout': 'Odhlásiť',
+        'page.menu.settings': 'Nastavenia používateľa',
         'pageheader.title': 'MyShops',
         'pageheader.shortdescription': 'Centrálny bod kde môžete organizovať Vaše e-obchody, heslá a registračné údaje.',
         'pageheader.shortdescription_mobile': 'Spravujte e-obchody, hesla a registračné údaje.',
@@ -134,7 +157,19 @@ export default {
         "loginform.srv_100006": "Používateľ neexistuje.",
         "loginform.srv_100007": "Heslo používateľa je expirované.",
         "loginform.srv_100008": "Používateľ je zablokovaný.",
-        "loginform.srv_100009": "Neplatné používateľské meno alebo heslo."
+        "loginform.srv_100009": "Neplatné používateľské meno alebo heslo.",
+        "usersettings.tittle": "Nastavenia",
+        "usersettings.tittle.user": "Používateľ",
+        "usersettings.tittle.security": "Bezpečnosť",
+        "usersettings.tittle.others": "Ostatné",
+        "usersettings.tittle.actlog": "Záznam aktivít",
+        "usersettings.user.email": 'Používateľské meno/e-mail',
+        "usersettings.user.alias": 'Alias',
+        "usersettings.user.notAlias":"Alias nie je nastavený",
+        "usersettings.user.regdate":"Dátum registrácie",
+        "usersettings.user.deleteUser":"Zmazanie používateľského účtu",
+        "usersettings.user.cancelDeleteUser":"Deaktivovať proces zrušenia používateľa",
+        "usersettings.user.langlabel":"Aktuálne jazykové nastavenie"
 
 
     }

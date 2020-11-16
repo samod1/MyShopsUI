@@ -4,21 +4,24 @@ import PropTypes from 'prop-types';
 import React,{Component}   from 'react';
 import Footer from "../Footer/Footer";
 import Body from "../Body/Body";
-import ShopsMenu,{MENU_EVENT} from '../Menu/Menu'
+import {ShopsMenu,MENU_EVENT} from '../PageMenu/PageMenu'
 import {Container, Icon, Menu, Segment, Sidebar} from "semantic-ui-react";
 import Registerform from "../Registerform/Registerform";
 import CompleteRegistration from "../Registerform/CompleteRegistration";
 import ShopsMainInfoBar from "../Header/ShopsMainInfoBar";
-import {getJsonFromLocation, isLogged} from "../../../Tools/Tools";
+import * as Tools  from "../../../Tools/Tools";
 import Login from "../Login/Login";
 import {BaseComponent} from "../../BaseComponent";
 import {JWTTokenInvalid,JWTTokenDoesNotExists} from "../../../Tools/MyShopsExceptions";
+import {UserSettings} from "../User/UserSettings";
+import "../../../css/MyShops.css"
+import "./Page.css"
 
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
     mobile: 0,
     tablet: 768,
-    computer: 1024,
+    desktop: 1024,
   },
 })
 
@@ -28,6 +31,7 @@ const MAIN_PANEL_MODE_REGISTER      = 0x02
 const MAIN_PANEL_MODE_LOGIN         = 0x03
 const MAIN_PANEL_MODE_REGCOMPLETE   = 0x04
 const MAIN_PANEL_MODE_LOGGED        = 0x05
+const MAIN_PANEL_MODE_USER_SETTINGS = 0x06
 
 export const MAIN_PANEL_PATH_MAIN          = "/"
 export const MAIN_PANEL_PATH_REGISTER      = "/register"
@@ -37,9 +41,10 @@ export const EVNAME_CLOSE_LOGIN = "CloseLogin";
 export const EVNAME_OPEN_REGISTER = "OpenRegister";
 export const EVNAME_OPEN_LOGIN = "OpenLogin";
 export const EVNAME_SHOW_INFO = "ShowInfo";
-export const EVNAME_INVALIDJWT = "InvalidJwt"
-export const EVNAME_LOGINSUCCESS = "LoginSuccess"
-
+export const EVNAME_INVALIDJWT = "InvalidJwt";
+export const EVNAME_LOGINSUCCESS = "LoginSuccess";
+export const EVNAME_LOGOUT = "Logout";
+export const EVNAME_USER_SETTINGS = "UserSettings";
 
 export default class ResponsiveContainer extends BaseComponent {
 
@@ -52,6 +57,8 @@ export default class ResponsiveContainer extends BaseComponent {
         this.handleShowInfo = this.handleShowInfo.bind(this);
         this.handleInvalidJwt = this.handleInvalidJwt.bind(this);
         this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
+        this.handleUserSettings = this.handleUserSettings.bind(this);
 
         this.state = {
             mainPanel_mode: MAIN_PANEL_MODE_INFO,
@@ -66,16 +73,19 @@ export default class ResponsiveContainer extends BaseComponent {
         this.updateHandlersCopy(EVNAME_SHOW_INFO,this.handleShowInfo);
         this.updateHandlersCopy(EVNAME_INVALIDJWT,this.handleInvalidJwt);
         this.updateHandlersCopy(EVNAME_LOGINSUCCESS,this.handleLoginSuccess);
+        this.updateHandlersCopy(EVNAME_LOGOUT,this.handleLogout);
+        this.updateHandlersCopy(EVNAME_USER_SETTINGS,this.handleUserSettings);
 
         if(this.props.path && this.props.path==MAIN_PANEL_PATH_REGISTER){
             this.state.mainPanel_mode = MAIN_PANEL_MODE_REGCOMPLETE;
         }
         if(this.props.location && this.props.location.search && this.props.location.search!==""){
-            let parameters = getJsonFromLocation(this.props.location);
+            let parameters = Tools.getJsonFromLocation(this.props.location);
             this.regkey = parameters["reg_key"];
             console.log(this.regkey);
         }
         this.setName("ResponsiveContainer");
+
     }
 
     handleOpenRegister(){
@@ -94,31 +104,37 @@ export default class ResponsiveContainer extends BaseComponent {
         this.setState({mainPanel_mode: MAIN_PANEL_MODE_INFO })
         return true;
     }
-
     handleShowInfo(){
         this.setState({mainPanel_mode: MAIN_PANEL_MODE_INFO })
         return true;
     }
-
     handleInvalidJwt(){
         this.setState({mainPanel_mode: MAIN_PANEL_MODE_LOGIN })
         return true;
     }
-
     handleLoginSuccess(){
         this.setState({mainPanel_mode: MAIN_PANEL_MODE_LOGGED })
         return true;
     }
+    handleLogout(){
+        Tools.deleteJwt();
+        this.setLogged(false);
+        this.setState({mainPanel_mode: MAIN_PANEL_MODE_INFO })
+        return true;
+    }
+    handleUserSettings(){
+        this.setState({mainPanel_mode: MAIN_PANEL_MODE_USER_SETTINGS })
+    }
 
 
     componentDidMount() {
-        super.componentDidMount();
-        this.isLogged();
+        if (! this.regkey)
+            this.isLogged();
     }
 
     async isLogged(){
         try {
-            let ret = await  isLogged();
+            let ret = await  Tools.isLogged();
             if(ret){
                 this.setLogged(true);
                 this.handleLoginSuccess();
@@ -139,33 +155,54 @@ export default class ResponsiveContainer extends BaseComponent {
     render() {
 
         let body = null;
-        if( this.state.mainPanel_mode == MAIN_PANEL_MODE_REGISTER) {
-            body=<div></div>
-        }
-        if( this.state.mainPanel_mode == MAIN_PANEL_MODE_INFO) {
-            body=<Body mobile={this.props.mobile}></Body>
-        }
-        if( this.state.mainPanel_mode == MAIN_PANEL_MODE_REGCOMPLETE) {
-            body=<div></div>
-        }
         if(this.props.path && this.props.path==MAIN_PANEL_PATH_REGISTER){
             body=<div></div>
         }
-        if( this.state.mainPanel_mode == MAIN_PANEL_MODE_LOGIN) {
-            body=<div></div>
+        switch(this.state.mainPanel_mode){
+
+            case MAIN_PANEL_MODE_REGISTER:
+            case MAIN_PANEL_MODE_REGCOMPLETE:
+            case MAIN_PANEL_MODE_LOGIN:
+            case MAIN_PANEL_MODE_USER_SETTINGS:
+                body=<div></div>;
+                break;
+            case MAIN_PANEL_MODE_INFO:
+                body=<Body mobile={this.props.mobile}></Body>;
+                break;
+
+            default:
+                body=<div></div>;
+
         }
 
         return (
-        <MediaContextProvider>
+            <MediaContextProvider>
                 <Media at="mobile">
-                    <MobileContainer  mobile={this.props.mobile}>{this.props.children}</MobileContainer>
+                    <DesktopContainer state = {this.state}
+                                      regkey = {this.regkey}
+                                      mode = "mobile"
+                                      {...this.getHandlersCopy()}
+                    >
+                        {this.props.children}
+                    </DesktopContainer>
                     {body}
                     <Footer mobile={this.props.mobile}></Footer>
                 </Media>
-                <Media greaterThan="mobile">
-                    <DesktopContainer mobile={this.props.mobile}
-                                      state = {this.state}
+                <Media  greaterThanOrEqual="desktop">
+                    <DesktopContainer state = {this.state}
                                       regkey = {this.regkey}
+                                      mode = "desktop"
+                                      {...this.getHandlersCopy()}
+                    >
+                        {this.props.children}
+                    </DesktopContainer>
+                    {body}
+                    <Footer mobile={this.props.mobile}></Footer>
+                </Media>
+                <Media at="tablet">
+                    <DesktopContainer state = {this.state}
+                                      regkey = {this.regkey}
+                                      mode = "tablet"
                                       {...this.getHandlersCopy()}
                     >
                         {this.props.children}
@@ -188,33 +225,31 @@ export class DesktopContainer extends BaseComponent {
         super(props);
 
         this.createMainPanel = this.createMainPanel.bind(this);
-        this.onLogged = this.props.handlers
-        this.mobile = this.props.mobile;
+        this.createMainPanelGrid = this.createMainPanelGrid.bind(this);
         this.setName("DesktopContainer");
-    }
-
-    /*
-    onMenuEvent(data){
-        if(data == MENU_EVENT.REGISTER){
-            this.dispatchEvent(EVNAME_CLOSE_REGISTER,null,data);
-        }
-        if(data == MENU_EVENT.LOGIN){
-            this.dispatchEvent(EVNAME_OPEN_LOGIN,null,data);
-        }
-        return false;
-    }
-
-    onCloseMainPanel(){
-        this.dispatchEvent(EVNAME_SHOW_INFO,null,null);
-        return false;
-    } */
-
-    onLogged(userContext){
-
+        this.createMenu = this.createMenu.bind(this);
     }
 
 
-    createMainPanel(state,mobile){
+    createMenu(){
+        /*
+        let menuPanel=<Menu
+            fixed={fixed ? 'top' : null}
+            inverted
+            pointing={!fixed}
+            secondary={!fixed}
+            size='large'>
+            <ShopsMenu link={this} {...this.getHandlersCopy()} ></ShopsMenu>
+        </Menu>
+         */
+
+        let menuPanel=<div id="topMenu" style={{backgroundColor: "rgba(0,0,0,0.5)",paddingTop: "5px"}}>
+                <ShopsMenu link={this} {...this.getHandlersCopy()} ></ShopsMenu>
+            </div>
+        return menuPanel;
+    }
+
+    createMainPanel(state){
         let panel="";
         let style = { minHeight: 550, padding: '1em 0em' };
         let styleMenu = {paddingTop: '1em' };
@@ -223,7 +258,7 @@ export class DesktopContainer extends BaseComponent {
             style = { minHeight: 80, padding: '0em 0em' };
             styleMenu = { paddingTop: '1em' };
             panel=<div style={{paddingBottom: '2em', minHeight: '300px',backgroundColor: "white"}}>
-                <Registerform mobile={mobile} onClose={this.onCloseMainPanel}></Registerform>
+                <Registerform link={this}  {...this.getHandlersCopy()}></Registerform>
             </div>
         };
 
@@ -231,16 +266,15 @@ export class DesktopContainer extends BaseComponent {
             style = { minHeight: 80, padding: '0em 0em' };
             styleMenu = { paddingTop: '1em' };
             panel=<div style={{paddingBottom: '2em', minHeight: '300px',backgroundColor: "white"}}>
-                <Login mobile={mobile} link={this}  {...this.getHandlersCopy()} ></Login>
+                <Login link={this}  {...this.getHandlersCopy()} ></Login>
             </div>
         };
 
-        if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_INFO)
-        {
+        if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_INFO){
             style = { minHeight: 550, padding: '0em 0em' };
             styleMenu = { paddingTop: '1em' };
             panel=<>
-                <ShopsMainInfoBar mobile={mobile}></ShopsMainInfoBar>
+                <ShopsMainInfoBar></ShopsMainInfoBar>
             </>
 
         }
@@ -248,39 +282,108 @@ export class DesktopContainer extends BaseComponent {
             style = { minHeight: 80, padding: '0em 0em' };
             styleMenu = { paddingTop: '1em' };
             panel=<div style={{paddingBottom: '2em', minHeight: '300px',backgroundColor: "white"}}>
-                <CompleteRegistration mobile={mobile} onClose={this.onCloseMainPanel} regkey={this.props.regkey}>
+                <CompleteRegistration link={this}  {...this.getHandlersCopy()} regkey={this.props.regkey}>
                 </CompleteRegistration>
             </div>
         };
 
+
+
         if(this.getLogged()){
-            style = { minHeight: 80, padding: '0em 0em' };
-            styleMenu = { paddingTop: '1em' };
-            panel= <div id="logged_panel" style={{paddingBottom: '2em', minHeight: '300px',backgroundColor: "white"}}>
-            </div>
+
+            if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_USER_SETTINGS){
+                style = { minHeight: 80, padding: '0em 0em' };
+                styleMenu = { paddingTop: '1em' };
+                panel=<div id="UserSettings" className="full" >
+                    <UserSettings link={this}  {...this.getHandlersCopy()} ></UserSettings>
+                </div>
+            } else {
+                style = { minHeight: 80, padding: '0em 0em' };
+                styleMenu = { paddingTop: '1em' };
+                panel= <div id="logged_panel" style={{paddingBottom: '2em', minHeight: '500px',backgroundColor: "white"}}>
+                </div>
+            }
+
         };
 
         return {panel: panel,style: style,styleMenu: styleMenu};
+    }
+    createMainPanelGrid(state){
+
+        let panel = null;
+        let mainPanel = this.createMainPanel(this.props.state);
+        let fixed = false;
+
+        if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_INFO){
+            panel = <div className="grid-container dc_grid-one_column mainPanel" style={{padding: "0px"}}>
+                <Segment id="PageHeaderSegment" style={{
+                    backgroundColor: "black",
+                    padding: '0em',
+                    margin: "0em",
+                    borderStyle: 'none',
+                    boxShadow: 'none',
+                    borderRadius: '0px'
+                }}>
+                    {mainPanel.panel}
+                </Segment>
+            </div>
+        }else{
+            if(this.isDesktop()) {
+                panel = <div className="grid-container dc_grid-three_column mainPanel"  style={{padding: "14px"}}>
+                    <div></div>
+                    <Segment id="PageHeaderSegment" style={{
+                        backgroundColor: "black",
+                        padding: '0em 0em 0em 0em',
+                        borderStyle: 'none',
+                        boxShadow: 'none'
+                    }}>
+                        {mainPanel.panel}
+                    </Segment>
+                    <div></div>
+                </div>
+            }
+            if(this.isTablet()){
+                panel = <div className="grid-container dc_grid-three_column_tablet mainPanel"  style={{padding: "0px"}}>
+                    <div></div>
+                    <Segment id="PageHeaderSegment" style={{
+                        backgroundColor: "black",
+                        padding: '0em 0em 0em 0em',
+                        borderStyle: 'none',
+                        boxShadow: 'none'
+                    }}>
+                        {mainPanel.panel}
+                    </Segment>
+                    <div></div>
+                </div>
+            }
+        }
+
+        /* panel = <div className="grid-container dc_grid-three_column mainPanel"> */
+
+
+        return panel;
     }
 
     render() {
         const { children } = this.props
         const { fixed } = false
 
-        let mainPanel = this.createMainPanel(this.props.state,this.props.mobile);
+        let mainPanelGrid = this.createMainPanelGrid(this.props.state);
 
         let titleStyle = null;
-        if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_INFO)
-            titleStyle={minHeight: '500px',backgroundColor: 'black'};
 
-        if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_REGISTER)
-            titleStyle={minHeight: '80px',backgroundColor: 'black'};
+        switch(this.props.state.mainPanel_mode){
 
-        if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_LOGIN)
-            titleStyle={minHeight: '80px',backgroundColor: 'black'};
+            case MAIN_PANEL_MODE_INFO:
+                titleStyle={minHeight: '500px',backgroundColor: 'black'};
+                break;
+            case MAIN_PANEL_MODE_REGISTER:
+            case MAIN_PANEL_MODE_LOGIN:
+            case MAIN_PANEL_MODE_LOGGED:
+                titleStyle={minHeight: '80px',backgroundColor: 'black'};
+                break;
 
-        if(this.props.state.mainPanel_mode == MAIN_PANEL_MODE_LOGGED)
-            titleStyle={minHeight: '80px',backgroundColor: 'black'};
+        }
 
         return (
             <div id="desktopContainer">
@@ -289,17 +392,8 @@ export class DesktopContainer extends BaseComponent {
                     textAlign='center'
                     style={titleStyle}
                     vertical>
-                    <Menu
-                        fixed={fixed ? 'top' : null}
-                        inverted={!fixed}
-                        pointing={!fixed}
-                        secondary={!fixed}
-                        size='large'>
-                        <ShopsMenu link={this} {...this.getHandlersCopy()} ></ShopsMenu>
-                    </Menu>
-                    <Segment id="PageHeaderSegment" style={{backgroundColor: "black",padding:'0em'}}>
-                        {mainPanel.panel}
-                    </Segment>
+                    {this.createMenu()}
+                    {mainPanelGrid}
                 </Segment>
 
                 {children}
@@ -312,62 +406,3 @@ DesktopContainer.propTypes = {
     children: PropTypes.node,
 }
 
-export class MobileContainer extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    state = {}
-
-    handleSidebarHide = () => this.setState({ sidebarOpened: false })
-    handleToggle = () => this.setState({ sidebarOpened: true })
-
-    render() {
-        const { children } = this.props
-        const { sidebarOpened } = this.state
-
-        return (
-            <div>
-                <Sidebar.Pushable>
-                    <Sidebar
-                        as={Menu}
-                        animation='overlay'
-                        inverted
-                        onHide={this.handleSidebarHide}
-                        vertical
-                        visible={sidebarOpened}
-                        style={{paddingTop: '1em'}}
-                    >
-                        <ShopsMenu mobile="false"></ShopsMenu>
-                    </Sidebar>
-
-                    <Sidebar.Pusher dimmed={sidebarOpened}>
-                        <Segment
-                            inverted
-                            textAlign='center'
-                            style={{ minHeight: 350, padding: '1em 0em' }}
-                            vertical
-                        >
-                            <Container>
-                                <Menu inverted pointing secondary size='large'>
-                                    <Menu.Item onClick={this.handleToggle}>
-                                        <Icon name='sidebar' />
-                                    </Menu.Item>
-                                </Menu>
-                            </Container>
-                            {console.log(this.props)}
-                            <ShopsMainInfoBar mobile={true}></ShopsMainInfoBar>
-                        </Segment>
-
-                        {children}
-                    </Sidebar.Pusher>
-                </Sidebar.Pushable>
-            </div>
-        )
-    }
-}
-
-MobileContainer.propTypes = {
-    children: PropTypes.node,
-}

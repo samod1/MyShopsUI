@@ -6,12 +6,14 @@ import {validateEmail, getLocalizedString, MessageLocalization} from "../../../T
 import '../../../css/MyShops.css'
 import {postData, getData, ServerError} from "../../../Tools/servercall";
 import Config from "../../../Tools/Config"
+import {BaseComponent} from "../../BaseComponent";
+import {EVNAME_SHOW_INFO,EVNAME_CLOSE_REGISTER} from "../Page/Page";
 
 const SHOPS_CODE_REG_EMAILEXISTS = 100001;
 const SHOPS_CODE_REG_EMAILINVALID = 100002;
 const SHOPS_CODE_REG_EMAILPREVATTEMPT = 100003;
 
-export class Registerform extends Component{
+export class Registerform extends BaseComponent{
 
        constructor(props) {
            super(props);
@@ -100,7 +102,7 @@ export class Registerform extends Component{
 
 
     gotoMainPage(ev,data){
-        this.props.onClose();
+        this.dispatchEvent(EVNAME_SHOW_INFO,ev,data);
     }
 
     setUsername(ev,data){
@@ -154,7 +156,6 @@ export class Registerform extends Component{
    render(){
        const { intl } = this.props;
        return(
-           <Form>
                <div className="page-login" style={{minHeight: '700px'}}>
                    <div className="ui centered grid container">
                        <div className="nine wide column">
@@ -264,7 +265,6 @@ export class Registerform extends Component{
                        </div>
                    </div>
                </div>
-           </Form>
        )
    }
 

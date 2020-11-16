@@ -12,6 +12,7 @@ import {
     Link
 } from "react-router-dom";
 import ConfigPanel from "./Components/ConfigPanel/ConfigPanel"
+import {screenMedia} from "./Components/BaseComponent"
 
 const locale = (navigator.languages && navigator.languages[0])
     || navigator.language
@@ -19,10 +20,12 @@ const locale = (navigator.languages && navigator.languages[0])
     || 'en-US';
 
 let locale_test='sk-SK';
+const scrmedia = new screenMedia();
 
 
 function App(props) {
-  return (
+
+    return (
     <React.StrictMode>
         <AppProvider>
             <Router>

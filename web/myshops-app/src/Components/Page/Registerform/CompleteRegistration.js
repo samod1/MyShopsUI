@@ -7,13 +7,15 @@ import '../../../css/MyShops.css'
 import {postData,getJson, getData, ServerError} from "../../../Tools/servercall";
 import Passwordfield from "../../Passwordfield/Passwordfield";
 import Config from "../../../Tools/Config"
+import {BaseComponent} from "../../BaseComponent";
+import {EVNAME_SHOW_INFO,EVNAME_OPEN_LOGIN} from "../Page/Page";
 
 
 const SHOPS_CODE_REG_EMAILEXISTS = 100001;
 const SHOPS_CODE_REG_EMAILINVALID = 100002;
 const SHOPS_CODE_REG_EMAILPREVATTEMPT = 100003;
 
-export class CompleteRegistration extends Component{
+export class CompleteRegistration extends BaseComponent{
 
     constructor(props) {
         super(props);
@@ -28,10 +30,8 @@ export class CompleteRegistration extends Component{
         this.message_detail = this.message_detail.bind(this);
         this.hideErrMessage = this.hideErrMessage.bind(this);
         this.hideOKMessage = this.hideOKMessage.bind(this);
-        this.sendRegistrationCompleti1on = this.sendRegistrationCompletion.bind(this);
+        this.sendRegistrationCompletion = this.sendRegistrationCompletion.bind(this);
         this.gotoMainPage = this.gotoMainPage.bind(this);
-
-        this.ct = new Config();
 
         this.password = "";
         this.password1 = "";
@@ -47,7 +47,7 @@ export class CompleteRegistration extends Component{
 
     sendRegistrationCompletion (password){
 
-        postData( this.ct.api_url + '/users/registration/confirm',{password: password,registration_key: this.props.regkey} )
+        postData( this.config.api_url + '/users/registration/confirm',{password: password,registration_key: this.props.regkey} )
             .then(retData => {
                 console.log(retData);
                 this.srvDescId = "registerform.compl.OK";
@@ -99,7 +99,7 @@ export class CompleteRegistration extends Component{
     }
 
     gotoMainPage(ev,data){
-        this.props.onClose();
+        this.dispatchEvent(EVNAME_SHOW_INFO,ev,data);
     }
 
     setPassword(data){
@@ -149,7 +149,7 @@ export class CompleteRegistration extends Component{
 
     getRegistrationData(){
 
-        postData(this.ct.api_url_registration + '/getbykey',{registration_key: this.props.regkey} )
+        postData(this.config.api_url_registration + '/getbykey',{registration_key: this.props.regkey} )
             .then(retData => {
                 console.log("getRegistrationData=")
                 console.log(retData);

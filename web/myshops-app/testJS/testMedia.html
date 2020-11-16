@@ -1,0 +1,55 @@
+<!doctype html>
+<html >
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<span id="text1">Nezname media</span>
+
+
+<script>
+
+    var mobile = false;
+    var tablet = false;
+    var desktop = false;
+
+    var mqls = [ window.matchMedia('(max-width: 700px)'),
+                 window.matchMedia('(min-width: 701px) and (max-width: 1023px)'),
+                 window.matchMedia('(min-width: 1024px)')]
+
+    function changeML(ev){
+        console.log(ev);
+
+        mobile = false;
+        tablet = false;
+        desktop = false;
+
+        let txt = ev.toString();
+        if(ev.matches === true){
+            if(ev.media === '(max-width: 700px)'){
+                txt = ev.media;
+                mobile = true;
+            } else if (ev.media === '(min-width: 701px) and (max-width: 1023px)'){
+                txt = ev.media;
+                tablet = true;
+            } else if (ev.media === '(min-width: 1024px)'){
+                txt = ev.media;
+                desktop = true;
+            }
+            let el = document.getElementById('text1');
+            el.textContent = txt;
+        }
+    }
+
+
+    mqls.forEach( (mql) => {
+        changeML(mql);
+        mql.addEventListener('change',changeML);
+        });
+
+
+
+</script>
+</body>
+</html>

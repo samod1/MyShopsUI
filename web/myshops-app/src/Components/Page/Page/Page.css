@@ -1,0 +1,20 @@
+.dc_grid-three_column{
+    grid-template-columns: 1fr 9fr 1fr;
+}
+.dc_grid-three_column_tablet{
+    grid-template-columns: 1fr 90fr 1fr;
+}
+.dc_grid-one_column{
+    grid-template-columns: 1fr;
+}
+
+
+.mainPanel{
+    background-color: white;
+}
+
+#UserSettings {
+    padding_bottom: 2em;
+    min-height: 600px;
+    background: white;
+}
