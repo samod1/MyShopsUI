@@ -51,7 +51,7 @@ function AppL1(props){
 
     return (
         <IntlProvider locale={ctx.language} messages={messages[ctx.language]}>
-            <div className="App">
+            <div id="AppL1" className="App">
                 <ResponsiveContainer></ResponsiveContainer>
             </div>
         </IntlProvider>
@@ -62,8 +62,8 @@ function AppL2(props){
     const  [ctx,dispatch] = useContext(AppContext)
     return (
         <IntlProvider locale={ctx.language} messages={messages[ctx.language]}>
-            <div className="App">
-                <ResponsiveContainer path={MAIN_PANEL_PATH_REGISTER} location={props.location}></ResponsiveContainer>
+            <div id="AppL2" className="App">
+                <ResponsiveContainer id="ResponsiveContainer" path={MAIN_PANEL_PATH_REGISTER} location={props.location}></ResponsiveContainer>
             </div>
         </IntlProvider>
     )
@@ -73,8 +73,8 @@ function AppL3(props){
     const  [ctx,dispatch] = useContext(AppContext)
     return (
             <IntlProvider locale={ctx.language} messages={messages[ctx.language]} >
-                <div className="App" hidden={!config.dev}>
-                    <ConfigPanel></ConfigPanel>
+                <div id="AppL3" className="App" hidden={!config.dev}>
+                    <ConfigPanel id="ConfigPanel"></ConfigPanel>
                 </div>
             </IntlProvider>
     )

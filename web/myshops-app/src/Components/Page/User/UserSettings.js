@@ -12,7 +12,8 @@ import {LinkButton} from "../../Button/LinkButton"
 import {Menu,MenuItem,MenuIconItem} from "../../Menu/Menu";
 import {Divider} from "../../Divider/Divider";
 import {getJson, postData,getData, ServerError} from "../../../Tools/servercall";
-import {Language} from "../../../Tools/Languages";
+import Languages, {Language} from "../../../Tools/Languages";
+import {MyShopsException} from "../../../Tools/MyShopsExceptions";
 
 export class UserSettingsIntl extends BaseComponent {
 
@@ -139,19 +140,21 @@ class UserIntl extends BaseComponent{
         this.message_detail = this.message_detail.bind(this);
         this.aliasCancel = this.aliasCancel.bind(this);
         this.aliasSave = this.aliasSave.bind(this);
+        this.onClickLang = this.onClickLang.bind(this);
+        this.langCancel = this.langCancel.bind(this);
+        this.langSave = this.langSave.bind(this);
+        this.setAlias = this.setAlias.bind(this);
+        this.saveAlias = this.saveAlias.bind(this);
+
+        this.alias = "";
         this.userdata={};
         this.retData = {};
         this.state = {
             srvErr: false
         };
-        this.changeAlias=false;
 
     }
 
-    onClickAlias(){
-        console.log("onClickAlias");
-        this.setState({chgAlias: true})
-    }
 
     getUserData(){
         getData(this.config.api_url + '/users/' + this.getUserName().username )
@@ -180,7 +183,6 @@ class UserIntl extends BaseComponent{
                 }
             });
     }
-
 
     componentDidMount() {
         super.componentDidMount();
@@ -216,15 +218,60 @@ class UserIntl extends BaseComponent{
         return localizedMessage;
     }
 
-
-    aliasSave(ev,data){
-        console.log("onClickAliasSave");
-        this.setState({chgAlias: false})
+    saveAlias(){
+        postData(this.config.api_url + '/users/' + this.getUserName().username + "/alias",{alias: this.alias})
+            .then(retData => {
+                console.log(retData);
+                this.srvDescId = "loginform.OK";
+                this.retData = retData;
+                this.userdata.alias = this.alias;
+                this.setState({srvErr: false});
+            })
+            .catch(error => {
+                if(error instanceof ServerError){
+                    console.log(error.data);
+                    this.srvDescId = error.data.shops_code;
+                    this.retData = error.data;
+                    this.setState({srvErr: true});
+                } else {
+                    console.log(error);
+                    this.srvDescId = null;
+                    this.srvMsg = error.message
+                    this.setState({srvErr: true});
+                }
+            });
     }
 
+    /* ***   Alias  *** */
+    onClickAlias(){
+        console.log("onClickAlias");
+        this.setState({chgAlias: true})
+    }
+    aliasSave(ev,data){
+        console.log("onClickAliasSave");
+        this.setState({chgAlias: false});
+        this.saveAlias()
+    }
     aliasCancel(ev,data){
         console.log("onClickAliasCancel");
         this.setState({chgAlias: false})
+    }
+    setAlias(ev,data){
+        this.alias = ev.target.value;
+    }
+
+    /* ***   Language  *** */
+    langSave(ev,data){
+        console.log("onClickLangSave");
+        this.setState({chgLang: false})
+    }
+    langCancel(ev,data){
+        console.log("onClickLangCancel");
+        this.setState({chgLang: false})
+    }
+    onClickLang(){
+        console.log("onClickLang");
+        this.setState({chgLang: true})
     }
 
 
@@ -274,6 +321,13 @@ class UserIntl extends BaseComponent{
             chgAliasStyle.display = "none";
         }
 
+        let chgLangStyle= {};
+        if(this.state.chgLang){
+            chgLangStyle.display = "flex";
+
+        }else{
+            chgLangStyle.display = "none";
+        }
 
 
         return(
@@ -281,7 +335,7 @@ class UserIntl extends BaseComponent{
 
                 <Message negative hidden={this.hideErrMessage()}>
                     <Message.Header>
-                        <FormattedMessage id="loginform.srvErrorTitle"
+                        <FormattedMessage id="usersettings.user.saveAlias"
                                           defaultMessage= "ENTER ME TO MESSAGES"/>
                     </Message.Header>
                     <p>
@@ -321,14 +375,15 @@ class UserIntl extends BaseComponent{
                         <label className="flexcolumn" style={{paddingTop: "0.5em"}}>
                             <FormattedMessage id="usersettings.user.alias1"/>
                         </label>
-                        <Form.Field  style={{paddingTop: "0.5em"}}>
+                        <Form.Field  style={{paddingTop: "0.5em",width: "100%"}}>
                             <Form.Input type=""
                                         name="alias"
                                         placeholder={intl.formatMessage(
                                             {id: "usersettings.user.alias",
                                                 defaultMessage: "ENTER ME TO MESSAGES"})}
-                                        onChange={this.setUsername}
+                                        onChange={this.setAlias}
                                         error={this.uname_err}
+                                        style={{width: "80%"}}
 
                             />
                             {this.uname_err && <Label pointing prompt>
@@ -388,32 +443,19 @@ class UserIntl extends BaseComponent{
                             <FormattedMessage id="usersettings.user.langlabel"/>
                         </label>
                         <Language></Language>
-                        <LinkButton iconname='edit' text='Upravit' onClick={this.onClickAlias}>
+                        <LinkButton iconname='edit' text='Upravit' hidden={this.state.chgLang} onClick={this.onClickLang}>
                         </LinkButton>
                     </div>
 
-                    <div className={"us_chgAlias"} style={chgAliasStyle}>
+                    <div className={"us_chgLang"} style={chgLangStyle}>
                         <label className="flexcolumn" style={{paddingTop: "0.5em"}}>
-                            <FormattedMessage id="usersettings.user.alias1"/>
+                            <FormattedMessage id="usersettings.user.lang1"/>
                         </label>
-                        <Form.Field  style={{paddingTop: "0.5em"}}>
-                            <Form.Input type=""
-                                        name="alias"
-                                        placeholder={intl.formatMessage(
-                                            {id: "usersettings.user.alias",
-                                                defaultMessage: "ENTER ME TO MESSAGES"})}
-                                        onChange={this.setUsername}
-                                        error={this.uname_err}
-
-                            />
-                            {this.uname_err && <Label pointing prompt>
-                                {getLocalizedString(this.errdescid,intl)}
-                            </Label>}
-                        </Form.Field>
+                        <Languages></Languages>
                         <div style={{display:"flex", flexDirection: "row", paddingTop: "1.5em" }}>
                             <div style={{paddingRight: "1em"}}>
                                 <Button className="ui primary labeled icon button" type="submit"
-                                        onClick={this.aliasSave}
+                                        onClick={this.langSave}
                                         style={{paddingRight: "0.5em" }}
                                 >
                                     <i className="save alternate icon"></i>
@@ -424,7 +466,7 @@ class UserIntl extends BaseComponent{
                             </div>
                             <div>
                                 <Button className="ui labeled icon button" type="submit"
-                                        onClick={this.aliasCancel}
+                                        onClick={this.langCancel}
                                 >
                                     <i className="cancel alternate icon"></i>
                                     <FormattedMessage id="cancelbut"

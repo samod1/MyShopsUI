@@ -178,7 +178,7 @@ export default class ResponsiveContainer extends BaseComponent {
         return (
             <MediaContextProvider>
                 <Media at="mobile">
-                    <DesktopContainer state = {this.state}
+                    <DesktopContainer id="dc_mobile" state = {this.state}
                                       regkey = {this.regkey}
                                       mode = "mobile"
                                       {...this.getHandlersCopy()}
@@ -189,7 +189,7 @@ export default class ResponsiveContainer extends BaseComponent {
                     <Footer mobile={this.props.mobile}></Footer>
                 </Media>
                 <Media  greaterThanOrEqual="desktop">
-                    <DesktopContainer state = {this.state}
+                    <DesktopContainer id="dc_desktop" state = {this.state}
                                       regkey = {this.regkey}
                                       mode = "desktop"
                                       {...this.getHandlersCopy()}
@@ -200,7 +200,7 @@ export default class ResponsiveContainer extends BaseComponent {
                     <Footer mobile={this.props.mobile}></Footer>
                 </Media>
                 <Media at="tablet">
-                    <DesktopContainer state = {this.state}
+                    <DesktopContainer id="dc_tablet" state = {this.state}
                                       regkey = {this.regkey}
                                       mode = "tablet"
                                       {...this.getHandlersCopy()}
@@ -370,21 +370,21 @@ export class DesktopContainer extends BaseComponent {
             case MAIN_PANEL_MODE_REGISTER:
             case MAIN_PANEL_MODE_LOGIN:
             case MAIN_PANEL_MODE_LOGGED:
-                titleStyle={minHeight: '80px',backgroundColor: 'black'};
+                titleStyle={minHeight: '80px',backgroundColor: 'black',paddingBottom:"0px"};
                 break;
 
         }
-
+        titleStyle = null;
         return (
             <div id="desktopContainer">
-                <Segment
+                <Segment id="segment"
                     inverted
                     textAlign='center'
                     style={titleStyle}
                     vertical>
                     {this.createMenu()}
-                    {mainPanelGrid}
                 </Segment>
+                {mainPanelGrid}
 
                 {children}
             </div>

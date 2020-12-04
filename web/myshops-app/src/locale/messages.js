@@ -85,7 +85,12 @@ export default {
         "usersettings.user.regdate":"Registration date",
         "usersettings.user.deleteUser":"Delete user account",
         "usersettings.user.cancelDeleteUser":"Deactivate user deletion process",
-        "usersettings.user.langlabel":"Actual language"
+        "usersettings.user.langlabel":"Actual language",
+        "usersettings.user.saveAliasOK": "Saving of the alias was successful. ",
+        "usersettings.user.saveAlias": "Alias saving",
+        "usersettings.srv_100013": "Alias already exists, enter another alias."
+
+
 
 
     },
@@ -173,7 +178,11 @@ export default {
         "usersettings.user.regdate":"Dátum registrácie",
         "usersettings.user.deleteUser":"Zmazanie používateľského účtu",
         "usersettings.user.cancelDeleteUser":"Deaktivovať proces zrušenia používateľa",
-        "usersettings.user.langlabel":"Aktuálne jazykové nastavenie"
+        "usersettings.user.langlabel":"Aktuálne jazykové nastavenie",
+        "usersettings.user.saveAliasOK": "Uloženie aliasu bolo úspešné.",
+        "usersettings.user.saveAlias": "Uloženie aliasu",
+        "usersettings.srv_100013": "Alias je už použitý, zadajte iný."
+
 
 
     }
