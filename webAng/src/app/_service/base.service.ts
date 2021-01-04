@@ -45,7 +45,12 @@ export class BaseService {
           rd.initialize(error);
           this.errorDataSubject.next(rd);
           /* zobrazenie chybovej spravy */
-          this.showShopsError(rd);
+          if((error instanceof MyShopsException)){
+            this.showShopsError(rd);
+          }
+          if((error instanceof ServerError)){
+            this.showOtherError(rd);
+          }
           if(onError){
             onError(rd,serviceObject);
           }

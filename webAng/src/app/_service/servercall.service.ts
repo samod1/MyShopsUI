@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import {MyShopsException,JWTTokenDoesNotExists,JWTTokenInvalid, InternalServerError, ServerError} from '../myshopsexceptions';
+import {
+  MyShopsException,
+  JWTTokenDoesNotExists,
+  JWTTokenInvalid,
+  InternalServerError,
+  ServerError,
+  MyShopsUnauthorized
+} from '../myshopsexceptions';
 import { environment} from '../../environments/environment';
 
 
@@ -59,16 +66,21 @@ function constructRetData(response: any): ReturnData{
 
   if (ret.status !== 200) {
 
+    /* Unathorized */
+    if(ret.status === 400){
+      console.log()
+      throw new MyShopsException(response.statusText,ret);
+    }
+
     /* Forbidden */
     if(ret.status === 403){
       console.log('Server call forbidden, JWT token invalid.')
       throw new JWTTokenInvalid('Server call forbidden, JWT token invalid.',response);
     }
-
     /* Unathorized */
     if(ret.status === 401){
       console.log()
-      throw new MyShopsException(response.statusText,response);
+      throw new MyShopsUnauthorized(response.statusText,response);
     }
     /* Internal server error */
     if(ret.status === 500){

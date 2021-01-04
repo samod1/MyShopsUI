@@ -3,20 +3,24 @@
   <div>
     <mat-form-field appearance="fill">
       <mat-label>{{'app.sign-up.email'| translate}}</mat-label>
-      <input [formControl]="emailControl"  matInput
+      <input [formControl]="emailControl"  matInput [disabled]="disabledComponents"
              placeholder="{{'app.sign-up.email_placeholder'| translate}}"
              required (keyup)="OnEmailChange()">
       <mat-error>{{'app.sign-up.email_invalid' | translate}}</mat-error>
     </mat-form-field>
     <div class="flexRow" id="buttons">
-      <app-icon-button [disabled]="emailInvalid" color="primary"
+      <app-icon-button *ngIf="!registerAgain" [disabled]="emailInvalid || disabledComponents" color="primary"
                        buttonTextKey="app.sign-up.crtbut"
                        iconName="create" (click)="OnCreate()" ></app-icon-button>
-      <app-icon-button color="basic" buttonTextKey="app.cancelbut"
+      <app-icon-button *ngIf="registerAgain" [disabled]="emailInvalid || disabledComponents" color="primary"
+                       buttonTextKey="app.sign-up.crtbutagain"
+                       iconName="create" (click)="OnCreateAgain()" ></app-icon-button>
+      <app-icon-button color="basic" buttonTextKey="app.cancelbut" [disabled]="disabledComponents"
                        iconName="cancel" routerLink="/"></app-icon-button>
     </div>
   </div>
 
 
 </div>
+<app-loading-indicator [loading]="loading"></app-loading-indicator>
 
