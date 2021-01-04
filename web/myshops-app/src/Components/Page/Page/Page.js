@@ -176,9 +176,19 @@ export default class ResponsiveContainer extends BaseComponent {
         }
 
         return (
+
+/*            <DesktopContainer  state = {this.state}
+                               regkey = {this.regkey}
+                               mode = "desktop"
+                               {...this.getHandlersCopy()}
+            >
+                {this.props.children}
+            </DesktopContainer>
+*/
+
             <MediaContextProvider>
                 <Media at="mobile">
-                    <DesktopContainer id="dc_mobile" state = {this.state}
+                    <DesktopContainer  state = {this.state}
                                       regkey = {this.regkey}
                                       mode = "mobile"
                                       {...this.getHandlersCopy()}
@@ -189,7 +199,7 @@ export default class ResponsiveContainer extends BaseComponent {
                     <Footer mobile={this.props.mobile}></Footer>
                 </Media>
                 <Media  greaterThanOrEqual="desktop">
-                    <DesktopContainer id="dc_desktop" state = {this.state}
+                    <DesktopContainer  state = {this.state}
                                       regkey = {this.regkey}
                                       mode = "desktop"
                                       {...this.getHandlersCopy()}
@@ -200,7 +210,7 @@ export default class ResponsiveContainer extends BaseComponent {
                     <Footer mobile={this.props.mobile}></Footer>
                 </Media>
                 <Media at="tablet">
-                    <DesktopContainer id="dc_tablet" state = {this.state}
+                    <DesktopContainer  state = {this.state}
                                       regkey = {this.regkey}
                                       mode = "tablet"
                                       {...this.getHandlersCopy()}
@@ -211,6 +221,7 @@ export default class ResponsiveContainer extends BaseComponent {
                     <Footer mobile={this.props.mobile}></Footer>
                 </Media>
             </MediaContextProvider>
+
         )
     }
 }

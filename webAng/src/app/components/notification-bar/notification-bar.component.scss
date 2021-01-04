@@ -1,0 +1,36 @@
+@import '../_colors';
+@import '../components_common';
+:host {
+  display: flex;
+}
+
+.notifPanel {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em 1em 0.5em 1em;
+  min-width: 20em;
+}
+
+.notifRow{
+  @extend .flexRow;
+  & .typeIcon {
+    padding-right: 0.3em;
+  }
+  & div {
+    flex: max-content;
+  }
+  & .pointer{
+    cursor: pointer;
+    padding-left: 0.3em;
+  }
+}
+
+.errIcon {
+  color: #c13333;
+}
+.warnIcon {
+  color: #dada47;
+}
+.infoIcon {
+  color: #47a447;
+}

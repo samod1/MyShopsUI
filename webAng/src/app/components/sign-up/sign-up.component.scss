@@ -1,16 +1,15 @@
 @import '../colors';
+@import '../components_common';
 :host {
-  height: 100vh;
+  height: 60vh;
   display: flex;
 }
 
 .signup {
-  width: 466px;
-  height: 242px;
-  margin: auto;
+  /*width: 40vw;
+  height: 12vh; */
   display: block;
-  border-top: 4px solid $comic-menu-link;
-  padding: 0;
+  margin: auto;
 
 
   & mat-card-content {
@@ -18,12 +17,15 @@
   }
 
   & mat-form-field {
-    width: 400px;
+    width: 40em;
   }
 
   & button {
     float: right;
+
   }
+
+
   & .error {
     position: absolute;
     left: 33px;

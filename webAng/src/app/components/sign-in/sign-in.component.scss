@@ -1,0 +1,40 @@
+@import '../_colors';
+@import '../components_common';
+:host {
+  height: 60vh;
+  display: flex;
+}
+
+.login {
+  margin: auto;
+  display: block;
+
+  & mat-form-field {
+    width: 40em;
+  }
+
+  & button {
+    float: right;
+  }
+  & .error {
+    position: absolute;
+    left: 33px;
+    bottom: 33px;
+    color: red;
+  }
+}
+
+
+.password {
+  & ::ng-deep.mat-form-field-suffix {
+    display: flex;
+  }
+  & .eye {
+    cursor: pointer;
+  }
+  & .eyeDisabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    color: grey;
+  }
+}

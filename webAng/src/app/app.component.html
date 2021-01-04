@@ -1,0 +1,29 @@
+
+<div id="application" fxLayout="column" fxFlexFill>
+  <div id="header">
+    <!-- Title bar, login, register  -->
+    <app-top-bar></app-top-bar>
+  </div>
+  <!-- Page content  -->
+  <div id="pageContent" fxLayout="row" fxFlexFill fxLayoutGap="32px">
+
+    <div id="leftContent" style="max-width: 3%">
+
+    </div>
+
+    <div id="middleContent" style="min-width: 94%">
+      <app-notification-bar></app-notification-bar>
+      <router-outlet></router-outlet>
+    </div>
+
+    <div id="rightContent" style="max-width: 3%">
+
+    </div>
+
+  </div>
+  <!-- footer -->
+  <div id="pageFooter">
+    footer
+  </div>
+</div>
+

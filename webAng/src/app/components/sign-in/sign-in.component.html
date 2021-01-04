@@ -1,0 +1,30 @@
+  <div class="login borderPanel">
+      <h2>{{'app.sign-in.title' | translate}}</h2>
+      <div class="flexColumn">
+        <mat-form-field appearance="fill">
+          <mat-label>{{'app.sign-in.email'| translate}}</mat-label>
+          <input [formControl]="loginControl"  matInput
+                 placeholder="{{'app.sign-in.email_placeholder'| translate}}"
+                 required>
+          <mat-error>{{'app.sign-in.uname_empty' | translate}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="password">
+          <mat-label>{{'app.sign-in.password' | translate}}</mat-label>
+          <input matInput [formControl]="passwordControl"
+                 type="password"  #passwordField >
+            <mat-icon matSuffix [class]="eyeIconClass"
+                      (mousedown)="passwordField.type='text'"
+                      (mouseup)="passwordField.type='password'">remove_red_eye</mat-icon>
+          <mat-error>{{'app.sign-in.password_empty' | translate}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="flexRow" id="buttons">
+        <app-icon-button  color="primary" buttonTextKey="app.sign-in.loginbut"
+                         iconName="login" [disabled]="loading"
+                          (click)="onLogin()" ></app-icon-button>
+        <app-icon-button color="basic" buttonTextKey="app.cancelbut" iconName="cancel"
+                         routerLink="/" [disabled]="loading"></app-icon-button>
+      </div>
+  </div>
+  <app-loading-indicator [loading]="loading"></app-loading-indicator>

@@ -1,0 +1,63 @@
+{
+  "app" : {
+    "exitbut": "Návrat na hlavnú stránku",
+    "cancelbut": "Zrušiť",
+    "edit": "Upraviť",
+    "delete": "Zmazať",
+    "save": "Uložiť",
+    "loading": " Spracovanie ...",
+    "deactivate":"Deaktivovať",
+
+    "srv": {
+      "100001": "Účet s daným e-mailom už existuje.",
+      "100002": "Zadaná e-mailová adresa nie je v správnom tvare. ",
+      "100003": "Predchádzajúca požiadavka na registráciu nebola dokončená.",
+      "100004": "Registračný kľúč nie je platný.",
+      "100005": "Heslo nie je dostatočne silné. Dĺžka minimálne 8 znakov, veľké písmeno, malé písmeno, špecialny znak a číslica.",
+      "100006": "Používateľ neexistuje.",
+      "100007": "Heslo používateľa je expirované.",
+      "100008": "Používateľ je zablokovaný.",
+      "100009": "Neplatné používateľské meno alebo heslo."
+    },
+
+    "top-bar" : {
+        "login": "Prihlásiť",
+        "signup": "Registrovať"
+      },
+    "sign-up" : {
+      "title" : "Registrácia nového účtu",
+      "crtbut" : "Vytvoriť nový účet",
+      "crtbutagain":"Vytvoriť účet znovu",
+      "exitbut": "Návrat na hlavnú stránku",
+      "save":"Uložiť heslo",
+      "email" : "Používateľské meno/e-mail",
+      "email_placeholder" : "jozef@mail.com",
+      "email_empty" : "Prosím vyplňte e-mail",
+      "email_invalid" : "E-mail nie je platný.",
+      "srvErrorTitle": "Chyba registrácie",
+      "srvOKTitle": "Registrácia",
+      "OK": "Na Váš email bola odoslaná správa s informáciou o pokračovaní v procese registrácie.",
+      "regOK": "Registrácia bola dokončená. Môžete pokračovať prihlásením.",
+      "password": "Heslo",
+      "password1": "Opakované heslo",
+      "completeregtitle" : "Dokončenie registrácie",
+      "password_placeholder":"heslo",
+      "password_invalid_length":"Nedostatočná dĺžka hesla. Minimálna dĺžka hesla je šesť znakov.",
+      "password_invalid_noteq": "Heslo a heslo pre kontrolu sa nezhodujú."
+    },
+    "sign-in": {
+      "OK": "Používateľ bol úspešne prihlásený.",
+      "uname_empty": "Prihlasovacie meno musí byť vyplnené.",
+      "password_empty": "Heslo musí byť vyplnené.",
+      "logindata_empty": "Prihlasovacie meno a heslo musia byť vyplnené.",
+      "logindata_unameinvalid": "Prihlasovacie meno nie je platné.",
+      "title" : "Prihlásenie",
+      "srvErrorTitle": "Chyba prihlásenia",
+      "srvOKTitle" : "Úspešné prihlásenie",
+      "email" : "Používateľské meno/e-mail",
+      "password" : "Heslo",
+      "loginbut" : "Prihlásiť",
+      "email_placeholder": "jozef@mail.com"
+    }
+  }
+}

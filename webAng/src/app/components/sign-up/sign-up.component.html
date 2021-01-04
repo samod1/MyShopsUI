@@ -1,0 +1,22 @@
+<div class="signup borderPanel">
+  <h2>{{'app.sign-up.title' | translate}}</h2>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>{{'app.sign-up.email'| translate}}</mat-label>
+      <input [formControl]="emailControl"  matInput
+             placeholder="{{'app.sign-up.email_placeholder'| translate}}"
+             required (keyup)="OnEmailChange()">
+      <mat-error>{{'app.sign-up.email_invalid' | translate}}</mat-error>
+    </mat-form-field>
+    <div class="flexRow" id="buttons">
+      <app-icon-button [disabled]="emailInvalid" color="primary"
+                       buttonTextKey="app.sign-up.crtbut"
+                       iconName="create" (click)="OnCreate()" ></app-icon-button>
+      <app-icon-button color="basic" buttonTextKey="app.cancelbut"
+                       iconName="cancel" routerLink="/"></app-icon-button>
+    </div>
+  </div>
+
+
+</div>
+

@@ -1,0 +1,20 @@
+<mat-accordion displayMode="flat" class="mat-accordion" (mouseover)="onMouseOver()"  (mouseout)="onMouseOut()">
+  <mat-expansion-panel *ngFor="let item of menu" [expanded]="item.selected"
+    [hideToggle]="menuCollapsed && !menuExpanded || !item.items || item.items.length == 0 || !isMenuEnabled(item)"
+    [ngClass]="{'collapsed': menuCollapsed && !menuExpanded, 'full-width' : smallViewport}">
+    <mat-expansion-panel-header [ngClass]="{'active': item.selected}" [collapsedHeight]="'48px'" [expandedHeight]="'48px'" (click)="onMenuItemClicked(item, $event)">
+      <mat-icon>{{item.icon}}</mat-icon>
+      <div class="title-wrapper" [ngClass]="{'hidden': menuCollapsed && !menuExpanded}">
+        {{item.title | translate}}
+      </div>
+    </mat-expansion-panel-header>
+
+    <ng-container *ngIf="isMenuEnabled(item)">
+      <mat-card *ngFor="let subItem of item.items" [ngStyle]="{'display': menuCollapsed && !menuExpanded ? 'none' : 'block'}" >
+        <div class="sub-title-wrapper">
+          <a [routerLink]="subItem.link">{{subItem.title | translate}}</a>
+        </div>
+      </mat-card>
+    </ng-container>
+  </mat-expansion-panel>
+</mat-accordion>

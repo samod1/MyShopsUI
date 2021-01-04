@@ -1,0 +1,93 @@
+@import "../colors";
+
+:host {
+  display: block;
+}
+mat-expansion-panel {
+  box-shadow: none !important;
+  width: 300px;
+  background: inherit !important;
+  color: inherit !important;
+  top: 48px;
+  & mat-card {
+    box-shadow: unset !important;
+    padding: 8px 0px 8px 60px;
+    border-radius: 0;
+    background: inherit !important;
+    color: inherit !important;
+    cursor: pointer;
+    background: $comic-menu-bg-dark !important;
+  }
+  &:last-of-type {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+  &:first-of-type {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+  &.collapsed{
+    width: 68px;
+    & mat-expansion-panel-header {
+      padding: 0;
+    }
+  }
+  &.full-width {
+    width: 100vw ;
+  }
+  & mat-expansion-panel-header {
+    padding: 0 24px 0 0;
+    & fa-icon {
+      width: 68px;
+      text-align: center;
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+    & ::ng-deep.mat-content {
+      align-items: center;
+    }
+    &:hover {
+      background: $comic-menu-active !important;
+    }
+    &.active {
+      box-shadow: 2px 0 0 $comic-menu-link inset;
+    }
+    &.mat-expanded {
+      background: $comic-menu-active;
+    }
+  }
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+::ng-deep .mat-expansion-indicator:after {
+  color: inherit !important;
+}
+
+.mat-accordion {
+  display: inline-block;
+  height: 100%;
+  background: $comic-menu-bg;
+  color: $comic-menu-color;
+}
+
+.title-wrapper {
+  font-size: 13px;
+  margin-left: -10px;
+  &.hidden {
+    display: none;
+  }
+}
+
+.sub-title-wrapper {
+  font-size: 13px;
+  & a {
+    color: $comic-menu-color;
+    text-decoration: none;
+    display: block;
+    padding: 8px;
+  }
+}
+

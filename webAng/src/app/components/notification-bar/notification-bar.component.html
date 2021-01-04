@@ -1,0 +1,36 @@
+
+<div cdkOverlayOrigin #notifPanel="cdkOverlayOrigin" style="min-height: 1px">
+  <ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="notifPanel"
+  [cdkConnectedOverlayOpen]="newMessage"
+  [cdkConnectedOverlayDisableClose]="true"
+  >
+    <div class="notifPanel borderPanel">
+      <div id="notifError" class="notifRow" *ngIf="errorMessages.length>0" >
+        <mat-icon class="typeIcon errIcon">error</mat-icon>
+        <div>
+          <p *ngFor="let msg of errorMessages">{{msg}}</p>
+        </div>
+        <mat-icon (click)="errorClose()" class="pointer errIcon">cancel</mat-icon>
+      </div>
+      <mat-divider *ngIf=" (errorMessages.length>0 && warnMessages.length>0) ||
+                           (errorMessages.length>0 && infoMessages.length>0 && warnMessages.length==0)"></mat-divider>
+      <div id="notifWarn" class="notifRow" *ngIf="warnMessages.length>0">
+        <mat-icon  class="typeIcon warnIcon">warning</mat-icon>
+        <div>
+          <p *ngFor="let msg of warnMessages">{{msg}}</p>
+        </div>
+        <mat-icon [color]="" (click)="warnClose()" class="pointer warnIcon">cancel</mat-icon>
+      </div>
+      <mat-divider *ngIf=" (warnMessages.length>0 && infoMessages.length>0)"></mat-divider>
+      <div id="notifInfo"  class="notifRow" *ngIf="infoMessages.length>0">
+        <mat-icon  class="typeIcon infoIcon">info</mat-icon>
+        <div>
+          <p *ngFor="let msg of infoMessages">{{msg}}</p>
+        </div>
+        <mat-icon [color]="" (click)="infoClose()" class="pointer infoIcon">cancel</mat-icon>
+      </div>
+    </div>
+  </ng-template>
+</div>

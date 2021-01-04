@@ -1,0 +1,12 @@
+<div>
+
+  <button mat-button [matMenuTriggerFor]="menu">Language</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item
+      *ngFor="let lang of languages; let i = index;"
+      (click)="OnLang(lang.langid)" id="lang_{{lang.langid}}"       >{{lang.langtext}}</button>
+  </mat-menu>
+
+  <button mat-stroked-button (click)="OnSignup()" routerLink="signup" >{{'app.top-bar.signup' | translate}}</button>
+  <button mat-stroked-button (click)="OnLogin()" routerLink="signin">{{'app.top-bar.login' | translate}}</button>
+</div>

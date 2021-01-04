@@ -1,0 +1,67 @@
+{
+  "app" : {
+
+    "exitbut": "Return to main page",
+    "cancelbut": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "deactivate":"Deactivate",
+    "loading": " Processing...",
+
+    "srv": {
+      "100001": "Account with specified e-mail, already exists.",
+      "100002": "E-mail is not valid.",
+      "100003": "Previous sign up process for specified e-mail is pending.",
+      "100004": "Registration key is invalid.",
+      "100005": "The password is not strong enough. Length at least 8 characters, uppercase letter, lowercase letter, special character and number.",
+      "100006": "User does not exists.",
+      "100007": "User password is expired.",
+      "100008": "User is disabled.",
+      "100009": "Invalid user name or password."
+
+    },
+
+      "top-bar" : {
+      "login": "Log in",
+      "signup": "Sign up"
+    },
+    "sign-up": {
+      "title": "Register new account",
+      "crtbut" : "Create new account",
+      "crtbutagain":"Send signup again",
+      "exitbut": "Return to main page",
+      "cancelbut": "Cancel",
+      "save":"Save password",
+      "email" : "Username/e-mail",
+      "email_placeholder" : "foo@gmail.com",
+      "email_empty" : "Please fill e-mail",
+      "email_invalid" : "E-mail is not valid.",
+      "srvErrorTitle": "Registration error",
+      "srvOKTitle": "Registration",
+      "OK": "Message with next instruction was sent to entered e-mail.",
+      "regOK": "Registration completed. You can continue by log in.",
+      "password": "Password",
+      "password1": "Password for check",
+      "completeregtitle" : "Sign up completion",
+      "password_placeholder":"password",
+      "password_invalid_length":"Invalid password length. Minimal password length is six characters.",
+      "password_invalid_noteq": "Password and check password is not the same."
+    },
+    "sign-in": {
+      "OK": "User was successfully logged in.",
+      "logindata_empty": "Username and password cannot be empty.",
+      "logindata_unameinvalid": "Login name is invalid.",
+      "uname_empty": "Username cannot be empty.",
+      "password_empty": "Password cannot be empty.",
+      "title" : "Log in to MyShops",
+      "srvErrorTitle": "Login error",
+      "srvOKTitle" : "Successful login",
+      "email" : "Username/e-mail",
+      "password" : "Password",
+      "loginbut" : "Log in",
+      "email_placeholder": "foo@mail.com"
+    }
+  }
+}
+
