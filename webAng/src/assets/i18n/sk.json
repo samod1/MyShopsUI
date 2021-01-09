@@ -7,6 +7,7 @@
     "save": "Uložiť",
     "loading": " Spracovanie ...",
     "deactivate":"Deaktivovať",
+    "exit": "Ukončiť",
 
     "srv": {
       "100001": "Účet s daným e-mailom už existuje.",
@@ -17,33 +18,33 @@
       "100006": "Používateľ neexistuje.",
       "100007": "Heslo používateľa je expirované.",
       "100008": "Používateľ je zablokovaný.",
-      "100009": "Neplatné používateľské meno alebo heslo."
+      "100009": "Neplatné používateľské meno alebo heslo.",
+      "100013": "Alias je už použitý, zadajte iný.",
+      "20000": "Neplatné vstupné údaje."
     },
 
     "top-bar" : {
-        "login": "Prihlásiť",
-        "signup": "Registrovať"
-      },
+      "login": "Prihlásiť",
+      "signup": "Registrovať",
+      "eshops": "E-Obchody",
+      "profiles": "Profily",
+
+      "userMenu": {
+        "settings": "Nastavenia používateľa",
+        "logout": "Odhlásiť"
+      }
+    },
     "sign-up" : {
       "title" : "Registrácia nového účtu",
       "crtbut" : "Vytvoriť nový účet",
       "crtbutagain":"Vytvoriť účet znovu",
-      "exitbut": "Návrat na hlavnú stránku",
-      "save":"Uložiť heslo",
       "email" : "Používateľské meno/e-mail",
       "email_placeholder" : "jozef@mail.com",
       "email_empty" : "Prosím vyplňte e-mail",
       "email_invalid" : "E-mail nie je platný.",
       "srvErrorTitle": "Chyba registrácie",
       "srvOKTitle": "Registrácia",
-      "OK": "Na Váš email bola odoslaná správa s informáciou o pokračovaní v procese registrácie.",
-      "regOK": "Registrácia bola dokončená. Môžete pokračovať prihlásením.",
-      "password": "Heslo",
-      "password1": "Opakované heslo",
-      "completeregtitle" : "Dokončenie registrácie",
-      "password_placeholder":"heslo",
-      "password_invalid_length":"Nedostatočná dĺžka hesla. Minimálna dĺžka hesla je šesť znakov.",
-      "password_invalid_noteq": "Heslo a heslo pre kontrolu sa nezhodujú."
+      "registrationSent": "Na Váš email bola odoslaná správa s informáciou o pokračovaní v procese registrácie."
     },
     "sign-in": {
       "OK": "Používateľ bol úspešne prihlásený.",
@@ -58,6 +59,38 @@
       "password" : "Heslo",
       "loginbut" : "Prihlásiť",
       "email_placeholder": "jozef@mail.com"
+    },
+    "register": {
+      "regOK": "Registrácia bola dokončená. Môžete pokračovať prihlásením.",
+      "password": "Heslo",
+      "password1": "Opakované heslo",
+      "completeregtitle" : "Dokončenie registrácie",
+      "password_placeholder":"heslo",
+      "password_invalid_length":"Nedostatočná dĺžka hesla. Minimálna dĺžka hesla je šesť znakov.",
+      "password_invalid_noteq": "Heslo a heslo pre kontrolu sa nezhodujú.",
+      "save":"Uložiť heslo",
+      "regkeyNotfound": "Registračný kľúč sa nenašiel.",
+      "uname_empty": "Prihlasovacie meno musí byť vyplnené.",
+      "email" : "Používateľské meno/e-mail",
+      "password_empty": "Heslo musí byť vyplnené."
+    },
+    "user-settings":{
+      "title": "Nastavenia",
+      "title.user": "Používateľ",
+      "title.security": "Bezpečnosť",
+      "title.others": "Ostatné",
+      "title.actlog": "Záznam aktivít",
+      "email": "Používateľské meno/e-mail",
+      "alias": "Alias",
+      "alias1":"Alias meno je možné použit pri prihlásení namiesto e-mail adresy.",
+      "notAlias":"Alias nie je nastavený",
+      "regdate":"Dátum registrácie",
+      "deleteUser":"Zmazanie používateľského účtu",
+      "cancelDeleteUser":"Deaktivovať proces zrušenia používateľa",
+      "langlabel":"Aktuálne jazykové nastavenie",
+      "saveAliasOK": "Uloženie aliasu bolo úspešné.",
+      "saveAlias": "Uloženie aliasu"
     }
+
   }
 }

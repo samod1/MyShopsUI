@@ -8,6 +8,8 @@
     "save": "Save",
     "deactivate":"Deactivate",
     "loading": " Processing...",
+    "exit": "Exit",
+
 
     "srv": {
       "100001": "Account with specified e-mail, already exists.",
@@ -18,19 +20,28 @@
       "100006": "User does not exists.",
       "100007": "User password is expired.",
       "100008": "User is disabled.",
-      "100009": "Invalid user name or password."
+      "100009": "Invalid user name or password.",
+      "100013": "Alias already exists, enter another alias.",
+      "20000": "Invalid input data."
 
     },
 
-      "top-bar" : {
+    "top-bar" : {
       "login": "Log in",
-      "signup": "Sign up"
+      "signup": "Sign up",
+      "eshops": "E-Shops",
+      "profiles": "Profiles",
+
+      "userMenu": {
+        "logout": "Log out",
+        "settings": "User settings"
+      }
     },
+
     "sign-up": {
       "title": "Register new account",
       "crtbut" : "Create new account",
       "crtbutagain":"Send signup again",
-      "exitbut": "Return to main page",
       "cancelbut": "Cancel",
       "save":"Save password",
       "email" : "Username/e-mail",
@@ -39,14 +50,7 @@
       "email_invalid" : "E-mail is not valid.",
       "srvErrorTitle": "Registration error",
       "srvOKTitle": "Registration",
-      "OK": "Message with next instruction was sent to entered e-mail.",
-      "regOK": "Registration completed. You can continue by log in.",
-      "password": "Password",
-      "password1": "Password for check",
-      "completeregtitle" : "Sign up completion",
-      "password_placeholder":"password",
-      "password_invalid_length":"Invalid password length. Minimal password length is six characters.",
-      "password_invalid_noteq": "Password and check password is not the same."
+      "registrationSent": "Message with next instruction was sent to entered e-mail."
     },
     "sign-in": {
       "OK": "User was successfully logged in.",
@@ -61,6 +65,36 @@
       "password" : "Password",
       "loginbut" : "Log in",
       "email_placeholder": "foo@mail.com"
+    },
+    "register": {
+      "regOK": "Registration completed. You can continue by log in.",
+      "password": "Password",
+      "password1": "Password for check",
+      "completeregtitle" : "Sign up completion",
+      "password_placeholder":"password",
+      "password_invalid_length":"Invalid password length. Minimal password length is six characters.",
+      "password_invalid_noteq": "Password and check password is not the same.",
+      "regkeyNotfound": "Registration key not found.",
+      "email" : "Username/e-mail",
+      "password_empty": "Password cannot be empty."
+    },
+    "user-settings":{
+      "title": "Settings",
+      "title.user": "User",
+      "title.security": "Security",
+      "title.others": "Others",
+      "title.actlog": "Activity log",
+      "email": "Username/e-mail",
+      "alias": "Alias",
+      "notAlias":"Alias is not set user account.",
+      "alias1":"You can use alias name as user name at login.",
+      "regdate":"Registration date",
+      "deleteUser":"Delete user account",
+      "cancelDeleteUser":"Deactivate user deletion process",
+      "langlabel":"Actual language",
+      "saveAliasOK": "Saving of the alias was successful. ",
+      "saveAlias": "Alias saving"
+
     }
   }
 }

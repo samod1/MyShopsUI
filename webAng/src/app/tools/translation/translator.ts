@@ -1,7 +1,7 @@
 import {TranslateService} from '@ngx-translate/core';
 import {OnInit} from '@angular/core';
 
-export class Translator {
+export class TranslatorXX {
 
   public static translate: TranslateService;
 
@@ -9,12 +9,13 @@ export class Translator {
   }
 
   public static getTranslation(key: string): string {
-    if (!Translator.translate){
+    if (!TranslatorXX.translate){
+      console.log('Not initialized');
       return 'Not initialized';
     }
 
     let ret: string;
-    ret = Translator.translate.instant(key);
+    ret = TranslatorXX.translate.instant(key);
     return ret;
   }
 

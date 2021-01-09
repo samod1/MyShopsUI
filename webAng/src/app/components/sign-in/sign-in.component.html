@@ -20,10 +20,10 @@
         </mat-form-field>
       </div>
       <div class="flexRow" id="buttons">
-        <app-icon-button  color="primary" buttonTextKey="app.sign-in.loginbut"
+        <app-icon-button  color="primary" buttonText="{{'app.sign-in.loginbut' | translate }}"
                          iconName="login" [disabled]="loading"
                           (click)="onLogin()" ></app-icon-button>
-        <app-icon-button color="basic" buttonTextKey="app.cancelbut" iconName="cancel"
+        <app-icon-button color="basic" buttonText="{{'app.cancelbut' | translate}}" iconName="cancel"
                          routerLink="/" [disabled]="loading"></app-icon-button>
       </div>
   </div>

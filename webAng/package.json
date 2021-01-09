@@ -8,10 +8,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "int_extract": "ng extract-i18n --output-path src/locale"
+    "int_extract": "ng extract-i18n --output-path src/locale",
+    "postinstall": "ngcc"
   },
   "private": true,
   "dependencies": {
+    "@angular-material-extensions/password-strength": "^8.1.1",
     "@angular/animations": "~11.0.4",
     "@angular/cdk": "^11.0.3",
     "@angular/common": "~11.0.4",

@@ -3,9 +3,10 @@ import { AngularMaterialModule} from './material.module';
 import {MatDrawerMode, MatSidenav} from '@angular/material/sidenav';
 import {TranslateService} from '@ngx-translate/core';
 import { GlobService} from './_service/glob-service';
-import {Translator} from './tools/translation/translator';
+// import {Translator} from './tools/translation/translator';
 import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {UiService} from './_service/ui.service';
+import {AuthenticationService} from './_service/authentication.service';
 
 
 @Component({
@@ -41,20 +42,20 @@ export class AppComponent implements OnInit, AfterContentInit {
   constructor(public translate: TranslateService,
               private globSrv: GlobService,
               private media: MediaObserver,
-              private uiService: UiService) {
+              private uiService: UiService,
+              private authService: AuthenticationService) {
     translate.addLangs(['en', 'sk']);
     translate.setDefaultLang('sk');
 
     const browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|sk/) ? browserLang : 'en');
     this.gridColumns = 3;
-
   }
 
   ngOnInit(): void {
     this.globSrv.currentLanguage.subscribe((data ) => {
       this.translate.use(data); } );
-    Translator.translate = this.translate;
+    // Translator.translate = this.translate;
 
   }
 
@@ -67,6 +68,9 @@ export class AppComponent implements OnInit, AfterContentInit {
       this.gridColumns = this.gridByBreakpoint[breakpoint];
 
     });
+
+    this.authService.isLogged();
+
   }
 
   handleBreakpoint(matches: boolean): void {

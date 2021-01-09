@@ -172,7 +172,10 @@ export async function postData(url: string = '', data: any): Promise<ReturnData>
 export async function getData(url = '') {
   let ret: ReturnData;
 
-   url = environment.serverBaseUrl +  url;
+  if(url.substr(1,1) === '/'){
+    url = url.substr(1);
+  }
+  url = environment.serverBaseUrl +  url;
 
   // Default options are marked with *
   const response = await fetch(url, {
@@ -196,7 +199,6 @@ export async function getData(url = '') {
   return ret;
 
 }
-
 
 
 @Injectable({

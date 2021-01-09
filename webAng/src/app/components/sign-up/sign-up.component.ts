@@ -1,30 +1,39 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Validators as ShopsValidators} from '../../tools/validators/validators';
 import {FormControl, Validators} from '@angular/forms';
 import {RegistrationService, RegistrationData} from '../../_service/registration.service'
-import {SHOPS_CODE_REG_EMAILPREVATTEMPT} from "../../tools/common/shops-error-codes";
+import {SHOPS_CODE_REG_EMAILPREVATTEMPT} from '../../tools/common/shops-error-codes';
+import {NotificationService} from '../../_service/notification.service';
+import {TranslateService} from '@ngx-translate/core';
+// import {Translator} from '../../tools/translation/translator';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
 
   emailControl: FormControl;
   emailInvalid: boolean;
   loading = true;
   disabledComponents = false;
   registerAgain = false;
+  registrationSent=false;
 
-  constructor(private registrationService: RegistrationService) {
+  constructor(private registrationService: RegistrationService,
+              private notifService: NotificationService,
+              private translate: TranslateService) {
     this.emailInvalid = true;
     const validators = [Validators.required, ShopsValidators.validateEmailControl];
     this.emailControl = new FormControl('', validators );
 
-    this.registrationService.registeredObservable.subscribe( registered => {
-      if(registered){
-
+    this.registrationService.registrationSentObservable.subscribe( registrationSent => {
+      if(registrationSent){
+        const message: string = this.translate.instant('app.register.registrationSent');
+        notifService.informationMessageSubject.next([message]);
+        this.registrationSent=true;
+        this.disabledComponents=true;
       }
     });
 
@@ -40,6 +49,11 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.emailInvalid = false;
+    this.loading = false;
+    this.disabledComponents = false;
+    this.registerAgain = false;
+    this.registrationSent=false;
   }
 
   OnCreate(): void {
@@ -88,6 +102,44 @@ export class SignUpComponent implements OnInit {
       this.loading = false;
       this.disabledComponents=false;
     }
+  }
+
+  public showCrtButton(): boolean {
+    if (this.registrationSent) {
+      return false;
+    }
+    if (this.registerAgain) {
+      return false;
+    }
+    return true;
+  }
+
+  public showAgainBut(): boolean{
+    if (this.registrationSent) {
+      return false;
+    }
+    if (this.registerAgain) {
+      return true;
+    }
+    return false;
+  }
+
+  public showCancelBut(): boolean{
+    if(!this.registrationSent){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public showExitBut(): boolean{
+    if(this.registrationSent)
+      return true;
+    else
+      return false;
+  }
+
+  ngOnDestroy(): void {
   }
 
 }

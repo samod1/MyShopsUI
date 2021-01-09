@@ -1,0 +1,51 @@
+<div class="register borderPanel">
+  <h2>{{'app.register.completeregtitle' | translate}}</h2>
+  <div class="flexColumn">
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{'app.register.email'| translate}}</mat-label>
+      <input  matInput [value]="regRequestData?.email"
+             placeholder="{{'app.sign-in.email_placeholder'| translate}}"
+             required readonly="true"  [(ngModel)]="formModel.email" #email>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill" class="password password_wrapper">
+      <mat-label>{{'app.register.password' | translate}}</mat-label>
+      <input matInput type="password"  #passwordField [(ngModel)]="formModel.password">
+      <mat-icon matSuffix [class]="eyeIconClass"
+                (mousedown)="passwordField.type='text'"
+                (mouseup)="passwordField.type='password'">remove_red_eye</mat-icon>
+      <!-- mat-error>{{'app.sign-in.password_empty' | translate}}</mat-error -->
+    </mat-form-field>
+    <mat-password-strength #passwordComponentWithValidation
+                           [password]="passwordField.value">
+    </mat-password-strength>
+
+
+    <mat-form-field appearance="fill" class="password" style="padding-top: 1em">
+      <mat-label>{{'app.register.password1' | translate}}</mat-label>
+      <input matInput
+             type="password"  [(ngModel)]="formModel.passwordVerify">
+    </mat-form-field>
+    <mat-error *ngIf="passwordError">{{passwordErrorMsg | translate}}</mat-error>
+  </div>
+
+
+  <div class="flexRow" id="buttons">
+    <app-icon-button  *ngIf="showSaveBut()"
+                      color="primary" buttonText="{{ 'app.save' | translate }}"
+                      iconName="save" [disabled]="loading" (click)="onSave()">
+    </app-icon-button>
+    <app-icon-button *ngIf="showCancelBut()"
+                     color="basic" buttonText="{{ 'app.cancelbut' | translate }}" iconName="cancel"
+                     routerLink="/" [disabled]="loading">
+    </app-icon-button>
+    <app-icon-button *ngIf="showExitBut()"
+                     color="primary" buttonText="{{ 'app.exit' | translate }}"
+                     iconName="cancel" routerLink="/">
+    </app-icon-button>
+
+  </div>
+</div>
+<app-loading-indicator [loading]="loading"></app-loading-indicator>

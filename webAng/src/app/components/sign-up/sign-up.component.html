@@ -3,20 +3,25 @@
   <div>
     <mat-form-field appearance="fill">
       <mat-label>{{'app.sign-up.email'| translate}}</mat-label>
-      <input [formControl]="emailControl"  matInput [disabled]="disabledComponents"
+      <input [formControl]="emailControl"  matInput [readonly]="disabledComponents"
              placeholder="{{'app.sign-up.email_placeholder'| translate}}"
              required (keyup)="OnEmailChange()">
       <mat-error>{{'app.sign-up.email_invalid' | translate}}</mat-error>
     </mat-form-field>
     <div class="flexRow" id="buttons">
-      <app-icon-button *ngIf="!registerAgain" [disabled]="emailInvalid || disabledComponents" color="primary"
-                       buttonTextKey="app.sign-up.crtbut"
+      <app-icon-button *ngIf="showCrtButton()" [disabled]="emailInvalid || disabledComponents" color="primary"
+                       buttonText="{{ 'app.sign-up.crtbut' | translate }}"
                        iconName="create" (click)="OnCreate()" ></app-icon-button>
-      <app-icon-button *ngIf="registerAgain" [disabled]="emailInvalid || disabledComponents" color="primary"
-                       buttonTextKey="app.sign-up.crtbutagain"
+      <app-icon-button *ngIf="showAgainBut()" [disabled]="emailInvalid || disabledComponents" color="primary"
+                       buttonText="{{'app.sign-up.crtbutagain' | translate }}"
                        iconName="create" (click)="OnCreateAgain()" ></app-icon-button>
-      <app-icon-button color="basic" buttonTextKey="app.cancelbut" [disabled]="disabledComponents"
+      <app-icon-button color="basic" buttonText="{{ 'app.cancelbut' | translate }}" [disabled]="disabledComponents"
+                       *ngIf="showCancelBut()"
                        iconName="cancel" routerLink="/"></app-icon-button>
+      <app-icon-button color="primary" buttonText="{{'app.exit' | translate }}"
+                       *ngIf="showExitBut()"
+                       iconName="cancel" routerLink="/"></app-icon-button>
+
     </div>
   </div>
 

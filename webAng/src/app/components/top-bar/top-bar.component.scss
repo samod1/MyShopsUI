@@ -1,0 +1,11 @@
+@import '../colors';
+@import '../components_common';
+:host {
+}
+
+.loggedContainer {
+  display: flex;
+  flex-direction: row;
+
+}
+

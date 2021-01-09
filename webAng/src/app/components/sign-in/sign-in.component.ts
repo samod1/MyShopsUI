@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {Validators as ShopsValidators} from '../../tools/validators/validators';
-import {getData,postData} from '../../_service/servercall.service';
-import {ServerError,MyShopsException} from '../../myshopsexceptions';
 import {LoginData} from '../../_model/login-data';
 import {AuthenticationService} from '../../_service/authentication.service';
 import {NotificationService} from '../../_service/notification.service';
-import {Translator} from '../../tools/translation/translator';
+// import {Translator} from '../../tools/translation/translator';
+import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {ROUTER_PATH_DASHBOARD} from '../../tools/common/common';
 
 @Component({
   selector: 'app-sign-in',
@@ -22,7 +22,10 @@ export class SignInComponent implements OnInit {
   loading = true;
   eyeIconClass = 'eye';
 
-  constructor(private authService: AuthenticationService, private notificationService: NotificationService) {
+  constructor(private authService: AuthenticationService,
+              private notificationService: NotificationService,
+              private router: Router,
+              private translate: TranslateService) {
 
     const validators = [Validators.required];
     this.loginControl = new FormControl('', validators );
@@ -33,8 +36,9 @@ export class SignInComponent implements OnInit {
       this.setControlEnabled(true);
       if(logged){
         const messages = new Array<string>();
-        messages.push(Translator.getTranslation('app.sign-in.OK'));
+        messages.push(translate.instant('app.sign-in.OK'));
         this.notificationService.informationMessageSubject.next(messages);
+        this.router.navigateByUrl(ROUTER_PATH_DASHBOARD);
       }
     });
 
@@ -54,7 +58,7 @@ export class SignInComponent implements OnInit {
   onLogin(): void{
 
     if(!this.loginControl.value || !this.passwordControl.value){
-      const msgs = [Translator.getTranslation('app.sign-in.logindata_empty'),'sssssss','hdhdhdh'];
+      const msgs = [this.translate.instant('app.sign-in.logindata_empty'),'sssssss','hdhdhdh'];
       this.notificationService.warningMessageSubject.next(msgs);
       return;
     }

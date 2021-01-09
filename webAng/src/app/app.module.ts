@@ -17,14 +17,22 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { IconButtonComponent } from './components/widgets/icon-button/icon-button.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MenuComponent} from './components/menu/menu.component';
 import {PpBreadcrumbsModule} from '@miesil/pp-breadcrumbs';
 import { FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import {LoadingIndicatorComponent} from './components/widgets/loading-indicator/loading-indicator.component';
 import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
 import {NotificationService} from './_service/notification.service';
-
+import { RegisterComponent } from './components/register/register.component';
+import { MatPasswordStrengthComponent } from './components/widgets/mat-password-strength/mat-password-strength.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {AuthGuard} from './tools/common/auth.guard';
+import { UserSettingsComponent } from './components/user/user-settings/user-settings.component';
+import { UserAddressComponent } from './components/user/user-address/user-address.component';
+import { UserEmailComponent } from './components/user/user-email/user-email.component';
+import { UserPhoneComponent } from './components/user/user-phone/user-phone.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { SideNavPanelComponent } from './components/widgets/side-nav-panel/side-nav-panel.component';
 
 // AoT requires an exported function for factories
 // tslint:disable-next-line:typedef
@@ -40,10 +48,17 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     TopBarComponent,
     SignUpComponent,
     IconButtonComponent,
-    MenuComponent,
     SignInComponent,
     LoadingIndicatorComponent,
-    NotificationBarComponent
+    NotificationBarComponent,
+    RegisterComponent,
+    MatPasswordStrengthComponent,
+    UserSettingsComponent,
+    UserAddressComponent,
+    UserEmailComponent,
+    UserPhoneComponent,
+    UserProfileComponent,
+    SideNavPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -65,9 +80,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     }),
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatProgressBarModule
   ],
-  providers: [NotificationService],
+  providers: [NotificationService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

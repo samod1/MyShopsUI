@@ -1,19 +1,14 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable,of} from 'rxjs';
 import {LoginData} from '../_model/login-data';
 import {environment} from '../../environments/environment';
-import {postData} from './servercall.service';
-import {MyShopsException, ServerError} from '../myshopsexceptions';
 import {Router} from '@angular/router';
-import {ReturnData} from './servercall.service';
-import {UserData} from '../_model/User';
-import {ErrorData} from '../_model/error-data';
 import {BaseService} from './base.service';
 import {getLocalStorageItem, removeLocalStorageItem, setLocalStorageItem} from '../tools/common/common';
-import {NotificationService} from './notification.service';
 
 export const authenticationUrl = 'auth/login';
-export const loggedUserLSID = 'loggedUser';
+export const loggedUserLocalStorageUID = 'loggedUser';
+export const authIsLoggedUrl = 'auth/isLogged';
 
 export class JwtToken {
   jwtHeader: string;
@@ -31,8 +26,9 @@ export class AuthenticationService extends BaseService{
   public loggedSubject: BehaviorSubject<boolean>;
   public logged$: Observable<boolean>;
 
+
   static getLocalLoggedUser(): string {
-    const user =  getLocalStorageItem(loggedUserLSID);
+    const user =  getLocalStorageItem(loggedUserLocalStorageUID);
     return user;
   }
 
@@ -63,8 +59,7 @@ export class AuthenticationService extends BaseService{
     this.currentUserSubject = new BehaviorSubject<string>(user);
     this.currentUser = this.currentUserSubject.asObservable();
 
-    const logged = false;
-    this.loggedSubject = new BehaviorSubject<boolean>(logged);
+    this.loggedSubject = new BehaviorSubject<boolean>(null);
     this.logged$ = this.loggedSubject.asObservable();
 
   }
@@ -81,14 +76,22 @@ export class AuthenticationService extends BaseService{
       this.postData(authenticationUrl,loginData,onSuccessLogin,onErrorLogin,this);
   }
 
-
-
-  logout(returnUrl?: string) {
-    localStorage.removeItem('currentUser');
+  logout() {
+    localStorage.removeItem(loggedUserLocalStorageUID);
+    localStorage.removeItem(environment.authorizationHeaderName);
+    this.loggedSubject.next(false);
     this.currentUserSubject.next(null);
-    this.router.navigate(['login'], returnUrl ? {queryParams: {returnUrl}} : undefined);
+    this.router.navigate(['']);
   }
 
+  isLogged(): void {
+    const _jwt  = getLocalStorageItem(environment.authorizationHeaderName);
+    if(!_jwt){
+      this.logout();
+      return ;
+    }
+    this.getData(authIsLoggedUrl,null,onSuccessIsLogin,null,this);
+  }
 }
 
 export function onSuccessLogin(retData: any, serviceObject: AuthenticationService): void {
@@ -100,10 +103,9 @@ export function onSuccessLogin(retData: any, serviceObject: AuthenticationServic
     if (key.toUpperCase() === environment.authorizationHeaderName.toUpperCase()) {
       setLocalStorageItem(environment.authorizationHeaderName,val);
       const jwtToken = AuthenticationService.decodeJWT(val);
-      serviceObject.loggedSubject.next(true);
-      setLocalStorageItem(loggedUserLSID,jwtToken.jwtClaims.identity);
+      setLocalStorageItem(loggedUserLocalStorageUID,jwtToken.jwtClaims.identity);
       serviceObject.currentUserSubject.next(jwtToken.jwtClaims.identity);
-      console.log(jwtToken);
+      serviceObject.loggedSubject.next(true);
     }
   });
 }
@@ -111,8 +113,19 @@ export function onSuccessLogin(retData: any, serviceObject: AuthenticationServic
 export function onErrorLogin(retData: any, serviceObject: AuthenticationService): void {
   // console.log('onErrorLogin');
   removeLocalStorageItem(environment.authorizationHeaderName);
-  removeLocalStorageItem(loggedUserLSID);
+  removeLocalStorageItem(loggedUserLocalStorageUID);
   serviceObject.loggedSubject.next(false);
   serviceObject.currentUserSubject.next('');
 }
+
+export function getLoggedUserName(): string{
+  const uname = getLocalStorageItem(loggedUserLocalStorageUID);
+  return uname;
+}
+
+export function onSuccessIsLogin(retData: any, serviceObject: AuthenticationService): void {
+  serviceObject.loggedSubject.next(true);
+}
+
+
 

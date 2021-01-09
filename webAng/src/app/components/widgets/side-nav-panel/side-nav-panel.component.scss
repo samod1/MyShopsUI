@@ -1,0 +1,9 @@
+@import '../../colors';
+@import '../../components_common';
+:host {
+}
+
+.sideNavContainer {
+  display: flex;
+  flex-direction: row;
+}
