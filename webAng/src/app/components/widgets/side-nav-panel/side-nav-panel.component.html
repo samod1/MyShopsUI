@@ -1,8 +1,14 @@
 <mat-sidenav-container class="sideNavContainer">
-  <mat-sidenav #sidenav mode="side" opened="true">
-    <p>SideNav</p>
+  <mat-sidenav id="sidenavmenu" #sidenav mode="side" opened="true">
+      <div *ngFor="let item of sdmenu.items">
+        <mat-divider *ngIf="item.type == 2"></mat-divider>
+        <app-icon-button *ngIf="item.type == 0" [iconRight]="true"
+          (click)="OnMenu(item.id)" id="{{item.id}}" [buttonTextKey]="item.textKey" [iconName]="item.iconName"
+          color="basic"></app-icon-button>
+      </div>
+
   </mat-sidenav>
-  <mat-sidenav-content #sidecontent>
+  <mat-sidenav-content id="sidenavcontent" #sidecontent>
     <p>SideNav Content </p>
   </mat-sidenav-content>
 </mat-sidenav-container>

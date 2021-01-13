@@ -75,7 +75,7 @@
       "password_empty": "Heslo musí byť vyplnené."
     },
     "user-settings":{
-      "title": "Nastavenia",
+      "title": "Nastavenia používateľa",
       "title.user": "Používateľ",
       "title.security": "Bezpečnosť",
       "title.others": "Ostatné",

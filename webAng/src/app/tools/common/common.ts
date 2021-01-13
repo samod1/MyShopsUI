@@ -17,4 +17,4 @@ export const ROUTER_PATH_DASHBOARD = 'dashboard';
 export const ROUTER_PATH_SIGNUP = 'signup';
 export const ROUTER_PATH_SIGNIN  = 'signin';
 export const ROUTER_PATH_REGISTER = 'register';
-export const ROUTER_PATH_USERSETTINGS = 'usersettigns';
+export const ROUTER_PATH_USERSETTINGS = 'usersettings';

@@ -1,2 +1,18 @@
+@import "../../components_common";
+@import "../../colors";
+
+
+.userSettings{
+
+  display: flex;
+  flex-direction: column;
+
+  & .sideNavPanel{
+    height: max-content;
+  }
+
+
+
+}
 
 

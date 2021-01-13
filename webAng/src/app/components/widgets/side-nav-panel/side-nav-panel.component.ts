@@ -18,7 +18,7 @@ export class SideNavMenuItem {
 }
 
 export class SideNavMenu{
-  items: [SideNavMenuItem];
+  items: Array<SideNavMenuItem>;
 }
 
 export class SideNavComponent{
@@ -34,15 +34,73 @@ export type sideNavComponents = Array<SideNavComponent>;
   templateUrl: './side-nav-panel.component.html',
   styleUrls: ['./side-nav-panel.component.scss']
 })
+
 export class SideNavPanelComponent implements OnInit {
 
-  @Input() menu: SideNavMenu;
-  @Input() components: sideNavComponents;
+  sdmenu: SideNavMenu = null;
 
+  private _menu: SideNavMenu;
+  private _components: sideNavComponents;
 
-  constructor() { }
+  @Input() set menu(value: SideNavMenu){
+    this._menu = value;
+  }
+  get menu():SideNavMenu{
+    return this._menu;
+  }
+
+  @Input() set components(value: sideNavComponents){
+    this._components = value;
+  }
+  get components(): sideNavComponents{
+    return this._components;
+  }
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+
+
+    /* Test menu */
+    this.sdmenu = new SideNavMenu();
+    this.sdmenu.items = new Array<SideNavMenuItem>();
+
+    const mi = new SideNavMenuItem();
+    mi.id = 'app.user-settings.title.user';
+    mi.iconName = 'file';
+    mi.textKey = 'app.user-settings.title.user';
+    mi.type = menuItemType.item;
+    mi.action = 'user-settings.user';
+    this.sdmenu.items.push(mi);
+
+    const mi1 = new SideNavMenuItem();
+    mi1.id = '';
+    mi1.type = menuItemType.divider;
+    this.sdmenu.items.push(mi1);
+
+    const mi2 = new SideNavMenuItem();
+    mi2.id = 'app.user-settings.title.security';
+    mi2.iconName = 'lock';
+    mi2.textKey = 'app.user-settings.title.security';
+    mi2.type = menuItemType.item;
+    mi2.action = 'user-settings.security';
+    this.sdmenu.items.push(mi2);
+
+    const mi3 = new SideNavMenuItem();
+    mi3.id = '';
+    mi3.type = menuItemType.divider;
+    this.sdmenu.items.push(mi3);
+    /* Test menu */
+    console.log(this.sdmenu);
+
+
   }
+
+
+  OnMenu(action: string): void{
+
+  }
+
 
 }

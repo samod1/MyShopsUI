@@ -1,4 +1,32 @@
 @import '../../_colors';
-:host { display: block; }
+@import '../../components_common';
+:host {  }
 
+.iconButton{
 
+}
+
+.iconButtonClassButton{
+  & ::ng-deep.mat-button-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  & mat-icon {
+    padding-right: 0.5em;
+  }
+
+}
+.iconButtonClassButtonRight{
+
+    & mat-icon {
+      padding-left: 0.5em;
+    }
+
+    & ::ng-deep.mat-button-wrapper {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+    }
+
+}

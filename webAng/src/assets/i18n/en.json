@@ -79,7 +79,7 @@
       "password_empty": "Password cannot be empty."
     },
     "user-settings":{
-      "title": "Settings",
+      "title": "User settings",
       "title.user": "User",
       "title.security": "Security",
       "title.others": "Others",

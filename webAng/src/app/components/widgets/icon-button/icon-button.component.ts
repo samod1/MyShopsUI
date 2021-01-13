@@ -15,6 +15,9 @@ export class IconButtonComponent implements OnInit {
   @Input() iconName = 'home';
   @Input() disabled = false;
   @Input() buttonText = '';
+  @Input() iconRight = false;
+
+  buttonClass = 'iconButtonClassButton';
 
   constructor(private translate: TranslateService) {
   }
@@ -22,6 +25,11 @@ export class IconButtonComponent implements OnInit {
   ngOnInit(): void {
     if(this.buttonText === ''){
       this.buttonText = this.translate.instant(this.buttonTextKey);
+    }
+    if(this.iconRight){
+      this.buttonClass = 'iconButtonClassButtonRight';
+    } else {
+      this.buttonClass = 'iconButtonClassButton';
     }
   }
 

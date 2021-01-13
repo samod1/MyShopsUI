@@ -1,9 +1,11 @@
 @import '../../colors';
 @import '../../components_common';
 :host {
+  height: 100vh;
 }
 
 .sideNavContainer {
   display: flex;
   flex-direction: row;
+  flex-grow: 1;
 }
