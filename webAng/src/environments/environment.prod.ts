@@ -5,6 +5,7 @@ export const environment = {
     { langid: 'sk', langtext: 'Slovenčina', langval: 'sk' },
   ],
   authorizationHeaderName: 'Authorization',
-  serverBaseUrl: 'http://localhost:8887/shops/v1/',
-  messageTimeout: 5000
+  serverBaseUrl: 'http://192.168.1.31:8887/shops/v1/',
+  messageTimeout: 5000,
+  basehref: '/mshapp'
 };

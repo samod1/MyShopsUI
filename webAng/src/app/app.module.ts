@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {CommonModule} from '@angular/common';
-import { NgModule } from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 import {OverlayModule} from '@angular/cdk/overlay';
 
 import { AppComponent } from './app.component';
@@ -33,11 +33,13 @@ import { UserEmailComponent } from './components/user/user-email/user-email.comp
 import { UserPhoneComponent } from './components/user/user-phone/user-phone.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { SideNavPanelComponent } from './components/widgets/side-nav-panel/side-nav-panel.component';
+import {environment} from "../environments/environment";
+
 
 // AoT requires an exported function for factories
 // tslint:disable-next-line:typedef
 export function HttpLoaderFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient);
+  return new TranslateHttpLoader(httpClient,environment.basehref);
 }
 
 @NgModule({
@@ -83,7 +85,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FlexLayoutModule,
     MatProgressBarModule
   ],
-  providers: [NotificationService, AuthGuard],
+  providers: [NotificationService,
+              AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
