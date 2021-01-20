@@ -7,5 +7,5 @@ export const environment = {
   authorizationHeaderName: 'Authorization',
   serverBaseUrl: 'http://192.168.1.31:8887/shops/v1/',
   messageTimeout: 5000,
-  basehref: '/mshapp'
+  basehref: '/mshapp/assets/i18n/'
 };

@@ -11,7 +11,7 @@ export const environment = {
   authorizationHeaderName: 'Authorization',
   serverBaseUrl: 'http://192.168.1.31:8887/shops/v1/',
   messageTimeout: 50000,
-  basehref: '/'
+  basehref: '/assets/i18n/'
 };
 
 /*
