@@ -6,9 +6,11 @@
 
   display: flex;
   flex-direction: column;
+  height: 100%;
+
 
   & .sideNavPanel{
-    height: max-content;
+    height: 100%;
   }
 
 
@@ -16,4 +18,4 @@
 }
 
 
- 
+

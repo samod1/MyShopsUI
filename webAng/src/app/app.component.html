@@ -1,11 +1,11 @@
 
 <div id="application" fxLayout="column" fxFlexFill>
-  <div id="header">
+  <div id="header" fxFlex="40px">
     <!-- Title bar, login, register  -->
     <app-top-bar></app-top-bar>
   </div>
   <!-- Page content  -->
-  <div id="pageContent" fxLayout="row" fxFlexFill fxLayoutGap="32px">
+  <div id="pageContent" fxLayout="row" fxFlex="calc(100%-120px)" fxLayoutGap="32px">
 
     <div id="leftContent" style="max-width: 3%">
 
@@ -22,7 +22,7 @@
 
   </div>
   <!-- footer -->
-  <div id="pageFooter">
+  <div id="pageFooter" fxFlex="80px">
     footer
   </div>
 </div>
