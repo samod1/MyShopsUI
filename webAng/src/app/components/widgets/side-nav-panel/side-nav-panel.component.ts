@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, Type} from '@angular/core';
 import {FormControl} from '@angular/forms';
+import {Router} from '@angular/router';
 
 
 export enum menuItemType{
@@ -21,14 +22,6 @@ export class SideNavMenu{
   items: Array<SideNavMenuItem>;
 }
 
-export class SideNavComponent{
-  id: string;
-  component: Type<any>;
-}
-
-export type sideNavComponents = Array<SideNavComponent>;
-
-
 @Component({
   selector: 'side-nav-panel',
   templateUrl: './side-nav-panel.component.html',
@@ -40,7 +33,6 @@ export class SideNavPanelComponent implements OnInit {
   sdmenu: SideNavMenu = null;
 
   private _menu: SideNavMenu;
-  private _components: sideNavComponents;
 
   @Input() set menu(value: SideNavMenu){
     this._menu = value;
@@ -49,56 +41,17 @@ export class SideNavPanelComponent implements OnInit {
     return this._menu;
   }
 
-  @Input() set components(value: sideNavComponents){
-    this._components = value;
-  }
-  get components(): sideNavComponents{
-    return this._components;
-  }
-
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
-
-
-    /* Test menu */
-    this.sdmenu = new SideNavMenu();
-    this.sdmenu.items = new Array<SideNavMenuItem>();
-
-    const mi = new SideNavMenuItem();
-    mi.id = 'app.user-settings.title.user';
-    mi.iconName = 'file';
-    mi.textKey = 'app.user-settings.title.user';
-    mi.type = menuItemType.item;
-    mi.action = 'user-settings.user';
-    this.sdmenu.items.push(mi);
-
-    const mi1 = new SideNavMenuItem();
-    mi1.id = '';
-    mi1.type = menuItemType.divider;
-    this.sdmenu.items.push(mi1);
-
-    const mi2 = new SideNavMenuItem();
-    mi2.id = 'app.user-settings.title.security';
-    mi2.iconName = 'lock';
-    mi2.textKey = 'app.user-settings.title.security';
-    mi2.type = menuItemType.item;
-    mi2.action = 'user-settings.security';
-    this.sdmenu.items.push(mi2);
-
-    const mi3 = new SideNavMenuItem();
-    mi3.id = '';
-    mi3.type = menuItemType.divider;
-    this.sdmenu.items.push(mi3);
-    /* Test menu */
-    console.log(this.sdmenu);
-
-
+    this.sdmenu = this.menu;
   }
 
 
   OnMenu(action: string): void{
+    console.log(action);
+    this.router.navigateByUrl(action);
 
   }
 

@@ -34,6 +34,10 @@ import { UserPhoneComponent } from './components/user/user-phone/user-phone.comp
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { SideNavPanelComponent } from './components/widgets/side-nav-panel/side-nav-panel.component';
 import {environment} from "../environments/environment";
+import { UserSettingsUserComponent } from './components/user/user-settings-user/user-settings-user.component';
+import { UserSettingsSecurityComponent } from './components/user/user-settings-security/user-settings-security.component';
+import { UserSettingsOtherComponent } from './components/user/user-settings-other/user-settings-other.component';
+import { UserSettingsActlogComponent } from './components/user/user-settings-actlog/user-settings-actlog.component';
 
 
 // AoT requires an exported function for factories
@@ -60,7 +64,11 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     UserEmailComponent,
     UserPhoneComponent,
     UserProfileComponent,
-    SideNavPanelComponent
+    SideNavPanelComponent,
+    UserSettingsUserComponent,
+    UserSettingsSecurityComponent,
+    UserSettingsOtherComponent,
+    UserSettingsActlogComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import { GlobService} from './_service/glob-service';
 import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {UiService} from './_service/ui.service';
 import {AuthenticationService} from './_service/authentication.service';
+import {NavigationEnd, Router} from '@angular/router';
 
 
 @Component({
@@ -43,13 +44,21 @@ export class AppComponent implements OnInit, AfterContentInit {
               private globSrv: GlobService,
               private media: MediaObserver,
               private uiService: UiService,
-              private authService: AuthenticationService) {
+              private authService: AuthenticationService,
+              private router: Router) {
     translate.addLangs(['en', 'sk']);
     translate.setDefaultLang('sk');
 
     const browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|sk/) ? browserLang : 'en');
     this.gridColumns = 3;
+
+    this.router.events.subscribe( (val) => {
+      console.log(val instanceof NavigationEnd);
+    });
+
+
+
   }
 
   ngOnInit(): void {
@@ -68,8 +77,6 @@ export class AppComponent implements OnInit, AfterContentInit {
       this.gridColumns = this.gridByBreakpoint[breakpoint];
 
     });
-
-    this.authService.isLogged();
 
   }
 

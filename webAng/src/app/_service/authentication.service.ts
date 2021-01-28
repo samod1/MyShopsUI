@@ -85,6 +85,11 @@ export class AuthenticationService extends BaseService{
   }
 
   isLogged(): void {
+
+    if(this.router.url === 'register'){
+      return;
+    }
+
     const _jwt  = getLocalStorageItem(environment.authorizationHeaderName);
     if(!_jwt){
       this.logout();
