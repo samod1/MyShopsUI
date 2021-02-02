@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { NotificationService} from '../../_service/notification.service';
 import {environment} from '../../../environments/environment';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -8,34 +9,43 @@ import {environment} from '../../../environments/environment';
   templateUrl: './notification-bar.component.html',
   styleUrls: ['./notification-bar.component.scss']
 })
-export class NotificationBarComponent implements OnInit {
+export class NotificationBarComponent implements OnInit, OnDestroy {
 
   errorMessages: Array<string>;
   infoMessages: Array<string>;
   warnMessages: Array<string>;
   newMessage = false;
   actualTimer: any = null;
+  private subscriptions: Array<Subscription> = [];
 
   constructor(private notificationService: NotificationService) {
     this.newMessage = false;
-    this.notificationService.errorMessage.subscribe( (messages:Array<string>) => {
+    let subscription = this.notificationService.errorMessage.subscribe( (messages:Array<string>) => {
       this.errorMessages = messages;
       this.showMessage();
     });
-    this.notificationService.warningMessage.subscribe( (messages:Array<string>) => {
+    this.subscriptions.push(subscription);
+    subscription = this.notificationService.warningMessage.subscribe( (messages:Array<string>) => {
       this.warnMessages = messages;
       this.showMessage();
     });
-    this.notificationService.informationMessage.subscribe( (messages:Array<string>) => {
+    this.subscriptions.push(subscription);
+    subscription = this.notificationService.informationMessage.subscribe( (messages:Array<string>) => {
       this.infoMessages = messages;
       this.showMessage();
     });
+    this.subscriptions.push(subscription);
 
   }
 
   ngOnInit(): void {
   }
 
+  ngOnDestroy() {
+    for (const subscription of this.subscriptions){
+      subscription.unsubscribe();
+    }
+  }
   showMessage(): void {
     this.newMessage = true;
     if(this.actualTimer){

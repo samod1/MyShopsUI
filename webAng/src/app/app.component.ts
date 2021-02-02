@@ -78,6 +78,8 @@ export class AppComponent implements OnInit, AfterContentInit {
 
     });
 
+    this.authService.isLogged();
+
   }
 
   handleBreakpoint(matches: boolean): void {

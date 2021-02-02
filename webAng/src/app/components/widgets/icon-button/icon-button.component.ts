@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 // import {Translator} from '../../../tools/translation/translator';
 import {TranslateService} from '@ngx-translate/core';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-icon-button',
@@ -8,7 +9,7 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./icon-button.component.scss']
 })
 
-export class IconButtonComponent implements OnInit {
+export class IconButtonComponent implements OnInit,OnDestroy {
 
   @Input() color = 'primary';
   @Input() buttonTextKey = 'IconButton - Invalid key name';
@@ -16,21 +17,32 @@ export class IconButtonComponent implements OnInit {
   @Input() disabled = false;
   @Input() buttonText = '';
   @Input() iconRight = false;
+  @Input() stroked = false;
 
   buttonClass = 'iconButtonClassButton';
+  private subsription: Subscription;
 
   constructor(private translate: TranslateService) {
+    this.subsription = null;
   }
 
   ngOnInit(): void {
-    if(this.buttonText === ''){
-      this.buttonText = this.translate.instant(this.buttonTextKey);
+    if(this.buttonText === '' && this.buttonTextKey !== ''){
+      console.log(this.buttonTextKey);
+      this.subsription = this.translate.get(this.buttonTextKey).subscribe( (value) =>{
+        this.buttonText = value;
+      });
     }
     if(this.iconRight){
       this.buttonClass = 'iconButtonClassButtonRight';
     } else {
       this.buttonClass = 'iconButtonClassButton';
     }
+  }
+
+  ngOnDestroy(): void {
+    if(this.subsription)
+      this.subsription.unsubscribe();
   }
 
 }

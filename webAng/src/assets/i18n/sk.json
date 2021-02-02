@@ -8,6 +8,7 @@
     "loading": " Spracovanie ...",
     "deactivate":"Deaktivovať",
     "exit": "Ukončiť",
+    "yes": "Áno",
 
     "srv": {
       "100001": "Účet s daným e-mailom už existuje.",
@@ -84,12 +85,21 @@
       "alias": "Alias",
       "alias1":"Alias meno je možné použit pri prihlásení namiesto e-mail adresy.",
       "notAlias":"Alias nie je nastavený",
+      "aliasInvalid": "Neplatný alias. Alias musí mať dĺžku 6 znakov, prvý znak a-Z, povolené špecialne znaky '. _' .",
       "regdate":"Dátum registrácie",
       "deleteUser":"Zmazanie používateľského účtu",
-      "cancelDeleteUser":"Deaktivovať proces zrušenia používateľa",
+      "deleteUserQest0":"Zmazaním používateľského účtu budú vymazané všetky používateľské údaje, ktoré už nebude možné obnoviť.",
+      "deleteUserQest1":" Chcete aj napriek tomu začať proces zmazania účtu?",
+      "deleteUserQest2":"Proces zmazania používateľského účtu bol spustený {{datestart}}. Zmazanie je možné zastaviť do {{dateend}}.",
+      "deleteUserQest3":" Potvrdením zastavite proces zmazania používateľa.",
+      "deleteUserStarted": " Proces zmazania používateľa bol spustený.",
+      "deleteUserStopping": " Proces zmazania používateľa bol ukončený. Použivateľ nebude zmazaný.",
+      "cancelDeleteUser":"Deaktivovať proces zmazania používateľa",
       "langlabel":"Aktuálne jazykové nastavenie",
       "saveAliasOK": "Uloženie aliasu bolo úspešné.",
-      "saveAlias": "Uloženie aliasu"
+      "saveAlias": "Uloženie aliasu",
+      "selectedLang":"Vybraté jazykové nastavenie",
+      "saveLangOK": "Uloženie jazyka bolo úspešné."
     }
 
   }

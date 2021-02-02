@@ -10,6 +10,7 @@ import {NotificationService} from './notification.service';
 export class GlobService {
 
   public static injector: Injector;
+  private _actualLanguage: string;
 
   private langBSub = new BehaviorSubject<string>('');
   currentLanguage = this.langBSub.asObservable();
@@ -21,7 +22,11 @@ export class GlobService {
 
   changeCurrentLang(lang: string): void {
     this.langBSub.next(lang);
+    this._actualLanguage = lang;
   }
 
+  public get actualLanguage(){
+    return this._actualLanguage;
+  }
 
 }

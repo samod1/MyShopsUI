@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {CommonModule} from '@angular/common';
+import {CommonModule, registerLocaleData} from '@angular/common';
 import {Injector, NgModule} from '@angular/core';
 import {OverlayModule} from '@angular/cdk/overlay';
 
@@ -33,12 +33,25 @@ import { UserEmailComponent } from './components/user/user-email/user-email.comp
 import { UserPhoneComponent } from './components/user/user-phone/user-phone.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { SideNavPanelComponent } from './components/widgets/side-nav-panel/side-nav-panel.component';
-import {environment} from "../environments/environment";
+import {environment} from '../environments/environment';
 import { UserSettingsUserComponent } from './components/user/user-settings-user/user-settings-user.component';
 import { UserSettingsSecurityComponent } from './components/user/user-settings-security/user-settings-security.component';
 import { UserSettingsOtherComponent } from './components/user/user-settings-other/user-settings-other.component';
 import { UserSettingsActlogComponent } from './components/user/user-settings-actlog/user-settings-actlog.component';
+import { LocalizedDatePipe } from './_pipes/localized-date.pipe';
+import localeEn from '@angular/common/locales/en';
+import localeSk from '@angular/common/locales/sk'
+import localeDe from '@angular/common/locales/de'
+import localeCz from '@angular/common/locales/cs'
+import localeHu from '@angular/common/locales/hu'
 
+
+
+registerLocaleData(localeEn, 'en');
+registerLocaleData(localeSk, 'sk');
+registerLocaleData(localeDe, 'de');
+registerLocaleData(localeCz, 'cs');
+registerLocaleData(localeHu, 'hu');
 
 // AoT requires an exported function for factories
 // tslint:disable-next-line:typedef
@@ -68,7 +81,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     UserSettingsUserComponent,
     UserSettingsSecurityComponent,
     UserSettingsOtherComponent,
-    UserSettingsActlogComponent
+    UserSettingsActlogComponent,
+    LocalizedDatePipe,
+    LocalizedDatePipe
   ],
   imports: [
     BrowserModule,

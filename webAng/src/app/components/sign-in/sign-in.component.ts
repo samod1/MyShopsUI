@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {LoginData} from '../../_model/login-data';
 import {AuthenticationService} from '../../_service/authentication.service';
@@ -7,13 +7,14 @@ import {NotificationService} from '../../_service/notification.service';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {ROUTER_PATH_DASHBOARD} from '../../tools/common/common';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit,OnDestroy {
 
   loginControl: FormControl;
   passwordControl: FormControl;
@@ -21,6 +22,7 @@ export class SignInComponent implements OnInit {
   loginInvalid: boolean;
   loading = true;
   eyeIconClass = 'eye';
+  private subscriptions: Array<Subscription> = [];
 
   constructor(private authService: AuthenticationService,
               private notificationService: NotificationService,
@@ -32,7 +34,7 @@ export class SignInComponent implements OnInit {
     this.passwordControl = new FormControl('', validators );
     this.loginInvalid = false;
 
-    this.authService.loggedObservable.subscribe( logged => {
+    let subscription = this.authService.loggedObservable.subscribe( logged => {
       this.setControlEnabled(true);
       if(logged){
         const messages = new Array<string>();
@@ -41,18 +43,25 @@ export class SignInComponent implements OnInit {
         this.router.navigateByUrl(ROUTER_PATH_DASHBOARD);
       }
     });
+    this.subscriptions.push(subscription);
 
-    this.authService.errorDataObservable.subscribe( (errorData) => {
+    subscription = this.authService.errorDataObservable.subscribe( (errorData) => {
         if(errorData.isShopsCodeError()){
          console.log('ShopsErrorCode');
         }
         this.setControlEnabled(true);
     });
-
+    this.subscriptions.push(subscription);
 
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy() {
+    for (const subscription of this.subscriptions){
+      subscription.unsubscribe();
+    }
   }
 
   onLogin(): void{

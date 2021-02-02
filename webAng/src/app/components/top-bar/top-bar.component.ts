@@ -1,25 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { environment} from '../../../environments/environment';
 import { GlobService} from '../../_service/glob-service';
 import {AuthenticationService,getLoggedUserName} from '../../_service/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
 import {Router} from '@angular/router';
 import {ROUTER_PATH_HOME, ROUTER_PATH_USERSETTINGS} from '../../tools/common/common';
+import {ILanguage,IMenuItem} from '../../_model/lang';
+import {Subscription} from 'rxjs';
+
 // import {Translator} from '../../tools/translation/translator';
 
-interface ILanguage{
-  langid: string;
-  langtext: string;
-  langval: string;
-}
 
-interface IMenuItem {
-  id: string;
-  menuText: string;
-  menuTextId: string;
-  route: string;
-  iconName: string;
-}
 
 @Component({
   selector: 'app-top-bar',
@@ -27,7 +18,7 @@ interface IMenuItem {
   styleUrls: ['./top-bar.component.scss']
 })
 
-export class TopBarComponent implements OnInit {
+export class TopBarComponent implements OnInit, OnDestroy {
 
   public languages: Array<ILanguage> = [];
   public userMenu: Array<IMenuItem>;
@@ -37,6 +28,7 @@ export class TopBarComponent implements OnInit {
 
   private MENU_USER_LOGOUT = 'menu_UserLogout';
   private MENU_USER_SETTINGS = 'menu_UserSettings';
+  private subscriptions: Array<Subscription> = [];
 
   constructor(private globSrv: GlobService,
               private authService: AuthenticationService,
@@ -45,7 +37,7 @@ export class TopBarComponent implements OnInit {
     this.languages =  environment.languages;
     /* User menu */
     this.userMenu = this.CreateUserMenu();
-    authService.loggedObservable.subscribe( (logged: boolean) => {
+    const subscription = authService.loggedObservable.subscribe( (logged: boolean) => {
       this.loggedMode = logged;
       if(logged){
         this.uname = getLoggedUserName();
@@ -53,15 +45,21 @@ export class TopBarComponent implements OnInit {
         this.uname = '';
       }
     });
-
+    this.subscriptions.push(subscription);
     this.loggedMode=false;
 
   }
   ngOnInit(): void {
-    this.globSrv.currentLanguage.subscribe((data ) => {
+    const subscription = this.globSrv.currentLanguage.subscribe((data ) => {
                             this.currentLang = data; });
+    this.subscriptions.push(subscription);
   }
 
+  ngOnDestroy() {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
 
   OnLang(langid: string): void{
       // @ts-ignore

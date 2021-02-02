@@ -5,6 +5,7 @@ import {RegistrationService, RegistrationData} from '../../_service/registration
 import {SHOPS_CODE_REG_EMAILPREVATTEMPT} from '../../tools/common/shops-error-codes';
 import {NotificationService} from '../../_service/notification.service';
 import {TranslateService} from '@ngx-translate/core';
+import {Subscription} from 'rxjs';
 // import {Translator} from '../../tools/translation/translator';
 
 @Component({
@@ -20,6 +21,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   disabledComponents = false;
   registerAgain = false;
   registrationSent=false;
+  private subscriptions: Array<Subscription> = [];
 
   constructor(private registrationService: RegistrationService,
               private notifService: NotificationService,
@@ -28,7 +30,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     const validators = [Validators.required, ShopsValidators.validateEmailControl];
     this.emailControl = new FormControl('', validators );
 
-    this.registrationService.registrationSentObservable.subscribe( registrationSent => {
+    let subscription = this.registrationService.registrationSentObservable.subscribe( registrationSent => {
       if(registrationSent){
         const message: string = this.translate.instant('app.register.registrationSent');
         notifService.informationMessageSubject.next([message]);
@@ -36,8 +38,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
         this.disabledComponents=true;
       }
     });
-
-    this.registrationService.errorDataObservable.subscribe( (errorData) => {
+    this.subscriptions.push(subscription);
+    subscription = this.registrationService.errorDataObservable.subscribe( (errorData) => {
       if(errorData.isShopsCodeError()){
           if( Number(errorData.shopsErrorCode) === SHOPS_CODE_REG_EMAILPREVATTEMPT) {
             this.registerAgain=true;
@@ -45,6 +47,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       }
       this.setControlEnabled(true);
     });
+    this.subscriptions.push(subscription);
 
   }
 
@@ -54,6 +57,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.disabledComponents = false;
     this.registerAgain = false;
     this.registrationSent=false;
+  }
+  ngOnDestroy() {
+    for (const subscription of this.subscriptions){
+      subscription.unsubscribe();
+    }
   }
 
   OnCreate(): void {
@@ -139,7 +147,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
       return false;
   }
 
-  ngOnDestroy(): void {
-  }
+
 
 }

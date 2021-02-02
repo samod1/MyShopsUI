@@ -1,0 +1,29 @@
+@import "../../components_common";
+@import "../../colors";
+
+
+
+
+.usersetttings-user-container{
+
+
+  & .usersetttings-user-form-container{
+    padding-left: 1em;
+  }
+
+  & .gridThreeColumn{
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+
+  .editPanel{
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+}
+
+.flexRow{
+  & app-icon-button{
+    margin-left: 0.5em;
+  }
+}

@@ -9,6 +9,7 @@
     "deactivate":"Deactivate",
     "loading": " Processing...",
     "exit": "Exit",
+    "yes": "Yes",
 
 
     "srv": {
@@ -88,13 +89,21 @@
       "alias": "Alias",
       "notAlias":"Alias is not set user account.",
       "alias1":"You can use alias name as user name at login.",
+      "aliasInvalid": "Invalid alias. Alias must be 6 character length, first character a-Z, enabled special characters '. _' .",
       "regdate":"Registration date",
       "deleteUser":"Delete user account",
+      "deleteUserQest0":"Deleting a user account will erase any user data that can no longer be recovered.",
+      "deleteUserQest1":" Do you still want to start the account deletion process?",
+      "deleteUserQest2":"Deleting a user account was started at {{datestart}}. Deleting can stopped to {{dateend}} .",
+      "deleteUserQest3":" Confirm to stop the user deletion process.",
+      "deleteUserStarted": " The process of deleting the user account has started.",
+      "deleteUserStopping": "The process of deleting the user account has stopped. The user will not be deleted.",
       "cancelDeleteUser":"Deactivate user deletion process",
       "langlabel":"Actual language",
       "saveAliasOK": "Saving of the alias was successful. ",
-      "saveAlias": "Alias saving"
-
+      "saveAlias": "Alias saving",
+      "selectedLang":"Selected language",
+      "saveLangOK": "Saving of the locale was successful. "
     }
   }
 }

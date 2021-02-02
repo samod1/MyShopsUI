@@ -17,5 +17,11 @@
 }
 
 .sidenav_content {
+  width: 100%;
+  padding: 1em 1em 1em 2em;
+  border-left-width: 1px;
+  border-left-color: $msh-line-color;
+  border-left-style: solid;
+  margin-left: 1.3em;
 }
 

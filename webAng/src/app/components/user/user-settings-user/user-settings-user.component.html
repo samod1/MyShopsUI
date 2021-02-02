@@ -1,1 +1,130 @@
-<p>user-settings-user works!</p>
+<div id="usersetttings-user-container" class="usersetttings-user-container">
+  <h3 style="font-weight: bold">{{"app.user-settings.title.user" | translate}}</h3>
+  <mat-divider></mat-divider>
+  <div id="usersetttings-user-form-container" class="usersetttings-user-form-container">
+    <div class="gridContainer gridThreeColumn formLine borderBottom">
+      <mat-label style="font-weight: bold">{{"app.user-settings.email" | translate}}</mat-label>
+      <mat-label>{{email}}</mat-label>
+      <div></div>
+    </div>
+    <div class=" gridContainer gridThreeColumn formLine borderBottom">
+      <mat-label style="font-weight: bold">{{"app.user-settings.alias" | translate}}</mat-label>
+      <mat-label >{{alias}}</mat-label>
+      <div>
+        <button mat-button *ngIf="!showAliasEdit" (click)="onEditAlias()" >{{"app.edit" | translate}}</button>
+      </div>
+      <div *ngIf="showAliasEdit" class="editPanel">
+        <p>{{"app.user-settings.alias1" | translate}}</p>
+        <mat-form-field>
+          <input matInput required placeholder="{{'app.user-settings.alias'|translate}}" #alias [formControl]="aliasControl">
+          <mat-error>{{'app.user-settings.aliasInvalid' | translate}}</mat-error>
+        </mat-form-field>
+        <div class="flexRow">
+          <app-icon-button iconName="save"
+                           buttonText="{{'app.save' | translate}}"
+                           (click)="onSaveAlias()"
+                           color="primary"
+                           [disabled]="!aliasControl.valid"
+            ></app-icon-button>
+          <app-icon-button iconName="cancel"
+                           buttonText="{{'app.cancelbut' | translate}}"
+                           color="basic" (click)="showAliasEdit=false"
+                           [stroked]="true"
+          ></app-icon-button>
+        </div>
+      </div>
+    </div>
+    <!-- Registration date -->
+    <div class=" gridContainer gridThreeColumn formLine borderBottom">
+      <mat-label style="font-weight: bold">{{"app.user-settings.regdate" | translate}}</mat-label>
+      <mat-label>{{regDate | localizedDate}}</mat-label>
+      <div></div>
+    </div>
+    <!-- User deleting -->
+    <div class=" gridContainer gridThreeColumn formLine borderBottom">
+      <mat-label style="font-weight: bold">{{"app.user-settings.deleteUser" | translate}}</mat-label>
+      <p>{{deleteInProgressText}}</p>
+      <div >
+        <button *ngIf="!showDeleteUser && (userData && !userData.deleting.unreg_inprogress)"
+                mat-button (click)="onDeleteUser()">{{ deleteButtonLabel | translate}}</button>
+        <button *ngIf="!showDeleteUser && (userData && userData.deleting.unreg_inprogress)"
+                mat-button (click)="onDeleteUser()">{{ deleteButtonLabel | translate}}</button>
+      </div>
+      <div *ngIf="showDeleteUser" class="editPanel">
+        <div *ngIf="!userData.deleting.unreg_inprogress">
+          <p>{{"app.user-settings.deleteUserQest0" | translate }}{{"app.user-settings.deleteUserQest1" | translate}} </p>
+          <div class="flexRow">
+            <app-icon-button iconName="done"
+                             buttonText="{{'app.yes' | translate}}"
+                             (click)="onStartDeleteUser()"
+                             color="primary"
+            ></app-icon-button>
+            <app-icon-button iconName="cancel"
+                             buttonText="{{'app.cancelbut' | translate}}"
+                             color="basic" (click)="showDeleteUser=false"
+                             [stroked]="true"
+            ></app-icon-button>
+          </div>
+        </div>
+        <div  *ngIf="userData.deleting.unreg_inprogress">
+          <h3>{{'app.user-settings.cancelDeleteUser' | translate}}</h3>
+          <p>{{"app.user-settings.deleteUserQest2" | translate :{datestart: userData.deleting.unregtime_enter.toLocaleString(),
+               dateend: userData.deleting.unregtime_start.toLocaleString() } }}
+             {{"app.user-settings.deleteUserQest3" | translate}} </p>
+          <div class="flexRow" style="padding-top: 1em">
+            <app-icon-button iconName="done"
+                             buttonText="{{'app.yes' | translate}}"
+                             (click)="onStopDeleteUser()"
+                             color="primary"
+            ></app-icon-button>
+            <app-icon-button iconName="cancel"
+                             buttonText="{{'app.cancelbut' | translate}}"
+                             color="basic" (click)="showDeleteUser=false"
+                             [stroked]="true"
+            ></app-icon-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <div class=" gridContainer gridThreeColumn formLine borderBottom">
+      <mat-label style="font-weight: bold">{{"app.user-settings.langlabel" | translate}}</mat-label>
+      <mat-label>{{lang}}</mat-label>
+      <div>
+        <button *ngIf="!showLangChange" mat-button (click)="onShowLangChange()">{{ "app.edit" | translate}}</button>
+      </div>
+      <div *ngIf="showLangChange" class="editPanel">
+        <div class="flexColumn">
+
+          <div class="flexRow">
+            <app-icon-button [mat-menu-trigger-for]="menu"
+                             iconName="language"
+                             buttonText="Language"
+                             color="basic"
+            ></app-icon-button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item
+                      *ngFor="let lang of languages; let i = index;"
+                      (click)="OnLang(lang.langid)" id="lang_{{lang.langid}}" >{{lang.langtext}}
+              </button >
+            </mat-menu>
+            <div style="padding-top: 9px;padding-left: 3em;">{{'app.user-settings.selectedLang' | translate}}: {{actualLang}}</div>
+          </div>
+
+          <div class="flexRow" style="padding-top: 3em">
+            <app-icon-button iconName="save"
+                             buttonText="{{'app.save' | translate}}"
+                             (click)="onSaveLang()"
+                             color="primary"
+            ></app-icon-button>
+            <app-icon-button iconName="cancel"
+                             buttonText="{{'app.cancelbut' | translate}}"
+                             color="basic" (click)="showLangChange=false"
+                             [stroked]="true"
+            ></app-icon-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

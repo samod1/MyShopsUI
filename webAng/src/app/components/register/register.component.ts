@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 import {NotificationService} from '../../_service/notification.service';
 // import {Translator} from '../../tools/translation/translator';
@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {RegistrationService, RegistrationRequestDataOut, RegistrationRequestDataIn, RegistrationConfimDataIn} from '../../_service/registration.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ROUTER_PATH_HOME} from '../../tools/common/common';
+import {Subscription} from 'rxjs';
 
 
 export class FormModel {
@@ -20,7 +21,7 @@ export class FormModel {
   styleUrls: ['./register.component.scss']
 })
 
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   private regKey: string;
   eyeIconClass = 'eye';
@@ -30,6 +31,8 @@ export class RegisterComponent implements OnInit {
   passwordError = false;
   passwordErrorMsg = '';
   regRequestData: RegistrationRequestDataOut;
+  private subscriptions: Array<Subscription> = [];
+
 
   constructor(private route: ActivatedRoute,
               private notificationService: NotificationService,
@@ -38,13 +41,14 @@ export class RegisterComponent implements OnInit {
               private translate: TranslateService) {
     this.regKey='Unknown';
 
-    this.registrationService.registrationConfirmedObservable.subscribe( (confirmed: boolean) => {
+    const subscription = this.registrationService.registrationConfirmedObservable.subscribe( (confirmed: boolean) => {
       if(confirmed){
         this.registrationConfirmed = true;
         const message: string = this.translate.instant('app.register.regOK');
         this.notificationService.informationMessageSubject.next([message]);
       }
     });
+    this.subscriptions.push(subscription);
 
   }
 
@@ -60,11 +64,19 @@ export class RegisterComponent implements OnInit {
       this.loadRegistrationReqData();
     }
     this.formModel = {};
-    this.registrationService.registrationReqObservable.subscribe( (retData: RegistrationRequestDataOut) => {
+    const subscription = this.registrationService.registrationReqObservable.subscribe( (retData: RegistrationRequestDataOut) => {
       if(retData){
         this.regRequestData = retData;
       }
     });
+    this.subscriptions.push(subscription);
+
+  }
+
+  ngOnDestroy() {
+    for (const subscription of this.subscriptions){
+      subscription.unsubscribe();
+    }
   }
 
   loadRegistrationReqData(){

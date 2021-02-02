@@ -1,24 +1,31 @@
 <div>
 
   <ng-container *ngIf="!loggedMode">
-    <button mat-button [matMenuTriggerFor]="menu">Language</button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item
-        *ngFor="let lang of languages; let i = index;"
-        (click)="OnLang(lang.langid)" id="lang_{{lang.langid}}" >{{lang.langtext}}</button>
-    </mat-menu>
-
-    <button *ngIf="!loggedMode" mat-stroked-button
-            (click)="OnSignup()" routerLink="signup">{{'app.top-bar.signup' | translate}}</button>
-    <button *ngIf="!loggedMode" mat-stroked-button
-            (click)="OnLogin()" routerLink="signin">{{'app.top-bar.login' | translate}}</button>
+    <div class="flexRow">
+      <div style="padding: 0em 1em 0em 1em">
+        <button mat-button [matMenuTriggerFor]="menu">Language</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item
+            *ngFor="let lang of languages; let i = index;"
+            (click)="OnLang(lang.langid)" id="lang_{{lang.langid}}" >{{lang.langtext}}</button>
+        </mat-menu>
+      </div>
+      <div class="flexRow" style="width: 90%; flex-direction: row-reverse" >
+        <button *ngIf="!loggedMode" mat-stroked-button
+                (click)="OnLogin()" routerLink="signin" style="margin-left: 1em">{{'app.top-bar.login' | translate}}</button>
+        <button *ngIf="!loggedMode" mat-stroked-button
+                (click)="OnSignup()" routerLink="signup">{{'app.top-bar.signup' | translate}}</button>
+      </div>
+    </div>
   </ng-container>
 
   <ng-container *ngIf="loggedMode">
-    <div class="loggedContainer">
-      <button mat-flat-button color="basic">{{'app.top-bar.eshops' | translate}}</button>
-      <button mat-flat-button color="basic">{{'app.top-bar.profiles' | translate}}</button>
-      <div>
+    <div class="loggedContainer" style="padding: 0em 1em 0em 1em">
+      <div class="flexRow" >
+        <button mat-flat-button color="basic" style="margin-right: 1em">{{'app.top-bar.eshops' | translate}}</button>
+        <button mat-flat-button color="basic">{{'app.top-bar.profiles' | translate}}</button>
+      </div>
+      <div class="flexRow" style="width: 90%; flex-direction: row-reverse">
         <app-icon-button [matMenuTriggerFor]="usermenu" color="basic" iconName="account_circle" [buttonText]="uname" ></app-icon-button>
         <mat-menu #usermenu="matMenu">
           <app-icon-button

@@ -9,7 +9,7 @@ export const environment = {
     { langid: 'sk', langtext: 'Slovenčina', langval: 'sk' },
   ],
   authorizationHeaderName: 'Authorization',
-  serverBaseUrl: 'http://192.168.1.31:8887/shops/v1/',
+  serverBaseUrl: 'http://localhost:8887/shops/v1/',
   messageTimeout: 50000,
   basehref: '/assets/i18n/'
 };

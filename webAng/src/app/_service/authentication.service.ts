@@ -86,7 +86,7 @@ export class AuthenticationService extends BaseService{
 
   isLogged(): void {
 
-    if(this.router.url === 'register'){
+    if(window.location.pathname === '/register'){
       return;
     }
 

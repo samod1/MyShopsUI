@@ -1,5 +1,9 @@
 <div class="iconButton">
-  <button mat-flat-button [disabled]="disabled" mat-button color="{{color}}" [class]="buttonClass">
+  <button *ngIf="!stroked"  mat-flat-button [disabled]="disabled" mat-button color="{{color}}" [class]="buttonClass">
+    <mat-icon>{{iconName}}</mat-icon>
+    {{ buttonText}}
+  </button>
+  <button *ngIf="stroked"  mat-stroked-button [disabled]="disabled" mat-button color="{{color}}" [class]="buttonClass">
     <mat-icon>{{iconName}}</mat-icon>
     {{ buttonText}}
   </button>

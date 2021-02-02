@@ -24,5 +24,17 @@ export class Validators {
 
   }
 
+  public static validateAlias(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    const re = /^[A-Za-z]{1}[A-Za-z0-9\._]{5,}$/;
+    const ret = re.test(value);
+    if (!ret){
+      return { emailError: 'Alias not valid' };
+    }
+    else{
+      return null;
+    }
+
+  }
 
 }
