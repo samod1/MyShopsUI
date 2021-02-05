@@ -8,6 +8,7 @@ import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {UiService} from './_service/ui.service';
 import {AuthenticationService} from './_service/authentication.service';
 import {NavigationEnd, Router} from '@angular/router';
+import {UserSettingsService} from './_service/user-settings.service';
 
 
 @Component({
@@ -45,7 +46,8 @@ export class AppComponent implements OnInit, AfterContentInit {
               private media: MediaObserver,
               private uiService: UiService,
               private authService: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private user: UserSettingsService) {
     translate.addLangs(['en', 'sk']);
     translate.setDefaultLang('sk');
 
@@ -56,8 +58,6 @@ export class AppComponent implements OnInit, AfterContentInit {
     this.router.events.subscribe( (val) => {
       console.log(val instanceof NavigationEnd);
     });
-
-
 
   }
 

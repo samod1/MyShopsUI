@@ -13,7 +13,6 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
-
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -121,5 +120,8 @@
       }
     }
   },
-  "defaultProject": "webAng"
+  "defaultProject": "webAng",
+  "cli": {
+    "analytics": "a5f3fd1d-2c4b-4d37-9a65-22a992a4c57d"
+  }
 }

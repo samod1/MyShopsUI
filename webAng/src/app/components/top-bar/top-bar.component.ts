@@ -84,13 +84,13 @@ export class TopBarComponent implements OnInit, OnDestroy {
                           menuText: this.translate.instant('app.top-bar.userMenu.settings'),
                           menuTextId: 'app.top-bar.userMenu.settings',
                           route: 'user/settings',
-                          iconName: 'settings'}
+                          iconName: 'fa fa-cog'}
     retMenu.push(mi1);
     const mi2: IMenuItem = {id:'menu_UserLogout',
                             menuText: this.translate.instant('app.top-bar.userMenu.logout'),
                             menuTextId: 'app.top-bar.userMenu.logout',
                             route: 'user/logout',
-                            iconName: 'logout'}
+                            iconName: 'fas fa-sign-in-alt'}
     retMenu.push(mi2);
 
 

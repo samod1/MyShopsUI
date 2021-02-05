@@ -21,9 +21,9 @@
       </div>
       <div class="flexRow" id="buttons">
         <app-icon-button  color="primary" buttonText="{{'app.sign-in.loginbut' | translate }}"
-                         iconName="login" [disabled]="loading"
+                         iconName="fa fa-sign-in-alt" [disabled]="loading"
                           (click)="onLogin()" ></app-icon-button>
-        <app-icon-button color="basic" buttonText="{{'app.cancelbut' | translate}}" iconName="cancel"
+        <app-icon-button color="basic" buttonText="{{'app.cancelbut' | translate}}" iconName="fa fa-times"
                          routerLink="/" [disabled]="loading"></app-icon-button>
       </div>
   </div>

@@ -11,16 +11,16 @@
     <div class="flexRow" id="buttons">
       <app-icon-button *ngIf="showCrtButton()" [disabled]="emailInvalid || disabledComponents" color="primary"
                        buttonText="{{ 'app.sign-up.crtbut' | translate }}"
-                       iconName="create" (click)="OnCreate()" ></app-icon-button>
+                       iconName="fas fa-plus" (click)="OnCreate()" ></app-icon-button>
       <app-icon-button *ngIf="showAgainBut()" [disabled]="emailInvalid || disabledComponents" color="primary"
                        buttonText="{{'app.sign-up.crtbutagain' | translate }}"
-                       iconName="create" (click)="OnCreateAgain()" ></app-icon-button>
+                       iconName="fas fa-plus" (click)="OnCreateAgain()" ></app-icon-button>
       <app-icon-button color="basic" buttonText="{{ 'app.cancelbut' | translate }}" [disabled]="disabledComponents"
                        *ngIf="showCancelBut()"
-                       iconName="cancel" routerLink="/"></app-icon-button>
+                       iconName="fa fa-ban" routerLink="/"></app-icon-button>
       <app-icon-button color="primary" buttonText="{{'app.exit' | translate }}"
                        *ngIf="showExitBut()"
-                       iconName="cancel" routerLink="/"></app-icon-button>
+                       iconName="fa fa-ban" routerLink="/"></app-icon-button>
 
     </div>
   </div>
