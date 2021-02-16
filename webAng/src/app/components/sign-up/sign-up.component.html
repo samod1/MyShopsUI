@@ -11,7 +11,7 @@
     <div class="flexRow" id="buttons">
       <app-icon-button *ngIf="showCrtButton()" [disabled]="emailInvalid || disabledComponents" color="primary"
                        buttonText="{{ 'app.sign-up.crtbut' | translate }}"
-                       iconName="fas fa-plus" (click)="OnCreate()" ></app-icon-button>
+                       iconName="fas fa-plus" (click)="OnCreate()" class="bluebutton" ></app-icon-button>
       <app-icon-button *ngIf="showAgainBut()" [disabled]="emailInvalid || disabledComponents" color="primary"
                        buttonText="{{'app.sign-up.crtbutagain' | translate }}"
                        iconName="fas fa-plus" (click)="OnCreateAgain()" ></app-icon-button>

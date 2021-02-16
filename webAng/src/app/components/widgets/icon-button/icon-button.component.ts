@@ -18,6 +18,7 @@ export class IconButtonComponent implements OnInit,OnDestroy {
   @Input() buttonText = '';
   @Input() iconRight = false;
   @Input() stroked = false;
+  @Input() IconButton = 'button login';
 
   buttonClass = 'iconButtonClassButton';
   private subsription: Subscription;

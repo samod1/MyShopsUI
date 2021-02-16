@@ -1,11 +1,18 @@
 <div class="iconButton">
-  <button *ngIf="!stroked"  mat-flat-button [disabled]="disabled" mat-button color="{{color}}" [class]="buttonClass">
-    <i style="margin-right: 0.5em" class="{{iconName}}"></i>
+ <!-- <button *ngIf="!stroked" mat-flat-button [disabled]="disabled" mat-button color="{{color}}" [class]="buttonClass">
+    <i class="{{iconName}}"></i>
     {{ buttonText}}
   </button>
+
   <button *ngIf="stroked"  mat-stroked-button [disabled]="disabled" mat-button color="{{color}}" [class]="buttonClass">
     <i style="margin-right: 0.5em" class="{{iconName}}"></i>
     {{ buttonText}}
-  </button>
+  </button> -->
+
+
+
+  <button class="button phone">{{buttonText}}</button>
 </div>
+
+
 <!-- TODO dokoncit button s dvoma farbami -->

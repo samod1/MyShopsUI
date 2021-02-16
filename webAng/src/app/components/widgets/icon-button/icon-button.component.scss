@@ -1,9 +1,37 @@
 @import '../../colors';
 @import '../../components_common';
+
+$bg: #3f51b5;
+$bgIcon: lighten($bg,35%);
+$text_color: #ffffff;
+$PrimaryBg: #3f51b5;
+
+/*
 :host {  }
 
-.iconButton{
+.button {
+  color: $text_color;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  line-height: 36px;
+  white-space: nowrap;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
 
+  & .login
+  {
+    background-color: $PrimaryBg ;
+  }
+  & i
+  {
+    padding-right: 10px;
+  }
 }
 
 .iconButtonClassButton{
@@ -12,15 +40,19 @@
     flex-direction: row;
     align-items: center;
   }
-  & mat-icon {
+  & i
+  {
     padding-right: 0.5em;
   }
-
+  i.bluebutton
+  {
+    background-color: #0aadff;
+  }
 }
-.iconButtonClassButtonRight{
 
-    & mat-icon {
-      padding-left: 0.5em;
+.iconButtonClassButtonRight{
+    & i {
+      padding-left: 10px;
     }
 
     & ::ng-deep.mat-button-wrapper {
@@ -28,5 +60,88 @@
       flex-direction: row-reverse;
       align-items: center;
     }
+}
+*/
 
+$button-colour: #3f51b5;
+$button-text: #ffffff;
+$regular-text: #333;
+$button-tint: fadeout(#000, 90%);
+
+* {
+  box-sizing: border-box;
+}
+
+.button {
+  display: inline-block;
+  font-family: "Montserrat", "Trebuchet MS", Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  margin: 10px;
+  padding: .8em 1.4em;
+  text-align: left;
+  padding-right: 0.5em;
+  background: $button-colour;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  transition: .2s;
+
+  &:before,
+  &:after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding-top: inherit;
+    padding-bottom: inherit;
+    width: 2.8em;
+    content: "\00a0";
+    font-family: 'FontAwesome', sans-serif;
+    font-size: 1.2em;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: .2s;
+    transform-origin: 50% 60%;
+  }
+  &:before {
+    background: $button-tint;
+  }
+  &:hover {
+    background: darken($button-colour, 10%);
+  }
+  &:active,
+  &:focus {
+    background: darken($button-colour, 30%);
+    outline: none;
+  }
+}
+
+.button {
+  min-width: 15em;
+}
+
+.phone {
+
+  background: $bg;
+
+  &:active,
+  &:focus {
+    background: darken($bg, 20%);
+  }
+
+  &:after {
+    content: "\f2f6";
+    border-radius-right: 5px;
+    background: darken($bg, 10%);
+  }
+
+  &:hover {
+    background: darken($bg, 20%);
+  }
+
+  &:hover:before{
+    background: darken($bg, 25%);
+  }
 }

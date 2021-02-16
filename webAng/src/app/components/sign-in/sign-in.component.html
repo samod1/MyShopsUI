@@ -20,11 +20,16 @@
         </mat-form-field>
       </div>
       <div class="flexRow" id="buttons">
-        <app-icon-button  color="primary" buttonText="{{'app.sign-in.loginbut' | translate }}"
-                         iconName="fa fa-sign-in-alt" [disabled]="loading"
+        <app-icon-button buttonText="{{'app.sign-in.loginbut' | translate }}"
+                         iconName="fas fa-sign-in-alt" [disabled]="loading"
                           (click)="onLogin()" ></app-icon-button>
+
         <app-icon-button color="basic" buttonText="{{'app.cancelbut' | translate}}" iconName="fa fa-times"
                          routerLink="/" [disabled]="loading"></app-icon-button>
+
+
+        <!--<app-icon-button class="button button login" iconName="fas fa-bars" buttonText="skuskaTlacitka"></app-icon-button>-->
+
       </div>
   </div>
   <app-loading-indicator [loading]="loading"></app-loading-indicator>
